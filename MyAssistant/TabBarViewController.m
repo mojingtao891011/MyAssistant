@@ -13,7 +13,6 @@
 #import "AddScheduleController.h"
 #import "AddTaskController.h"
 
-
 @interface TabBarViewController ()<UINavigationControllerDelegate>
 {
     UIView      *_tabbarView ;
@@ -152,10 +151,9 @@
 
 - (void)showMenu
 {
-
     
-    
-    __weak TabBarViewController *weakSelf = self ;
+   
+    WS(weakSelf);
     CHTumblrMenuView *menuView = [[CHTumblrMenuView alloc] init];
     [menuView addMenuItemWithTitle:@"添加任务" andIcon:[UIImage imageNamed:@"tianjiaricheng"] andSelectedBlock:^{
         NSLog(@"添加任务 selected");
@@ -208,7 +206,6 @@
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         BaseNavgationController *addScheduleNavCtl = [storyboard instantiateViewControllerWithIdentifier:@"AddTaskNavCtl"];
         [self presentViewController:addScheduleNavCtl animated:YES completion:nil];
-        [self.navigationController pushViewController:addScheduleNavCtl animated:YES];
     }
     else if (index == 1){
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

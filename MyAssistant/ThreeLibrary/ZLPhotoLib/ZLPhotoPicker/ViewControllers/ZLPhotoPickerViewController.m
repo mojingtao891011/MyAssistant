@@ -68,8 +68,19 @@
 #pragma mark - 展示控制器
 - (void)show
 {
-    [[[[UIApplication sharedApplication].windows firstObject] rootViewController] presentViewController:self animated:YES completion:nil];
+   // [[[[UIApplication sharedApplication].windows firstObject] rootViewController] presentViewController:self animated:YES completion:nil];
+//    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:self animated:YES completion:nil];
     
+    UIViewController *activeController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    if ([activeController isKindOfClass:[UINavigationController class]])
+    {
+        activeController = [(UINavigationController*) activeController visibleViewController];
+    }
+    else if (activeController.presentedViewController)
+    {
+        activeController = activeController.presentedViewController;
+    }
+    [activeController presentViewController:self animated:YES completion:nil];
 }
 
 - (void) addNotification{
