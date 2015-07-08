@@ -1,0 +1,58 @@
+//
+//  MyAssistant.pch
+//  MyAssistant
+//
+//  Created by taomojingato on 15/6/18.
+//  Copyright (c) 2015年 mojingato. All rights reserved.
+//
+
+#ifndef MyAssistant_MyAssistant_pch
+#define MyAssistant_MyAssistant_pch
+
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
+#import "UIViewExt.h"
+#import "BaseTableView.h"
+#import "Tool.h"
+#import "CoreDataStack.h"
+#import "NetworkService.h"
+#import "NSDate+Utilities.h"
+#import "Color.h"
+#import "NoteName.h"
+#import "CoreDataModelService.h"
+
+//NSLog
+#ifdef DEBUG
+#define debugLog(...)          NSLog(__VA_ARGS__)
+#define debugMethod()       NSLog(@"%s" ,__func__)
+#else
+#define debugLog(...)
+#define debugMethod()
+#endif
+
+#define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self
+
+
+#define DEVICE_NAME                                                             [[NSUserDefaults standardUserDefaults]objectForKey:@"deviceName"]
+#define CUR_SELECTEDDATE                                                   [[NSUserDefaults standardUserDefaults]objectForKey:@"curSelectedDate"]
+#define DATE_FORMATE                                                            @"yyyy-MM-dd"
+
+
+#define CUR_USER                                                                    (User*)[CoreDataModelService fetchUserByName:DEVICE_NAME]
+
+
+//私有key登录成功获得
+#define     PRIVATEKEY                                                          [[NSUserDefaults standardUserDefaults]objectForKey:@"privatekey"]
+//公有key 注册、登录用到
+#define     PUBLICKEY                                                            @"smartclock"
+
+
+//
+#define     SCREEN_HEIGHT                                                        [UIScreen  mainScreen].bounds.size.height
+//
+#define     SCREEN_WIDTH                                                          [UIScreen mainScreen].bounds.size.width
+
+
+
+#endif
