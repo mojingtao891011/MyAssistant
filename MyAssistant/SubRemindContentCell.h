@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Schedule.h"
 
 @interface SubRemindContentCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *cellImageView;
+@property (weak, nonatomic) IBOutlet UILabel *cellTextLabel;
+
+- (void)configureCellWithIndexPath:(NSIndexPath*)indexPath scheduleModel:(Schedule*)scheduleModel ;
 
 @end

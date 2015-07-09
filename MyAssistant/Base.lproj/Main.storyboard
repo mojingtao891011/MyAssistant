@@ -2708,7 +2708,7 @@
                                                     <rect key="frame" x="15" y="12" width="17" height="19"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="子正点提醒" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vHW-wN-7AK">
-                                                    <rect key="frame" x="40" y="10" width="127" height="21"/>
+                                                    <rect key="frame" x="40" y="10" width="188" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -2719,6 +2719,10 @@
                                                 <constraint firstAttribute="centerY" secondItem="L7e-ru-dd4" secondAttribute="centerY" id="ypT-Cs-vhl"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="cellImageView" destination="ibj-dt-5UK" id="ONe-rA-NtB"/>
+                                            <outlet property="cellTextLabel" destination="vHW-wN-7AK" id="KHz-GD-dwd"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
