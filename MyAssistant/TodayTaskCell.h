@@ -13,10 +13,10 @@
 @interface TodayTaskCell : UITableViewCell
 
 
+@property (weak, nonatomic) IBOutlet UIImageView *taskTagImageView;
 @property (weak, nonatomic) IBOutlet UILabel *taskNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *taskEndtimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *taskEndDayLabel;
-@property (weak, nonatomic) IBOutlet UILabel *taskProjectLabel;
 @property (weak, nonatomic) IBOutlet MRoundProgressBar *taskStateView;
 
 @property (nonatomic , retain)Task *myTask ;

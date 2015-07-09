@@ -7,19 +7,22 @@
 //
 
 #import "AddScheduleController.h"
-#import "AddScheduleCellStyle1.h"
-#import "AddScheduleCellStyle2.h"
-#import "AddScheduleCellStyle3.h"
-#import "AddScheduleCellStyle4.h"
-#import "Schedule.h"
 #import "DatePickerViewController.h"
-#import "ExecutorController.h"
 #import "RepeatRemindController.h"
-#import "User.h"
+#import "ExecutorController.h"
 #import "PhtotoController.h"
+#import "DatePickerController.h"
+#import "SubRemindController.h"
+
+#import "AddScheduleContentCell.h"
+#import "AddSubRemindCell.h"
+#import "AddScheduleTimeCell.h"
+
+#import "Schedule.h"
+#import "User.h"
 #import "SubRemind.h"
 #import "CoreDataModelService.h"
-#import "DatePickerController.h"
+
 
 @interface AddScheduleController ()<UITableViewDataSource , UITableViewDelegate , UITextFieldDelegate>
 
@@ -49,7 +52,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+#pragma mark - Model
 - (Schedule*)scheduleModel
 {
     if (_scheduleModel) {
@@ -68,6 +71,7 @@
     
     return _scheduleModel ;
 }
+#pragma mark - Action
 - (IBAction)cancelAction:(id)sender {
       [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -145,33 +149,37 @@
 }
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //日程标题
     if (indexPath.section == 0 && indexPath.row == 0) {
-        AddScheduleCellStyle1 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddScheduleCellStyle1" forIndexPath:indexPath];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddScheduleNameCell" forIndexPath:indexPath];
         self.scheduleNameTF = (UITextField*)[cell viewWithTag:1];
         return cell ;
     }
+    //日程时间
     if (indexPath.section == 0 && indexPath.row == 1) {
-        AddScheduleCellStyle2 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddScheduleCellStyle2" forIndexPath:indexPath];
+        AddScheduleTimeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddScheduleTimeCell" forIndexPath:indexPath];
         [cell configureCellWith:tableView indexPath:indexPath scheduleModel:self.scheduleModel];
         return cell ;
     }
-
+    //添加多次提醒
     if (indexPath.section == 0 && indexPath.row == 4) {
-        AddScheduleCellStyle4 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddScheduleCellStyle4" forIndexPath:indexPath];
+        AddSubRemindCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddSubRemindCell" forIndexPath:indexPath];
         
         return cell ;
     }
+    //地点
     if (indexPath.section == 2) {
         
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddScheduleCellStyle5" forIndexPath:indexPath];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddScheduleAddressCell" forIndexPath:indexPath];
         self.scheduleAddressTF = (UITextField*)[cell viewWithTag:2];
         return cell ;
     }
-    
-    AddScheduleCellStyle3 *cell = [tableView dequeueReusableCellWithIdentifier:@"AddScheduleCellStyle3" forIndexPath:indexPath];
+    //其他
+    AddScheduleContentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddScheduleContentCell" forIndexPath:indexPath];
     [cell configureCellWithTableView:tableView indexPath:indexPath scheduleModel:self.scheduleModel];
     return cell ;
 }
+#pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0 && indexPath.row < 2) {
@@ -186,11 +194,8 @@
     
     if(indexPath.section == 0 && indexPath.row == 4){
         
-//        NSEntityDescription *entity = [NSEntityDescription entityForName:@"SubRemind" inManagedObjectContext:self.context];
-//        SubRemind *subRemind = [[SubRemind alloc]initWithEntity:entity insertIntoManagedObjectContext:self.context];
-//        
-//        self.scheduleModel.subReminds = [NSSet setWithObject:subRemind];
-//        [self.tableView reloadData];
+        SubRemindController *subRemindCtl = [self fetchViewControllerByIdentifier:@"SubRemindController"];
+        [self.navigationController pushViewController:subRemindCtl animated:YES];
         
         return ;
     }
@@ -213,18 +218,19 @@
             break;
     }
 }
-#pragma mark - 
+#pragma mark - 日程时间、提醒、重复
 - (void)didSelectedFirstSection:(NSIndexPath*)indexPath
 {
-    __weak AddScheduleController *weakSelf = self ;
-    
+   
+    WS(weakSelf);
+    //日程时间
     if (indexPath.row == 1) {
-        DatePickerViewController *dataPickerCtl = [self fetchViewControllerByIdentifier:@"StartAndEndDatePickCtl"];
+        DatePickerViewController *dataPickerCtl = [self fetchViewControllerByIdentifier:@"DatePickerController"];
         dataPickerCtl.typeInt = 2 ;
         dataPickerCtl.startTime = self.scheduleModel.schedulestartTime ;
         dataPickerCtl.endTime = [NSDate dateWithTimeInterval:60*60 sinceDate:self.scheduleModel.schedulestartTime];
         dataPickerCtl.scheuleDateBlock = ^(NSDate *startTime , NSDate *endTime){
-            AddScheduleCellStyle2 *cell = (AddScheduleCellStyle2*)[self.tableView cellForRowAtIndexPath:indexPath];
+            AddScheduleTimeCell *cell = (AddScheduleTimeCell*)[self.tableView cellForRowAtIndexPath:indexPath];
             NSString *startStr = [Tool stringFromFomate:startTime formate:@"MM月dd日"];
             NSString *endStr = [Tool stringFromFomate:endTime formate:@"MM月dd日"];
             
@@ -249,14 +255,15 @@
         [self.navigationController pushViewController:dataPickerCtl animated:YES];
         
     }
+    //提醒
     else if (indexPath.row == 2){
         DatePickerController *dataPickerCtl = [self fetchViewControllerByIdentifier:@"DatePickerViewController"];
         dataPickerCtl.curDate = self.scheduleModel.scheduleRemindTime ;
-        dataPickerCtl.datePickerShowMode =  DatePickerModeDateAndTime ;
+        dataPickerCtl.datePickerShowMode = DatePickerModeTime ;
         
         dataPickerCtl.selectedDateBlock = ^(NSDate *date){
             dispatch_async(dispatch_get_main_queue(), ^{
-                AddScheduleCellStyle3 *cell = (AddScheduleCellStyle3*)[weakSelf.tableView cellForRowAtIndexPath:indexPath];
+                AddScheduleContentCell *cell = (AddScheduleContentCell*)[weakSelf.tableView cellForRowAtIndexPath:indexPath];
                 cell.cellTextLabel.text = [Tool stringFromFomate:date formate:@"HH:mm"];
                 weakSelf.scheduleModel.scheduleRemindTime = date ;
                 
@@ -266,6 +273,7 @@
         [self.navigationController pushViewController:dataPickerCtl animated:YES];
         
     }
+    //重复
     else if (indexPath.row == 3){
         
        // __weak TestAddScheduleController *weakSelf = self ;
@@ -274,7 +282,7 @@
         repeatRemindCtl.curRepeatType = [self.scheduleModel.schedulerepeat intValue];
         repeatRemindCtl.selectedRepeatTypeBlock = ^(NSInteger selectedIndex){
             
-            AddScheduleCellStyle3 *cell = (AddScheduleCellStyle3*)[self.tableView cellForRowAtIndexPath:indexPath];
+            AddScheduleContentCell *cell = (AddScheduleContentCell*)[self.tableView cellForRowAtIndexPath:indexPath];
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 self.scheduleModel.schedulerepeat = [NSNumber numberWithInteger:selectedIndex];
@@ -309,6 +317,7 @@
     }
     
 }
+#pragma mark - 参与者
 - (void)didSelectedSecondSection:(NSIndexPath*)indexPath
 {
     __weak AddScheduleController *weakSelf = self ;
@@ -328,13 +337,14 @@
             [appNameStr appendFormat:@" %@" , user.userName];
         }
         
-       AddScheduleCellStyle3 *cell = (AddScheduleCellStyle3*)[self.tableView cellForRowAtIndexPath:indexPath];
+       AddScheduleContentCell *cell = (AddScheduleContentCell*)[self.tableView cellForRowAtIndexPath:indexPath];
         cell.cellSubTextLabel.text= appNameStr ;
         
     };
     [self.navigationController pushViewController:executor animated:YES];
 
 }
+#pragma mark - 添加附件
 - (void)didSelectedFourSection:(NSIndexPath*)indexPath
 {
     
@@ -345,7 +355,7 @@
         //
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            AddScheduleCellStyle3 *cell = (AddScheduleCellStyle3*)[self.tableView cellForRowAtIndexPath:indexPath];
+            AddScheduleContentCell *cell = (AddScheduleContentCell*)[self.tableView cellForRowAtIndexPath:indexPath];
             cell.cellSubTextLabel.text= [NSString stringWithFormat:@"%d" , (int)annexUploadCount];
             
 

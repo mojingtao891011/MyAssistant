@@ -1,14 +1,14 @@
 //
-//  AddScheduleCellStyle1.m
+//  SubRemindCell.m
 //  MyAssistant
 //
-//  Created by taomojingato on 15/7/5.
+//  Created by taomojingato on 15/7/9.
 //  Copyright (c) 2015年 mojingato. All rights reserved.
 //
 
-#import "AddScheduleCellStyle1.h"
+#import "SubRemindContentCell.h"
 
-@implementation AddScheduleCellStyle1
+@implementation SubRemindContentCell
 
 - (void)awakeFromNib {
     // Initialization code

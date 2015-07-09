@@ -6,10 +6,10 @@
 //  Copyright (c) 2015年 mojingato. All rights reserved.
 //
 
-#import "AddScheduleCellStyle3.h"
+#import "AddScheduleContentCell.h"
 #import "User.h"
 
-@implementation AddScheduleCellStyle3
+@implementation AddScheduleContentCell
 
 - (void)awakeFromNib {
     // Initialization code

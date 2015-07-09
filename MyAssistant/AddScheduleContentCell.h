@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Schedule.h"
 
-@interface AddScheduleCellStyle3 : UITableViewCell
+@interface AddScheduleContentCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *cellImageView;
 @property (weak, nonatomic) IBOutlet UILabel *cellTextLabel;

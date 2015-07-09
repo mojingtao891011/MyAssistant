@@ -6,10 +6,10 @@
 //  Copyright (c) 2015年 mojingato. All rights reserved.
 //
 
-#import "AddScheduleCellStyle2.h"
+#import "AddScheduleTimeCell.h"
 
 
-@implementation AddScheduleCellStyle2
+@implementation AddScheduleTimeCell
 
 - (void)awakeFromNib {
     // Initialization code

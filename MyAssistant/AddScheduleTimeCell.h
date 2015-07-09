@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Schedule.h"
 
-@interface AddScheduleCellStyle2 : UITableViewCell
+@interface AddScheduleTimeCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *startDayLabel;
 @property (weak, nonatomic) IBOutlet UILabel *startTimeLabel;

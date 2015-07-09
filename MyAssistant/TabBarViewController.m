@@ -204,8 +204,8 @@
 {
     if (index == 0) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        BaseNavgationController *addScheduleNavCtl = [storyboard instantiateViewControllerWithIdentifier:@"AddTaskNavCtl"];
-        [self presentViewController:addScheduleNavCtl animated:YES completion:nil];
+        BaseNavgationController *addTaskNavCtl = [storyboard instantiateViewControllerWithIdentifier:@"AddTaskNavCtl"];
+        [self presentViewController:addTaskNavCtl animated:YES completion:nil];
     }
     else if (index == 1){
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

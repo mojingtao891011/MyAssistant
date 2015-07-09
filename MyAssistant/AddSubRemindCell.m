@@ -6,9 +6,9 @@
 //  Copyright (c) 2015年 mojingato. All rights reserved.
 //
 
-#import "AddScheduleCellStyle4.h"
+#import "AddSubRemindCell.h"
 
-@implementation AddScheduleCellStyle4
+@implementation AddSubRemindCell
 
 - (void)awakeFromNib {
     // Initialization code

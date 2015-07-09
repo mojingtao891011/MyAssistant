@@ -27,6 +27,24 @@
         _myTask = myTask ;
     }
     
+   
+    switch (_myTask.taskTag.integerValue) {
+        case 0:
+            self.taskTagImageView.backgroundColor = SET_TASK_TAG0 ;
+            break;
+        case 1:
+             self.taskTagImageView.backgroundColor = SET_TASK_TAG1 ;
+            break;
+        case 2:
+             self.taskTagImageView.backgroundColor = SET_TASK_TAG2 ;
+            break;
+        case 3:
+             self.taskTagImageView.backgroundColor = SET_TASK_TAG3 ;
+            break;
+        default:
+            break;
+    }
+    
     self.taskNameLabel.text = _myTask.taskName ;
     NSString *endStr = [Tool stringFromFomate:_myTask.taskEndTime formate:@"MM月dd日"];
     self.taskEndtimeLabel.text =[NSString stringWithFormat:@"结束%@",endStr] ;

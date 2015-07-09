@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddScheduleCellStyle4 : UITableViewCell
+@interface AddSubRemindCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *cellIamgeView;
 @property (weak, nonatomic) IBOutlet UILabel *cellTextLabel;

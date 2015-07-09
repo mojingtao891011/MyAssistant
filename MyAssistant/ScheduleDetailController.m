@@ -256,7 +256,7 @@
         photoCtl.annexUploadCountBlock = ^(NSInteger annexUploadCount){
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-                 self.scheduleAnnex.text = [NSNumber numberWithInt:annexUploadCount].stringValue;
+                self.scheduleAnnex.text = [NSString stringWithFormat:@"%d" , (int)annexUploadCount];
             });
         };
         [self.navigationController pushViewController: photoCtl animated:YES];
