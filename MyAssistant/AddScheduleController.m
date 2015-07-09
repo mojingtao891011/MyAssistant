@@ -17,6 +17,7 @@
 #import "AddScheduleContentCell.h"
 #import "AddSubRemindCell.h"
 #import "AddScheduleTimeCell.h"
+#import "SubRemindContentCell.h"
 
 #import "Schedule.h"
 #import "User.h"
@@ -72,6 +73,39 @@
     return _scheduleModel ;
 }
 #pragma mark - Action
+#pragma mark - 添加自提醒
+- (void)addSubRemind:(NSIndexPath*)indexPath
+{
+    
+    WS(weaSelf);
+    SubRemindController *subRemindCtl = [self fetchViewControllerByIdentifier:@"SubRemindController"];
+    if (self.scheduleModel.subReminds.count != 0 && indexPath.row != self.scheduleModel.subReminds.count + 4) {
+        subRemindCtl.subRemindModel = [self.scheduleModel.subReminds allObjects][indexPath.row -4];
+    }
+    subRemindCtl.subRemindBlock = ^(NSDate *date , NSInteger remindType){
+        
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"SubRemind" inManagedObjectContext:weaSelf.context];
+        SubRemind *subremindModel = [[SubRemind alloc]initWithEntity:entity insertIntoManagedObjectContext:weaSelf.context];
+        subremindModel.subRemindTime = date ;
+        subremindModel.subRemindType =[NSNumber numberWithInteger: remindType] ;
+        
+        NSMutableSet *mutableSet = [NSMutableSet setWithSet:weaSelf.scheduleModel.subReminds];
+        [mutableSet addObject:subremindModel];
+        
+        if (mutableSet.count < 4) {
+            weaSelf.scheduleModel.subReminds = mutableSet;
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [weaSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic ];
+        });
+    };
+    [self.navigationController pushViewController:subRemindCtl animated:YES];
+    
+    return ;
+    
+}
 - (IBAction)cancelAction:(id)sender {
       [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -140,32 +174,44 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    if (section == 0) {
-//        return  self.scheduleModel.subReminds.count *2 + 5 ;
-//    }
-    NSArray *arr = @[ @(5),@(1), @(1), @(1)];
+
+    NSArray *arr = @[ @(5+self.scheduleModel.subReminds.count),@(1), @(1), @(1)];
     
     return [arr[section ] integerValue];
 }
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //日程标题
-    if (indexPath.section == 0 && indexPath.row == 0) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddScheduleNameCell" forIndexPath:indexPath];
-        self.scheduleNameTF = (UITextField*)[cell viewWithTag:1];
-        return cell ;
-    }
-    //日程时间
-    if (indexPath.section == 0 && indexPath.row == 1) {
-        AddScheduleTimeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddScheduleTimeCell" forIndexPath:indexPath];
-        [cell configureCellWith:tableView indexPath:indexPath scheduleModel:self.scheduleModel];
-        return cell ;
-    }
-    //添加多次提醒
-    if (indexPath.section == 0 && indexPath.row == 4) {
-        AddSubRemindCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddSubRemindCell" forIndexPath:indexPath];
-        
-        return cell ;
+    //第一段
+    if (indexPath.section == 0 ) {
+        //日程标题
+        if (indexPath.row == 0) {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddScheduleNameCell" forIndexPath:indexPath];
+            self.scheduleNameTF = (UITextField*)[cell viewWithTag:1];
+            return cell ;
+        }
+        //日程时间
+        else if (indexPath.row == 1){
+            AddScheduleTimeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddScheduleTimeCell" forIndexPath:indexPath];
+            [cell configureCellWith:tableView indexPath:indexPath scheduleModel:self.scheduleModel];
+            return cell ;
+        }
+        //提醒时间、重复方式
+        else if (indexPath.row == 2 || indexPath.row == 3){
+            AddScheduleContentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddScheduleContentCell" forIndexPath:indexPath];
+            [cell configureCellWithTableView:tableView indexPath:indexPath scheduleModel:self.scheduleModel];
+            return cell ;
+        }
+        //添加多次提醒
+        else if (indexPath.row == self.scheduleModel.subReminds.count + 4){
+            AddSubRemindCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddSubRemindCell" forIndexPath:indexPath];
+            return cell ;
+        }
+        //子提醒
+        else{
+            SubRemindContentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SubRemindContentCell" forIndexPath:indexPath];
+            [cell configureCellWithIndexPath:indexPath scheduleModel:self.scheduleModel];
+            return cell ;
+        }
     }
     //地点
     if (indexPath.section == 2) {
@@ -192,17 +238,24 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if(indexPath.section == 0 && indexPath.row == 4){
-        
-        SubRemindController *subRemindCtl = [self fetchViewControllerByIdentifier:@"SubRemindController"];
-        [self.navigationController pushViewController:subRemindCtl animated:YES];
-        
-        return ;
-    }
+    
     
     switch (indexPath.section) {
-        case 0:
-            [self didSelectedFirstSection:indexPath];
+        case 0:{
+            if (indexPath.row == 0) {
+                return ;
+            }
+            //日程时间、提醒、重复
+            if(indexPath.row < 4){
+                 [self didSelectedFirstSection:indexPath];
+            }
+            //添加子提醒\子提醒
+            else{
+                
+                [self addSubRemind:indexPath];
+
+            }
+        }
             break;
         case 1:
             [self didSelectedSecondSection:indexPath];
@@ -317,6 +370,7 @@
     }
     
 }
+
 #pragma mark - 参与者
 - (void)didSelectedSecondSection:(NSIndexPath*)indexPath
 {
