@@ -8,6 +8,9 @@
 
 #import "BaseController.h"
 
+@class Schedule ;
 @interface AddScheduleController : BaseController
+
+@property (nonatomic , retain)Schedule      *scheduleModel ;
 
 @end

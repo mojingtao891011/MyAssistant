@@ -21,6 +21,7 @@ typedef enum :NSInteger
 @interface SubRemindController : BaseTableController
 
 @property(nonatomic , retain)SubRemind      *subRemindModel;
-@property (nonatomic , copy)void(^subRemindBlock)(NSDate *remindTime , NSInteger remindType);
+@property (nonatomic , copy)void(^subRemindBlock)(NSDate *remindTime , NSInteger remindType , BOOL isCreatSubRemind);
+@property (nonatomic , copy)void(^deleteRemindBlock)();
 
 @end

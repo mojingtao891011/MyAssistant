@@ -1,18 +1,16 @@
 //
-//  ScheduleDetailController.h
+//  TestScheduleDetailController.h
 //  MyAssistant
 //
-//  Created by taomojingato on 15/6/25.
+//  Created by taomojingato on 15/7/10.
 //  Copyright (c) 2015年 mojingato. All rights reserved.
 //
 
-#import "BaseTableController.h"
+#import "BaseController.h"
+#import "Schedule.h"
 
-@class Schedule ;
-@interface ScheduleDetailController : BaseTableController
+@interface ScheduleDetailController : BaseController
 
-@property (nonatomic , retain)Schedule          *scheduleModel ;
-
-
+@property (nonatomic , retain)Schedule      *scheduleModel ;
 
 @end

@@ -27,7 +27,6 @@
 
 @interface AddScheduleController ()<UITableViewDataSource , UITableViewDelegate , UITextFieldDelegate>
 
-@property (nonatomic , retain)Schedule      *scheduleModel ;
 @property (nonatomic , retain)NSManagedObjectContext   *context ;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic , retain)UITextField *scheduleNameTF;
@@ -41,10 +40,7 @@
     [super viewDidLoad];
    
     
-//    //默认选中的时间为今天
-//    [[NSUserDefaults standardUserDefaults]setObject:[NSDate date] forKey:@"curSelectedDate"];
-//    [[NSUserDefaults standardUserDefaults]synchronize];
-
+    [self _initBarButtonItem];
     
     self.context = [CoreDataStack shareManaged].managedObjectContext ;
 }
@@ -52,6 +48,27 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+#pragma mark - UI
+- (void)_initBarButtonItem
+{
+    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [leftButton setFrame:CGRectMake(0, 0, 40, 30)];
+    [leftButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    [leftButton addTarget:self action:@selector(leftBarButtonItemAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = barButtonItem ;
+    
+    
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightButton setFrame:CGRectMake(0, 0, 40, 30)];
+    [rightButton setImage:[UIImage imageNamed:@"save"] forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(rightBarButtonItemAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *barButtonItemRight = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem = barButtonItemRight ;
+    
 }
 #pragma mark - Model
 - (Schedule*)scheduleModel
@@ -73,43 +90,13 @@
     return _scheduleModel ;
 }
 #pragma mark - Action
-#pragma mark - 添加自提醒
-- (void)addSubRemind:(NSIndexPath*)indexPath
+- (void)leftBarButtonItemAction:(UIButton*)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+- (void)rightBarButtonItemAction:(UIButton*)sender
 {
     
-    WS(weaSelf);
-    SubRemindController *subRemindCtl = [self fetchViewControllerByIdentifier:@"SubRemindController"];
-    if (self.scheduleModel.subReminds.count != 0 && indexPath.row != self.scheduleModel.subReminds.count + 4) {
-        subRemindCtl.subRemindModel = [self.scheduleModel.subReminds allObjects][indexPath.row -4];
-    }
-    subRemindCtl.subRemindBlock = ^(NSDate *date , NSInteger remindType){
-        
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"SubRemind" inManagedObjectContext:weaSelf.context];
-        SubRemind *subremindModel = [[SubRemind alloc]initWithEntity:entity insertIntoManagedObjectContext:weaSelf.context];
-        subremindModel.subRemindTime = date ;
-        subremindModel.subRemindType =[NSNumber numberWithInteger: remindType] ;
-        
-        NSMutableSet *mutableSet = [NSMutableSet setWithSet:weaSelf.scheduleModel.subReminds];
-        [mutableSet addObject:subremindModel];
-        
-        if (mutableSet.count < 4) {
-            weaSelf.scheduleModel.subReminds = mutableSet;
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [weaSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic ];
-        });
-    };
-    [self.navigationController pushViewController:subRemindCtl animated:YES];
-    
-    return ;
-    
-}
-- (IBAction)cancelAction:(id)sender {
-      [self dismissViewControllerAnimated:YES completion:nil];
-}
-- (IBAction)saveScheduleModel:(id)sender {
     
     if (self.scheduleNameTF.text.length == 0) {
         [[ [UIAlertView alloc]initWithTitle:nil message:@"日程名称不能为空" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil]show];
@@ -157,8 +144,71 @@
     
     [self dismissViewControllerAnimated:YES completion:nil];
     
+}
+#pragma mark - 添加自提醒
+- (void)addSubRemind:(NSIndexPath*)indexPath
+{
+    //当点击添加子提醒时，如果子提醒个数已大于3个则不能再添加
+    if (self.scheduleModel.subReminds.count + 4 == indexPath.row && self.scheduleModel.subReminds.count >= 3) {
+        [[[UIAlertView alloc]initWithTitle:nil message:@"最多只能添加三个子提醒" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确 定", nil]show ];
+        return ;
+    }
     
-
+    WS(weaSelf);
+    SubRemindController *subRemindCtl = [self fetchViewControllerByIdentifier:@"SubRemindController"];
+    if (self.scheduleModel.subReminds.count != 0 && indexPath.row != self.scheduleModel.subReminds.count + 4) {
+        subRemindCtl.subRemindModel = [self.scheduleModel.subReminds allObjects][indexPath.row -4];
+    }
+   
+    subRemindCtl.subRemindBlock = ^(NSDate *date , NSInteger remindType , BOOL isCreatRemind){
+        
+        NSMutableSet *mutableSet = [NSMutableSet setWithSet:weaSelf.scheduleModel.subReminds];
+    
+        if (isCreatRemind) {
+            NSEntityDescription *entity = [NSEntityDescription entityForName:@"SubRemind" inManagedObjectContext:weaSelf.context];
+            SubRemind *subremindModel = [[SubRemind alloc]initWithEntity:entity insertIntoManagedObjectContext:weaSelf.context];
+            subremindModel.subRemindTime = date ;
+            subremindModel.subRemindType =[NSNumber numberWithInteger: remindType] ;
+            [mutableSet addObject:subremindModel];
+        }
+        else{
+            SubRemind *subRemind = [self.scheduleModel.subReminds allObjects][indexPath.row -4];
+            [mutableSet removeObject:subRemind];
+    
+            subRemind.subRemindTime = date ;
+            subRemind.subRemindType = [NSNumber numberWithInteger:remindType];
+            [mutableSet addObject:subRemind];
+            
+        }
+        
+        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"subRemindTime" ascending:YES];
+        
+        if (mutableSet.count < 4) {
+            weaSelf.scheduleModel.subReminds = [NSSet setWithArray:[mutableSet sortedArrayUsingDescriptors:@[sort]]];
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [weaSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic ];
+        });
+    };
+    
+    subRemindCtl.deleteRemindBlock = ^{
+         NSMutableSet *mutableSet = [NSMutableSet setWithSet:weaSelf.scheduleModel.subReminds];
+        SubRemind *subRemind = [self.scheduleModel.subReminds allObjects][indexPath.row -4];
+        [mutableSet removeObject:subRemind];
+        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"subRemindTime" ascending:YES];
+         weaSelf.scheduleModel.subReminds = [NSSet setWithArray:[mutableSet sortedArrayUsingDescriptors:@[sort]]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [weaSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic ];
+        });
+    };
+    
+    [self.navigationController pushViewController:subRemindCtl animated:YES];
+    
+    return ;
+    
 }
 #pragma mark - UITextFieldDelegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -187,6 +237,7 @@
         if (indexPath.row == 0) {
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddScheduleNameCell" forIndexPath:indexPath];
             self.scheduleNameTF = (UITextField*)[cell viewWithTag:1];
+            self.scheduleNameTF.text = self.scheduleModel.scheduleName;
             return cell ;
         }
         //日程时间

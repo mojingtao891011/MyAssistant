@@ -63,7 +63,7 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(pushTaskDetailCtl:) name:NOTE_ADDTASKCOMPLETE object:nil];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiveMessage:) name:NOTE_RECEIVE_MESSAGE object:nil];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(receiveMessage:) name:NOTE_RECEIVE_MESSAGE object:nil];
 
     [self _initDefaultUI];
     
@@ -140,10 +140,7 @@
     taskDetailCtl.taskModel = sender.object ;
     [self.navigationController pushViewController:taskDetailCtl animated:YES];
 }
-- (void)receiveMessage:(NSNotification*)note
-{
-    [self loadDataSource];
-}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"PushTaskDetailControllerSague"]) {
@@ -266,8 +263,9 @@
     NSArray *sortScheduleArr= [curUserCreatSchedules sortedArrayUsingDescriptors:@[sortCreatScheduleTime]];
     
     NSPredicate *predicateSchedule = [NSPredicate predicateWithFormat:@"scheduleCreatDateDay == %@" , sortDate];
+     NSPredicate *predicateScheduleUser = [NSPredicate predicateWithFormat:@"creatScheduleUser.userName = %@" , curUser.userName];
     self.myCreatSchedules = [sortScheduleArr filteredArrayUsingPredicate:predicateSchedule];
-    
+    self.myCreatSchedules = [self.myCreatSchedules filteredArrayUsingPredicate:predicateScheduleUser];
     [self.tableView reloadData];
     
     
@@ -358,6 +356,7 @@
     return cell ;
     
 }
+#pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

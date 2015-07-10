@@ -42,12 +42,36 @@
     self.tableView.contentInset = UIEdgeInsetsMake(-22, 0, 0, 0);
     
     self.context = [CoreDataStack shareManaged].managedObjectContext;
+    
+    [self _initBarButtonItem];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark - UI
+- (void)_initBarButtonItem
+{
+    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [leftButton setFrame:CGRectMake(0, 0, 40, 30)];
+    [leftButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    [leftButton addTarget:self action:@selector(leftBarButtonItemAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = barButtonItem ;
+    
+    
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightButton setFrame:CGRectMake(0, 0, 40, 30)];
+    [rightButton setImage:[UIImage imageNamed:@"save"] forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(rightBarButtonItemAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *barButtonItemRight = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem = barButtonItemRight ;
+    
+}
+
 #pragma mark - push-AddSubTaskController
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -191,12 +215,14 @@
     
 }
 #pragma mark - private fun
-- (IBAction)cancelAction:(UIBarButtonItem *)sender {
+- (void)leftBarButtonItemAction:(UIButton*)sender
+{
     self.taskModel = nil ;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
-- (IBAction)saveAction:(UIBarButtonItem *)sender {
+- (void)rightBarButtonItemAction:(UIButton*)sender
+{
+    
     
     if (self.taskNameTF.text.length == 0) {
         [[ [UIAlertView alloc]initWithTitle:nil message:@"任务名称不能为空" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil]show];
@@ -228,10 +254,11 @@
     if (![self.context save:&error]) {
         NSLog(@"add user fail");
     }
-  
+    
     [[NSNotificationCenter defaultCenter]postNotificationName:NOTE_ADDTASKCOMPLETE object:self.taskModel];
     
     [self dismissViewControllerAnimated:YES completion:nil];
+
 }
 #pragma mark - ClickRow
 #pragma mark - 设置时间 、执行者

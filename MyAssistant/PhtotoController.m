@@ -53,9 +53,14 @@
     [[SDImageCache sharedImageCache] clearDisk];
     [[SDImageCache sharedImageCache] clearMemory];
     
-    self.view.backgroundColor = [UIColor whiteColor];
-    // 初始化UI
-    [self setupButtons];
+    //self.view.backgroundColor = [UIColor whiteColor];
+    
+    // 初始化RightBarButtonItem
+    if (!_isHideRight) {
+        [self setupButtons];
+    }
+    
+    
     [self tableView];
 }
 
