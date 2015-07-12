@@ -26,16 +26,12 @@
     NSString *endStr = [Tool stringFromFomate:scheduleModel.scheduleEndTime formate:@"MM月dd日"];
     
     //start
-    NSCalendar *greCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     
-    NSDateComponents *dateComponents = [greCalendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekCalendarUnit | NSWeekdayCalendarUnit | NSWeekOfMonthCalendarUnit | NSWeekOfYearCalendarUnit fromDate:scheduleModel.schedulestartTime];
-    
-    self.startDayLabel.text = [NSString stringWithFormat:@"%@  周%d" ,startStr , (int)dateComponents.weekday];
+    self.startDayLabel.text = [NSString stringWithFormat:@"%@  %@" ,startStr , [Tool curDateOfWeek:scheduleModel.schedulestartTime]];
     self.startTimeLabel.text = [NSString stringWithFormat:@"开始  %@",[Tool stringFromFomate:scheduleModel.schedulestartTime formate:@"HH:mm"]];
     
     //end
-    NSDateComponents *dateComponents1 = [greCalendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekCalendarUnit | NSWeekdayCalendarUnit | NSWeekOfMonthCalendarUnit | NSWeekOfYearCalendarUnit fromDate:scheduleModel.scheduleEndTime];
-    self.endDayLabel.text = [NSString stringWithFormat:@"%@  周%d" ,endStr , (int)dateComponents1.weekday];
+    self.endDayLabel.text = [NSString stringWithFormat:@"%@  %@" ,endStr , [Tool curDateOfWeek:scheduleModel.scheduleEndTime]];
     self.endTimeLabel.text =  [NSString stringWithFormat:@"结束  %@",[Tool stringFromFomate:scheduleModel.scheduleEndTime formate:@"HH:mm"]];
 }
 @end

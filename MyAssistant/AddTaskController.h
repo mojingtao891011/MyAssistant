@@ -8,6 +8,10 @@
 
 #import "BaseController.h"
 
+@class Task ;
 @interface AddTaskController : BaseController
+
+@property (nonatomic , retain)Task  *taskModel;
+@property (nonatomic ,assign)BOOL isCreatTask ;
 
 @end

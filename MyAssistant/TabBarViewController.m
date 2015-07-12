@@ -205,11 +205,15 @@
     if (index == 0) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         BaseNavgationController *addTaskNavCtl = [storyboard instantiateViewControllerWithIdentifier:@"AddTaskNavCtl"];
+        AddTaskController *addTaskCtl = (AddTaskController*)addTaskNavCtl.topViewController ;
+        addTaskCtl.isCreatTask = YES ;
         [self presentViewController:addTaskNavCtl animated:YES completion:nil];
     }
     else if (index == 1){
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         BaseNavgationController *addScheduleNavCtl = [storyboard instantiateViewControllerWithIdentifier:@"AddScheduleNavCtl"];
+        AddScheduleController *addScheduleCtl = (AddScheduleController*)addScheduleNavCtl.topViewController ;
+        addScheduleCtl.isCreatSchedule = YES ;
         [self presentViewController:addScheduleNavCtl animated:YES completion:nil];
     }
 }

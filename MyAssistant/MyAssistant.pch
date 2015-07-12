@@ -36,7 +36,7 @@
 
 #define DEVICE_NAME                                                             [[NSUserDefaults standardUserDefaults]objectForKey:@"deviceName"]
 #define CUR_SELECTEDDATE                                                   [[NSUserDefaults standardUserDefaults]objectForKey:@"curSelectedDate"]
-#define DATE_FORMATE                                                            @"yyyy-MM-dd"
+
 
 
 #define CUR_USER                                                                    (User*)[CoreDataModelService fetchUserByName:DEVICE_NAME]

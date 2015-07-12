@@ -27,7 +27,7 @@
     NSString *endtime = [Tool stringFromFomate:scheduleModel.scheduleEndTime formate:@"HH:mm"];
     self.scheduleTime.text = [NSString stringWithFormat:@"开始%@-结束%@" , startime , endtime];
     
-    self.scheduleYear.text = [Tool stringFromFomate:scheduleModel.scheduleCreatDetailTime formate:@"yyyy年HH月MM日"];
+    self.scheduleYear.text = [Tool stringFromFomate:scheduleModel.scheduleCreatTime formate:@"yyyy年MM月dd日"];
     
     self.scheduleAddress.text = scheduleModel.scheduleAddress ;
 }

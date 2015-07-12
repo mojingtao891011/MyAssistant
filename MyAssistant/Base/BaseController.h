@@ -15,4 +15,6 @@
 
 - (id)fetchViewControllerByIdentifier:(NSString*)Identifier;
 
+- (void)backAction ;
+
 @end

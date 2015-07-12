@@ -26,7 +26,6 @@
 
 @property (retain, nonatomic)UITextField *taskNameTF;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic , retain)Task  *taskModel;
 @property (nonatomic , retain)NSManagedObjectContext        *context ;
 
 @property (nonatomic , retain)AddSubTaskController *subTaskDetailCtl  ;
@@ -155,6 +154,7 @@
     if (indexPath.section == 0 && indexPath.row == 0) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FirstCell" forIndexPath:indexPath];
         self.taskNameTF = (UITextField*)[cell viewWithTag:1];
+        self.taskNameTF.text = self.taskModel.taskName ;
         return cell ;
     }
     
@@ -172,9 +172,10 @@
     }
     
     AddTaskSetTimeCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddTaskSetTimeCell" forIndexPath:indexPath];
-    [cell configureCellWithTableView:tableView indexPath:indexPath];
+    [cell configureCellWithTableView:tableView indexPath:indexPath taskModel:self.taskModel];
     return cell ;
 }
+#pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0 && indexPath.row == 0) {
@@ -233,9 +234,7 @@
     self.taskModel.taskCreatTime = [NSDate date];
     
     //创建的是那天的task
-    
-    NSString *dayDate = [Tool stringFromFomate:CUR_SELECTEDDATE formate:DATE_FORMATE];
-    self.taskModel.taskTheDate= [Tool dateFromFomate:dayDate formate:DATE_FORMATE] ;
+    self.taskModel.taskTheDate= CUR_SELECTEDDATE ;
     
     
     if (self.taskModel.taskStartTime == nil) {
@@ -255,7 +254,10 @@
         NSLog(@"add user fail");
     }
     
-    [[NSNotificationCenter defaultCenter]postNotificationName:NOTE_ADDTASKCOMPLETE object:self.taskModel];
+    if (_isCreatTask) {
+         [[NSNotificationCenter defaultCenter]postNotificationName:NOTE_ADDTASKCOMPLETE object:self.taskModel];
+    }
+   
     
     [self dismissViewControllerAnimated:YES completion:nil];
 
@@ -373,7 +375,7 @@
     WS(weaSelf);
     
     SetTagController *setTagCtl = [self fetchViewControllerByIdentifier:@"SetTagController"];
-    setTagCtl.curTaskTagType = OrdinaryType ;
+    setTagCtl.curTaskTagType = self.taskModel.taskTag.intValue ;
     setTagCtl.selectedTaskTagBlock = ^(NSInteger selectedTaskTag){
         //
        weaSelf.taskModel.taskTag = [NSNumber numberWithInteger:selectedTaskTag];

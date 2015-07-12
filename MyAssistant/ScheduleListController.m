@@ -11,7 +11,7 @@
 #import "CoreDataStack.h"
 #import "Schedule.h"
 #import "ScheduleDetailController.h"
-
+#import "NSDate+Utilities.h"
 
 @interface ScheduleListController ()<UITableViewDelegate , UITableViewDataSource , NSFetchedResultsControllerDelegate>
 
@@ -57,10 +57,17 @@
     [self configureScheduleCell:scheduleCell indexPath:indexPath];
     return scheduleCell ;
 }
+#pragma mark - UITableViewDelegate
 - (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    id<NSFetchedResultsSectionInfo>sectionInfo = [self.fetchedResultsController sections][section];
-    return sectionInfo.name ;
+   // id<NSFetchedResultsSectionInfo>sectionInfo = [self.fetchedResultsController sections][section];
+    
+    NSIndexPath *indexPath  = [NSIndexPath indexPathForRow:0 inSection:section];
+    Schedule *schedule = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    NSString *sectionName = [NSString stringWithFormat:@"%@        %@" ,[Tool stringFromFomate:schedule.scheduleTheDay  formate:@"MM-dd"],[Tool  curDateOfWeek:schedule.scheduleTheDay] ];
+    
+    return sectionName;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -72,7 +79,7 @@
 - (void)configureScheduleCell:(ScheduleCell*)cell indexPath:(NSIndexPath*)indexPath
 {
     Schedule *scheduleModel = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.scheduleTimeLabel.text = [Tool stringFromFomate:scheduleModel.scheduleCreatDetailTime formate:@"MM-dd"];
+    cell.scheduleTimeLabel.text = [Tool stringFromFomate:scheduleModel.scheduleTheDay formate:@"MM-dd"];
     cell.scheduleTitleLabel.text = scheduleModel.scheduleName ;
 }
 #pragma mark - NSFetchedResultsControllerDelegate
@@ -87,21 +94,13 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Schedule" inManagedObjectContext:self.context];
     [fetchRequest setEntity:entity];
     
-    NSSortDescriptor *sort1 = [NSSortDescriptor sortDescriptorWithKey:@"scheduleCreatDay" ascending:NO];
-    NSSortDescriptor *sort2 = [NSSortDescriptor sortDescriptorWithKey:@"scheduleCreatDetailTime" ascending:NO];
+    NSSortDescriptor *sort1 = [NSSortDescriptor sortDescriptorWithKey:@"scheduleTheDay" ascending:NO];
+    NSSortDescriptor *sort2 = [NSSortDescriptor sortDescriptorWithKey:@"scheduleCreatTime" ascending:NO];
     [fetchRequest setSortDescriptors:@[sort1 , sort2]];
-    
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"creatScheduleUser.userName = %@" , DEVICE_NAME];
-//    [fetchRequest setPredicate:predicate];
-    
-//    NSString *dateDayStr = [Tool stringFromFomate:CUR_SELECTEDDATE formate:DATE_FORMATE];
-//    NSDate *dateDay = [Tool dateFromFomate:dateDayStr formate:DATE_FORMATE];
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"scheduleCreatDateDay == %@" , dateDay];//scheduleCreatDateDay
-//    [fetchRequest setPredicate:predicate];
     
     [fetchRequest setFetchBatchSize:20];
     
-    NSFetchedResultsController *afetchedResultsController = [[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:self.context sectionNameKeyPath:@"scheduleCreatDay" cacheName:nil];
+    NSFetchedResultsController *afetchedResultsController = [[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:self.context sectionNameKeyPath:@"scheduleTheDay" cacheName:nil];
     afetchedResultsController.delegate = self ;
     self.fetchedResultsController = afetchedResultsController ;
     

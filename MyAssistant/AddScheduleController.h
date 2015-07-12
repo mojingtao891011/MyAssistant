@@ -12,5 +12,6 @@
 @interface AddScheduleController : BaseController
 
 @property (nonatomic , retain)Schedule      *scheduleModel ;
+@property (nonatomic , assign)BOOL              isCreatSchedule ;
 
 @end

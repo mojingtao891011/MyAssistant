@@ -153,12 +153,12 @@
 
     return  [[CoreDataStack shareManaged].managedObjectContext  save:nil];
 }
-+(BOOL)deleteScheduleByScheduleCreatDetailTime:(NSDate*)scheduleCreatDetailTime
++(BOOL)deleteScheduleByScheduleCreatDetailTime:(NSDate*)scheduleCreatTime
 {
     //实例化查询
     NSFetchRequest *request=[NSFetchRequest fetchRequestWithEntityName:@"Schedule"];
     //使用谓词查询是基于Keypath查询的，如果键是一个变量，格式化字符串时需要使用%K而不是%@
-    request.predicate=[NSPredicate predicateWithFormat:@"%K=%@",@"scheduleCreatDetailTime",scheduleCreatDetailTime];
+    request.predicate=[NSPredicate predicateWithFormat:@"%K=%@",@"scheduleCreatTime",scheduleCreatTime];
     //    request.predicate=[NSPredicate predicateWithFormat:@"name=%@",name];
     NSError *error;
     Task *taskModel;

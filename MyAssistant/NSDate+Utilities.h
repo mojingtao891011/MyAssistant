@@ -15,6 +15,11 @@
 @interface NSDate (Utilities)
 + (NSCalendar *) currentCalendar; // avoid bottlenecks
 
+
+//Mycode
+//比较两天是否是同一天
+- (BOOL)isSameDay:(NSDate*)date1 date2:(NSDate*)date2 ;
+
 // Relative dates from the current date
 + (NSDate *) dateTomorrow;
 + (NSDate *) dateYesterday;

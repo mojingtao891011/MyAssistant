@@ -18,6 +18,8 @@
 #import "SetTagController.h"
 #import "AddSubTaskController.h"
 #import "SubTaskCell.h"
+#import "AddTaskController.h"
+#import "BaseNavgationController.h"
 
 @interface TaskDetailsController ()<UITableViewDataSource , UITableViewDelegate>
 {
@@ -33,12 +35,34 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    [self _initBarButtonItem];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+#pragma mark - UI
+- (void)_initBarButtonItem
+{
+    
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightButton setFrame:CGRectMake(0, 0, 40, 30)];
+    [rightButton setImage:[UIImage imageNamed:@"bianji"] forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(rightBarButtonItemAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *barButtonItemRight = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem = barButtonItemRight ;
+    
+}
+#pragma mark - Action
+- (void)rightBarButtonItemAction:(UIButton*)sender
+{
+    BaseNavgationController *AddTaskNavCtl =  [self fetchViewControllerByIdentifier:@"AddTaskNavCtl"];
+    AddTaskController *addTaskCtl = (AddTaskController*)AddTaskNavCtl.topViewController;
+    addTaskCtl.taskModel = self.taskModel ;
+    [self presentViewController:AddTaskNavCtl animated:YES completion:nil];
+    
 }
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -95,6 +119,7 @@
     [cell configureCellWithTable:tableView indexPath:indexPath taskModel:self.taskModel];
     return cell ;
 }
+#pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0 && indexPath.row < self.taskModel.subTasks.count + 1) {
@@ -108,24 +133,24 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     
-    switch (indexPath.section) {
-        case 0:
-            [self didSelectedFirstSection:indexPath];
-            break;
-        case 1:
-            [self didSelectedSecondSection:indexPath];
-            break;
-        case 2:
-            [self didSelectedThreeSection:indexPath];
-            break;
-        case 3:
-            [self didSelectedFourSection:indexPath];
-            break;
-        
-            break;
-        default:
-            break;
-    }
+//    switch (indexPath.section) {
+//        case 0:
+//            [self didSelectedFirstSection:indexPath];
+//            break;
+//        case 1:
+//            [self didSelectedSecondSection:indexPath];
+//            break;
+//        case 2:
+//            [self didSelectedThreeSection:indexPath];
+//            break;
+//        case 3:
+//            [self didSelectedFourSection:indexPath];
+//            break;
+//        
+//            break;
+//        default:
+//            break;
+//    }
     
 }
 #pragma mark - selectedSection

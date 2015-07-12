@@ -48,10 +48,12 @@
     [super viewDidLoad];
 
     //默认选中的时间为今天
-    [[NSUserDefaults standardUserDefaults]setObject:[NSDate date] forKey:@"curSelectedDate"];
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
+    NSDateComponents* comp1 = [calendar components:unitFlags fromDate:[NSDate date]];
+    NSDate *date = [calendar dateFromComponents:comp1];
+    [[NSUserDefaults standardUserDefaults]setObject:date forKey:@"curSelectedDate"];
     [[NSUserDefaults standardUserDefaults]synchronize];
-    
-    //NSLog(@"%@" , self.calendView.calendar.currentDate);
     
     _headHeight = 100.0 ;
     
@@ -212,8 +214,14 @@
         self.titleLabel.text = [Tool stringFromFomate:selectedDate formate:@"yyyy年MM月dd日"];
         self.curDate = selectedDate ;
         
+        NSCalendar* calendar = [NSCalendar currentCalendar];
+        unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
+        NSDateComponents* comp1 = [calendar components:unitFlags fromDate:selectedDate];
+        NSDate *date = [calendar dateFromComponents:comp1];
+        
+       
         //保存选中的时间
-        [[NSUserDefaults standardUserDefaults]setObject:selectedDate forKey:@"curSelectedDate"];
+        [[NSUserDefaults standardUserDefaults]setObject:date forKey:@"curSelectedDate"];
         [[NSUserDefaults standardUserDefaults]synchronize];
         
         
@@ -240,9 +248,7 @@
 #pragma mark - DataSource
 - (void)loadDataSource
 {
-    
-    NSString *dateStr = [Tool stringFromFomate:CUR_SELECTEDDATE formate:DATE_FORMATE];
-    NSDate *sortDate = [Tool dateFromFomate:dateStr formate:DATE_FORMATE];
+   
     
     User *curUser = [CoreDataModelService fetchUserByName:DEVICE_NAME];
     
@@ -252,22 +258,21 @@
     NSSortDescriptor *sortTaskCreatTime = [NSSortDescriptor sortDescriptorWithKey:@"taskCreatTime" ascending:NO];
     NSArray *sortTaskArr = [curUserCreatAllTasks sortedArrayUsingDescriptors:@[sortTaskTag , sortTaskEndTime , sortTaskCreatTime]];
     
-    NSPredicate *predicateTask = [NSPredicate predicateWithFormat:@"taskTheDate = %@" , sortDate];
+    NSPredicate *predicateTask = [NSPredicate predicateWithFormat:@"taskTheDate = %@" , CUR_SELECTEDDATE];
     NSPredicate *predicateUser = [NSPredicate predicateWithFormat:@"creatTaskUser.userName = %@" , curUser.userName];
     self.myCreatTasks = [[sortTaskArr filteredArrayUsingPredicate: predicateTask] filteredArrayUsingPredicate:predicateUser];
     
     
     
     NSArray *curUserCreatSchedules = [CoreDataModelService fetchAllSchedule];
-    NSSortDescriptor *sortCreatScheduleTime = [NSSortDescriptor sortDescriptorWithKey:@"scheduleCreatDetailTime" ascending:NO];
+    NSSortDescriptor *sortCreatScheduleTime = [NSSortDescriptor sortDescriptorWithKey:@"scheduleCreatTime" ascending:NO];
     NSArray *sortScheduleArr= [curUserCreatSchedules sortedArrayUsingDescriptors:@[sortCreatScheduleTime]];
     
-    NSPredicate *predicateSchedule = [NSPredicate predicateWithFormat:@"scheduleCreatDateDay == %@" , sortDate];
+    NSPredicate *predicateSchedule = [NSPredicate predicateWithFormat:@"scheduleTheDay == %@" , CUR_SELECTEDDATE];
      NSPredicate *predicateScheduleUser = [NSPredicate predicateWithFormat:@"creatScheduleUser.userName = %@" , curUser.userName];
     self.myCreatSchedules = [sortScheduleArr filteredArrayUsingPredicate:predicateSchedule];
     self.myCreatSchedules = [self.myCreatSchedules filteredArrayUsingPredicate:predicateScheduleUser];
     [self.tableView reloadData];
-    
     
 }
 
@@ -414,7 +419,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         if (indexPath.section == 1) {
             Schedule *scheduleModel = self.myCreatSchedules[indexPath.row - 1];
-            if ([CoreDataModelService deleteScheduleByScheduleCreatDetailTime:scheduleModel.scheduleCreatDetailTime]) {
+            if ([CoreDataModelService deleteScheduleByScheduleCreatDetailTime:scheduleModel.scheduleCreatTime]) {
                 [self loadDataSource];
             }
         }

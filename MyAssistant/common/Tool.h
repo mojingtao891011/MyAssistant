@@ -126,4 +126,8 @@
  */
 +(void)sendMessageWithConnent:(NSString*)connent  recipient:(NSString*)recipient messageDelegate:(id<MFMessageComposeViewControllerDelegate>)messageDelegate ;
 
++ (NSString*)curDateOfWeek:(NSDate*)date;
+
++(NSString*)dateToString:(NSDate *)date isShowToday:(BOOL)isShowToday ;
+
 @end

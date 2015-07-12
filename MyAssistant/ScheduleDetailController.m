@@ -41,6 +41,7 @@
     
 }
 #pragma mark - Action
+
 - (void)rightBarButtonItemAction:(UIButton*)sender
 {
     
@@ -48,6 +49,7 @@
     BaseNavgationController *addScheduleNavCtl = [storyboard instantiateViewControllerWithIdentifier:@"AddScheduleNavCtl"];
     AddScheduleController* scheduleCtl = (AddScheduleController*)addScheduleNavCtl.topViewController;
     scheduleCtl.scheduleModel = self.scheduleModel ;
+    
     [self presentViewController:addScheduleNavCtl animated:YES completion:nil];
 }
 #pragma mark - UITableViewDataSource
@@ -57,8 +59,10 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray *arr = @[@(1) , @(1) , @(_scheduleModel.subReminds.count) , @(1)];
+   
+    NSArray *arr = @[@(1) , @(1) , @(_scheduleModel.subReminds.count + 1) , @(1)];
     return [arr[section] integerValue];
+    
 }
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

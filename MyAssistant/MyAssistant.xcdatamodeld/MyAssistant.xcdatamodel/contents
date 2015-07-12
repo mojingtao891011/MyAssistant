@@ -19,15 +19,14 @@
     </entity>
     <entity name="Schedule" representedClassName="Schedule" syncable="YES">
         <attribute name="scheduleAddress" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="scheduleCreatDateDay" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="scheduleCreatDay" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="scheduleCreatDetailTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="scheduleCreatTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="scheduleDescribe" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="scheduleEndTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="scheduleName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="scheduleRemindTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="schedulerepeat" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="schedulestartTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="scheduleTheDay" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="annexs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Annex" inverseName="schedule" inverseEntity="Annex" syncable="YES"/>
         <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Comment" inverseName="schedule" inverseEntity="Comment" syncable="YES"/>
         <relationship name="creatScheduleUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="creatShchedules" inverseEntity="User" syncable="YES"/>
@@ -81,7 +80,7 @@
     <elements>
         <element name="Annex" positionX="0" positionY="0" width="128" height="165"/>
         <element name="Comment" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Schedule" positionX="0" positionY="0" width="128" height="270"/>
+        <element name="Schedule" positionX="0" positionY="0" width="128" height="255"/>
         <element name="SubRemind" positionX="9" positionY="117" width="128" height="90"/>
         <element name="SubTask" positionX="9" positionY="117" width="128" height="120"/>
         <element name="Task" positionX="0" positionY="0" width="128" height="270"/>

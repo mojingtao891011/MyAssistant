@@ -130,6 +130,7 @@
 
 }
 #pragma mark - Message
+/*
 - (void)sendSchedule:(NSNotification*)note
 {
     [SVProgressHUD showWithStatus:nil maskType:SVProgressHUDMaskTypeBlack];
@@ -231,6 +232,7 @@
     
     [self uploade:taskDict];
 }
+ */
 - (void)autoLogin
 {
     
@@ -436,7 +438,7 @@
             
             if (!error) {
                 NSDictionary *dict =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-                [weakSelf dictToModel:dict];
+                //[weakSelf dictToModel:dict];
             }
             else{
                 
@@ -446,7 +448,7 @@
     }];
     
 }
-
+/*
 - (void)dictToModel:(NSDictionary*)dict
 {
     
@@ -571,4 +573,5 @@
     
     
 }
+ */
 @end

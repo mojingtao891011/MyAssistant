@@ -139,22 +139,7 @@
     
     
 }
-- (void)createScheduleRandomEvents:(NSNotification*)note
-{
-    if (!eventsByDate) {
-        eventsByDate = [NSMutableDictionary new];
-    }
-    
-    Schedule *schedule = note.object ;
-    NSString *dateStr = [[self dateFormatter] stringFromDate:schedule.scheduleCreatDateDay];
-    
-    if(!eventsByDate[dateStr]){
-        eventsByDate[dateStr] = [NSMutableArray new];
-    }
-    
-    [eventsByDate setObject:schedule.scheduleCreatDateDay forKey:dateStr];
-    
-}
+
 #pragma mark - Buttons callback
 
 - (void)didGoTodayTouch

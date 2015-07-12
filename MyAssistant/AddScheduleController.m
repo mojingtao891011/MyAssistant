@@ -116,18 +116,21 @@
         self.scheduleModel.schedulestartTime = CUR_SELECTEDDATE;
         NSDate *endTime = [NSDate dateWithTimeIntervalSinceNow:60*60];
         self.scheduleModel.scheduleEndTime = endTime ;
+        
+        //创建的是那天的schedule（到天）
+        self.scheduleModel.scheduleTheDay =  CUR_SELECTEDDATE;
+        
+    }
+    else{
+        NSCalendar* calendar = [NSCalendar currentCalendar];
+        unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
+        NSDateComponents* comp1 = [calendar components:unitFlags fromDate:self.scheduleModel.schedulestartTime];
+        NSDate *date = [calendar dateFromComponents:comp1];
+        self.scheduleModel.scheduleTheDay = date ;
     }
     
-    self.scheduleModel.scheduleCreatDetailTime = [NSDate date];
-    
-    NSCalendar *calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *dateComponents = [calendar components:NSMonthCalendarUnit|NSDayCalendarUnit|NSYearCalendarUnit|NSWeekdayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:CUR_SELECTEDDATE];
-    NSString *creatScheduleDay = [NSString stringWithFormat:@"%lu月%lu日      星期%lu" ,  dateComponents.month , dateComponents.day , dateComponents.weekday - 1 ];
-    self.scheduleModel.scheduleCreatDay = creatScheduleDay ;
-    
-    //创建schedule的日期（到天）
-    NSString *dateStr = [Tool stringFromFomate:CUR_SELECTEDDATE formate:DATE_FORMATE];
-    self.scheduleModel.scheduleCreatDateDay = [Tool dateFromFomate:dateStr formate:DATE_FORMATE];
+    self.scheduleModel.scheduleCreatTime = [NSDate date];
+        
     
     User *user = [CoreDataModelService fetchUserByName:DEVICE_NAME];
     
@@ -140,7 +143,10 @@
         debugLog(@"creat schedule fail");
     }
     
-    [[NSNotificationCenter defaultCenter]postNotificationName:NOTE_ADDSCHEDULECOMPLETE object:self.scheduleModel];
+    if (_isCreatSchedule) {
+         [[NSNotificationCenter defaultCenter]postNotificationName:NOTE_ADDSCHEDULECOMPLETE object:self.scheduleModel];
+    }
+   
     
     [self dismissViewControllerAnimated:YES completion:nil];
     
@@ -269,6 +275,7 @@
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddScheduleAddressCell" forIndexPath:indexPath];
         self.scheduleAddressTF = (UITextField*)[cell viewWithTag:2];
+        self.scheduleAddressTF.text = self.scheduleModel.scheduleAddress;
         return cell ;
     }
     //其他
@@ -339,16 +346,12 @@
             NSString *endStr = [Tool stringFromFomate:endTime formate:@"MM月dd日"];
             
             //start
-            NSCalendar *greCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
             
-            NSDateComponents *dateComponents = [greCalendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekCalendarUnit | NSWeekdayCalendarUnit | NSWeekOfMonthCalendarUnit | NSWeekOfYearCalendarUnit fromDate:startTime];
-            
-            cell.startDayLabel.text = [NSString stringWithFormat:@"%@  周%d" ,startStr , (int)dateComponents.weekday];
+            cell.startDayLabel.text = [NSString stringWithFormat:@"%@  %@" ,startStr , [Tool curDateOfWeek:startTime]];
             cell.startTimeLabel.text = [NSString stringWithFormat:@"开始  %@",[Tool stringFromFomate:startTime formate:@"HH:mm"]];
             
             //end
-            NSDateComponents *dateComponents1 = [greCalendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekCalendarUnit | NSWeekdayCalendarUnit | NSWeekOfMonthCalendarUnit | NSWeekOfYearCalendarUnit fromDate:endTime];
-            cell.endDayLabel.text = [NSString stringWithFormat:@"%@  周%d" ,endStr , (int)dateComponents1.weekday];
+            cell.endDayLabel.text = [NSString stringWithFormat:@"%@  %@" ,endStr , [Tool curDateOfWeek:endTime]];
             cell.endTimeLabel.text =  [NSString stringWithFormat:@"结束  %@",[Tool stringFromFomate:endTime formate:@"HH:mm"]];
             
             //保存时间

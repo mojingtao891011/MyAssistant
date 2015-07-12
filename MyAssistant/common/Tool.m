@@ -44,7 +44,7 @@
    
 //    formatter.dateStyle = kCFDateFormatterShortStyle;
 //    formatter.timeStyle = kCFDateFormatterShortStyle;
-//    formatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+//    formatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
     
     NSDate *date = [formatter dateFromString:datestring];
     return date;
@@ -203,5 +203,67 @@
     }
     
 }
+//
++ (NSString*)curDateOfWeek:(NSDate*)date
+{
+    NSCalendar *calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *dateComponents = [calendar components:NSMonthCalendarUnit|NSDayCalendarUnit|NSYearCalendarUnit|NSWeekdayCalendarUnit fromDate:date];
+    
+    NSString *week = nil ;
+    switch (dateComponents.weekday - 1) {
+        case 0:
+            week = @"星期日" ;
+            break;
+        case 1:
+            week = @"星期一" ;
+            break;
+        case 2:
+            week = @"星期二" ;
+            break;
+        case 3:
+            week = @"星期三" ;
+            break;
+        case 4:
+            week = @"星期四" ;
+            break;
+        case 5:
+            week = @"星期五" ;
+            break;
+        case 6:
+            week = @"星期六" ;
+            break;
+       
+            
+        default:
+            break;
+    }
+    
+    return week ;
+}
 
++(NSString*)dateToString:(NSDate *)date isShowToday:(BOOL)isShowToday
+{
+    
+    //判断是否是今年 、今天
+    NSString * startString = nil ;
+    //开始时间
+    if ([date isThisYear]) {
+        startString = [Tool stringFromFomate:date formate:@"MM月dd日"];
+    }
+    else{
+        startString = [Tool stringFromFomate:date formate:@"yyyy年MM月dd日"] ;
+    }
+    
+    if ([date isToday]) {
+        if (isShowToday) {
+             startString = @"今天";
+        }
+        else{
+             startString = [Tool stringFromFomate:date formate:@"HH:mm"] ;
+        }
+    }
+    
+    return startString ;
+    
+}
 @end
