@@ -11,7 +11,6 @@
 #import "AddSubTaskContentCell.h"
 #import "DatePickerViewController.h"
 #import "PhtotoController.h"
-#import "ExecutorController.h"
 #import "SetTagController.h"
 #import "AddSubTaskController.h"
 #import "Task.h"
@@ -21,6 +20,7 @@
 #import "Comment.h"
 #import "AddSubTaskActionCell.h"
 #import "AddSubTaskController.h"
+#import "FriendListController.h"
 
 @interface AddTaskController ()<UITableViewDataSource , UITableViewDelegate , UITextFieldDelegate>
 
@@ -127,8 +127,8 @@
      self.taskModel = task ;
     
     //默认开始、结束时间
-    _taskModel.taskStartTime = CUR_SELECTEDDATE ;
-    _taskModel.taskEndTime = [NSDate dateWithTimeInterval:24*60*60 sinceDate:CUR_SELECTEDDATE];
+    _taskModel.taskStartTime = [NSDate date] ;
+    _taskModel.taskEndTime = [NSDate dateWithTimeInterval:24*60*60 sinceDate:self.taskModel.taskStartTime];
     
     return _taskModel ;
 }
@@ -157,7 +157,7 @@
         self.taskNameTF.text = self.taskModel.taskName ;
         return cell ;
     }
-    
+    //子任务
     if (indexPath.section == 4 && indexPath.row != 0) {
         
         if (indexPath.row == self.taskModel.subTasks.count + 1) {
@@ -321,13 +321,15 @@
     }
     //执行者
     else if (indexPath.row == 2){
-        ExecutorController *executor = [self fetchViewControllerByIdentifier:@"ExecutorController"];
         
-        executor.executorUser = weakself.taskModel.executor ;
-        
-        executor.selectExecutorBlock = ^(User *user){
-            
+        FriendListController *friendListCtl = [self fetchViewControllerByIdentifier:@"FriendListController"];
+        friendListCtl.isExecutor = YES ;
+        if (self.taskModel.executor) {
+             friendListCtl.colletionDataSources = [NSMutableArray arrayWithObject:self.taskModel.executor];
+        }
+        friendListCtl.selectedFriendBlock = ^(NSMutableArray *userArr){
             //保存执行者
+            User *user = [userArr firstObject];
             weakself.taskModel.executor = user ;
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -335,29 +337,29 @@
                 cell.cellEndTextLabel.text = user.userName ;
                 cell.cellEndTextLabel.hidden = NO ;
             });
-           
-        };
-        [self.navigationController pushViewController:executor animated:YES];
 
+        };
+        [self.navigationController pushViewController:friendListCtl animated:YES];
     }
 }
 #pragma mark - 参与者
 - (void)didSelectedSecondSection:(NSIndexPath*)indexPath
 {
     WS(weaSelf);
-    ExecutorController *executor = [self fetchViewControllerByIdentifier:@"ExecutorController"];
-    
-    executor.follows = [NSMutableArray arrayWithArray:[self.taskModel.followers allObjects]];
-    
-    executor.selectFollowersBlock = ^(NSMutableArray *followers){
-        
+    FriendListController *friendListCtl = [self fetchViewControllerByIdentifier:@"FriendListController"];
+    friendListCtl.isExecutor = NO ;
+    if ([self.taskModel.followers allObjects].count != 0) {
+        NSMutableArray *arr = [NSMutableArray arrayWithArray:[self.taskModel.followers allObjects]];
+        friendListCtl.colletionDataSources = [arr mutableCopy];
+    }
+    friendListCtl.selectedFriendBlock = ^(NSMutableArray *userArr){
         //参与者
-        NSSet *set = [NSSet setWithArray:followers];
+        NSSet *set = [NSSet setWithArray:userArr];
         weaSelf.taskModel.followers = set ;
         
         NSMutableString *appNameStr = [NSMutableString new];
-        for (User *user in followers) {
-                [appNameStr appendFormat:@" %@" , user.userName];
+        for (User *user in userArr) {
+            [appNameStr appendFormat:@" %@" , user.userName];
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -365,9 +367,9 @@
             cell.cellEndTextLabel.text = appNameStr ;
         });
         
-        
     };
-    [self.navigationController pushViewController:executor animated:YES];
+    [self.navigationController pushViewController:friendListCtl animated:YES];
+
 }
 #pragma mark - 普通(任务紧急程度)
 - (void)didSelectedThreeSection:(NSIndexPath*)indexPath
@@ -381,25 +383,7 @@
        weaSelf.taskModel.taskTag = [NSNumber numberWithInteger:selectedTaskTag];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            AddTaskSetTimeCell *cell = (AddTaskSetTimeCell*)[self.tableView cellForRowAtIndexPath:indexPath];
-            cell.taskTagLabel.hidden = NO ;
-            switch (selectedTaskTag) {
-                case 0:
-                    cell.taskTagLabel.backgroundColor = SET_TASK_TAG0 ;
-                    break;
-                case 1:
-                    cell.taskTagLabel.backgroundColor = SET_TASK_TAG1 ;
-                    break;
-                case 2:
-                    cell.taskTagLabel.backgroundColor = SET_TASK_TAG2 ;
-                    break;
-                case 3:
-                    cell.taskTagLabel.backgroundColor = SET_TASK_TAG3 ;
-                    break;
-                    
-                default:
-                    break;
-            }
+            [weaSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
         });
        
         

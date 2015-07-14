@@ -178,8 +178,7 @@
     
     [_calendView didChangeModeTouch];
     
-    [_calendView.calendar reloadAppearance];
-    
+
     static BOOL flag = YES ;
     
     if (flag) {
@@ -192,6 +191,7 @@
     flag = !flag ;
     
     [self.tableView reloadData];
+    
 
 }
 

@@ -18,7 +18,7 @@
 //导航栏颜色
 #define NAVIGATIONBAR_COLOR                                        [UIColor colorWithRed:247/255.0 green:247/255.0 blue:248/255.0 alpha:1.0]
 //内容栏颜色
-#define BACKGOUNDVIEW_COLOR                                     [UIColor colorWithRed:247/255.0 green:247/255.0 blue:248/255.0 alpha:1.0]
+#define BACKGOUNDVIEW_COLOR                                     [UIColor colorWithRed:235/255.0 green:235/255.0 blue:241/255.0 alpha:1.0]
 //tableView的Header
 #define HEADER_COLOR                                                         [UIColor colorWithRed:239/255.0 green:239/255.0 blue:244/255.0 alpha:1.0]
 //橙色

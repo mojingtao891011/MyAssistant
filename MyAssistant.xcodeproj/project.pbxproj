@@ -18,6 +18,7 @@
 		FB694B4D1B3454CF00D79E93 /* TaskNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FB694B4C1B3454CF00D79E93 /* TaskNameCell.m */; };
 		FB694B501B3454FE00D79E93 /* TaskCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FB694B4F1B3454FE00D79E93 /* TaskCommentCell.m */; };
 		FB694B531B34553800D79E93 /* TaskContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FB694B521B34553800D79E93 /* TaskContentCell.m */; };
+		FB86E4921B54E1E900A15D14 /* FriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FB86E4911B54E1E900A15D14 /* FriendCell.m */; };
 		FBB1FD2F1B512E8E008B363B /* Schedule.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB1FD2E1B512E8E008B363B /* Schedule.m */; };
 		FBC238DA1B48E27400730559 /* AddSubTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC238D91B48E27400730559 /* AddSubTaskController.m */; };
 		FBC238E01B48F34200730559 /* Annex.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC238DF1B48F34200730559 /* Annex.m */; };
@@ -95,6 +96,7 @@
 		FBC2FF2E1B33B6850068E0D9 /* ScheduleListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC2FF2D1B33B6850068E0D9 /* ScheduleListController.m */; };
 		FBC35ABC1B40E03200119BA9 /* Mbutton.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC35ABB1B40E03200119BA9 /* Mbutton.m */; };
 		FBC35ABF1B40E16600119BA9 /* MLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC35ABE1B40E16600119BA9 /* MLabel.m */; };
+		FBC3A1811B53B69C00209751 /* FriendListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC3A1801B53B69C00209751 /* FriendListController.m */; };
 		FBC429F31B38F0CE00587FA6 /* SetTagController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC429F21B38F0CE00587FA6 /* SetTagController.m */; };
 		FBC42A091B394E2500587FA6 /* CoreDataModelService.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC42A081B394E2500587FA6 /* CoreDataModelService.m */; };
 		FBC42A0F1B3969E200587FA6 /* TodayTaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC42A0E1B3969E200587FA6 /* TodayTaskCell.m */; };
@@ -118,7 +120,6 @@
 		FBC7D05D1B3A44A500ACCE4D /* Youtube@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FBC7D0511B3A44A500ACCE4D /* Youtube@2x.png */; };
 		FBC7D0A91B3A5D9F00ACCE4D /* RepeatRemindController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC7D0A81B3A5D9F00ACCE4D /* RepeatRemindController.m */; };
 		FBC7D0AC1B3A5E2000ACCE4D /* DatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC7D0AB1B3A5E2000ACCE4D /* DatePickerViewController.m */; };
-		FBC7D4951B36B43200BC3A06 /* ExecutorController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC7D4941B36B43200BC3A06 /* ExecutorController.m */; };
 		FBC7D4981B36B59B00BC3A06 /* ExecutorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC7D4971B36B59B00BC3A06 /* ExecutorCell.m */; };
 		FBC7D49B1B36F4C700BC3A06 /* DatePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC7D49A1B36F4C700BC3A06 /* DatePickerController.m */; };
 		FBC7EE1A1B499FCD0062DD3D /* SubRemind.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC7EE191B499FCD0062DD3D /* SubRemind.m */; };
@@ -195,6 +196,8 @@
 		FB694B4F1B3454FE00D79E93 /* TaskCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskCommentCell.m; sourceTree = "<group>"; };
 		FB694B511B34553800D79E93 /* TaskContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskContentCell.h; sourceTree = "<group>"; };
 		FB694B521B34553800D79E93 /* TaskContentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskContentCell.m; sourceTree = "<group>"; };
+		FB86E4901B54E1E900A15D14 /* FriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendCell.h; sourceTree = "<group>"; };
+		FB86E4911B54E1E900A15D14 /* FriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendCell.m; sourceTree = "<group>"; };
 		FBB1FD2D1B512E8E008B363B /* Schedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Schedule.h; sourceTree = "<group>"; };
 		FBB1FD2E1B512E8E008B363B /* Schedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Schedule.m; sourceTree = "<group>"; };
 		FBC238D81B48E27400730559 /* AddSubTaskController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddSubTaskController.h; sourceTree = "<group>"; };
@@ -336,6 +339,8 @@
 		FBC35ABB1B40E03200119BA9 /* Mbutton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mbutton.m; sourceTree = "<group>"; };
 		FBC35ABD1B40E16600119BA9 /* MLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLabel.h; sourceTree = "<group>"; };
 		FBC35ABE1B40E16600119BA9 /* MLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLabel.m; sourceTree = "<group>"; };
+		FBC3A17F1B53B69C00209751 /* FriendListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendListController.h; sourceTree = "<group>"; };
+		FBC3A1801B53B69C00209751 /* FriendListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendListController.m; sourceTree = "<group>"; };
 		FBC429F11B38F0CE00587FA6 /* SetTagController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetTagController.h; sourceTree = "<group>"; };
 		FBC429F21B38F0CE00587FA6 /* SetTagController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetTagController.m; sourceTree = "<group>"; };
 		FBC42A071B394E2500587FA6 /* CoreDataModelService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataModelService.h; sourceTree = "<group>"; };
@@ -370,8 +375,6 @@
 		FBC7D0A81B3A5D9F00ACCE4D /* RepeatRemindController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepeatRemindController.m; sourceTree = "<group>"; };
 		FBC7D0AA1B3A5E2000ACCE4D /* DatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerViewController.h; sourceTree = "<group>"; };
 		FBC7D0AB1B3A5E2000ACCE4D /* DatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerViewController.m; sourceTree = "<group>"; };
-		FBC7D4931B36B43200BC3A06 /* ExecutorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExecutorController.h; sourceTree = "<group>"; };
-		FBC7D4941B36B43200BC3A06 /* ExecutorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExecutorController.m; sourceTree = "<group>"; };
 		FBC7D4961B36B59B00BC3A06 /* ExecutorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExecutorCell.h; sourceTree = "<group>"; };
 		FBC7D4971B36B59B00BC3A06 /* ExecutorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExecutorCell.m; sourceTree = "<group>"; };
 		FBC7D4991B36F4C700BC3A06 /* DatePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerController.h; sourceTree = "<group>"; };
@@ -940,6 +943,10 @@
 				FBC7D0A81B3A5D9F00ACCE4D /* RepeatRemindController.m */,
 				FBC7D0AA1B3A5E2000ACCE4D /* DatePickerViewController.h */,
 				FBC7D0AB1B3A5E2000ACCE4D /* DatePickerViewController.m */,
+				FBC3A17F1B53B69C00209751 /* FriendListController.h */,
+				FBC3A1801B53B69C00209751 /* FriendListController.m */,
+				FB86E4901B54E1E900A15D14 /* FriendCell.h */,
+				FB86E4911B54E1E900A15D14 /* FriendCell.m */,
 			);
 			name = Add;
 			sourceTree = "<group>";
@@ -1104,8 +1111,6 @@
 				FBC42A0E1B3969E200587FA6 /* TodayTaskCell.m */,
 				FBC42A101B3969FD00587FA6 /* TodayScheduleCell.h */,
 				FBC42A111B3969FD00587FA6 /* TodayScheduleCell.m */,
-				FBC7D4931B36B43200BC3A06 /* ExecutorController.h */,
-				FBC7D4941B36B43200BC3A06 /* ExecutorController.m */,
 				FBC7D4991B36F4C700BC3A06 /* DatePickerController.h */,
 				FBC7D49A1B36F4C700BC3A06 /* DatePickerController.m */,
 				FBC2976D1B44D98300DBB57E /* PhtotoController.h */,
@@ -1383,7 +1388,6 @@
 				FBC2981C1B44DB2A00DBB57E /* ZLPhotoPickerCollectionViewCell.m in Sources */,
 				FBC2D8C31B4E43B90098498A /* AddScheduleContentCell.m in Sources */,
 				FBC297F41B44DB2A00DBB57E /* SDWebImageManager.m in Sources */,
-				FBC7D4951B36B43200BC3A06 /* ExecutorController.m in Sources */,
 				FBC238E61B48F34200730559 /* Comment.m in Sources */,
 				FBDD42571B3265EB0050C313 /* TabBarViewController.m in Sources */,
 				FBC297F71B44DB2A00DBB57E /* UIImage+GIF.m in Sources */,
@@ -1400,6 +1404,7 @@
 				FBC298121B44DB2A00DBB57E /* ZLPhotoPickerBrowserPhotoScrollView.m in Sources */,
 				FBC298191B44DB2A00DBB57E /* ZLPhotoPickerGroupViewController.m in Sources */,
 				FBC91C961B4F7C58008B6F69 /* ScheduleContentCell.m in Sources */,
+				FB86E4921B54E1E900A15D14 /* FriendCell.m in Sources */,
 				FB51D1301B4B665D00CF4867 /* TestAddUserController.m in Sources */,
 				FBC7D4981B36B59B00BC3A06 /* ExecutorCell.m in Sources */,
 				FBC429F31B38F0CE00587FA6 /* SetTagController.m in Sources */,
@@ -1409,6 +1414,7 @@
 				FBC297F11B44DB2A00DBB57E /* SDWebImageDecoder.m in Sources */,
 				FBC297721B44D98300DBB57E /* PhtotoController.m in Sources */,
 				FB694B501B3454FE00D79E93 /* TaskCommentCell.m in Sources */,
+				FBC3A1811B53B69C00209751 /* FriendListController.m in Sources */,
 				FBC297EB1B44DB2A00DBB57E /* UIView+Extension.m in Sources */,
 				FBC298111B44DB2A00DBB57E /* ZLPhotoPickerBrowserPhotoImageView.m in Sources */,
 				FBC91C901B4F7C06008B6F69 /* ScheduleDetailNameCell.m in Sources */,

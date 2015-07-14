@@ -11,7 +11,7 @@
 #import "TaskDetailContentCell.h"
 #import "TaskDetailTagCell.h"
 #import "DatePickerViewController.h"
-#import "ExecutorController.h"
+
 #import "User.h"
 #import "PhtotoController.h"
 #import "EditTaskNameController.h"
@@ -221,6 +221,7 @@
     }
     //执行者
     else if (indexPath.row == self.taskModel.subTasks.count +2){
+        /*
         ExecutorController *executor = [self fetchViewControllerByIdentifier:@"ExecutorController"];
         executor.executorUser = self.taskModel.executor ;
         
@@ -233,7 +234,7 @@
             
         };
         [self.navigationController pushViewController:executor animated:YES];
-        
+        */
     }
     //子任务
     else {
@@ -258,6 +259,7 @@
 #pragma mark - 参与者
 - (void)didSelectedSecondSection:(NSIndexPath*)indexPath
 {
+    /*
     ExecutorController *executor = [self fetchViewControllerByIdentifier:@"ExecutorController"];
     
     executor.follows = [NSMutableArray arrayWithArray:[self.taskModel.followers allObjects]];
@@ -278,6 +280,7 @@
         
     };
     [self.navigationController pushViewController:executor animated:YES];
+     */
 }
 #pragma mark - 普通
 - (void)didSelectedThreeSection:(NSIndexPath*)indexPath

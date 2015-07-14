@@ -42,12 +42,6 @@
 }
 - (void)_initCalender
 {
-//    //添加任务
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(createTaskRandomEvents:) name:NOTE_ADDTASKCOMPLETE object:nil];
-//    
-//    //添加日程
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(createScheduleRandomEvents:) name:NOTE_ADDSCHEDULECOMPLETE object:nil];
-    
     
     self.calendar = [JTCalendar new];
     
@@ -66,42 +60,7 @@
         self.calendar.calendarAppearance.dayCircleRatio = 0.8 ;
         self.calendar.calendarAppearance.dayTextFont = [UIFont systemFontOfSize:17.0];
         
-        
-        // Customize the text for each month
-        self.calendar.calendarAppearance.monthBlock = ^NSString *(NSDate *date, JTCalendar *jt_calendar){
-            
-            jt_calendar.calendarAppearance.menuMonthTextColor = [UIColor lightGrayColor];
-            jt_calendar.calendarAppearance.menuMonthTextFont = [UIFont systemFontOfSize:12.f];
-          // jt_calendar.calendarAppearance.dayCircleRatio = 1.0 ;
-            //self.calendar.calendarAppearance.dayTextFont = [UIFont systemFontOfSize:17.0];
-            
-            NSCalendar *calendar = jt_calendar.calendarAppearance.calendar;
-            NSDateComponents *comps = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth fromDate:date];
-            NSInteger currentMonthIndex = comps.month;
-            
-            
-            
-            static NSDateFormatter *dateFormatter;
-            if(!dateFormatter){
-                dateFormatter = [NSDateFormatter new];
-                //dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
-                dateFormatter.timeZone = jt_calendar.calendarAppearance.calendar.timeZone;
-            }
-            
-            while(currentMonthIndex <= 0){
-                currentMonthIndex += 12;
-            }
-            
-            NSString *monthText = [[dateFormatter standaloneMonthSymbols][currentMonthIndex - 1] capitalizedString];
-            
-            return [NSString stringWithFormat:@"%ld\n%@", comps.year, monthText];
-        };
     }
-    
-//    self.calendarMenuView = [[JTCalendarMenuView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0)];
-//    self.calendarMenuView.backgroundColor = [UIColor clearColor];
-//    [self addSubview:self.calendarMenuView];
-//    [self.calendar setMenuMonthsView:self.calendarMenuView];
     
     self.calendarContentView = [[JTCalendarContentView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH,  calenderHeight  )];
     self.calendarContentView.backgroundColor = [UIColor clearColor];
@@ -111,8 +70,6 @@
     [self.calendar setDataSource:self];
     
     //[self createRandomEvents];
-    
-    
     
 }
 
@@ -150,6 +107,13 @@
 - (void)didChangeModeTouch
 {
     self.calendar.calendarAppearance.isWeekMode = !self.calendar.calendarAppearance.isWeekMode;
+    
+    if (self.calendar.calendarAppearance.isWeekMode) {
+        self.calendar.calendarAppearance.dayTextFont = [UIFont systemFontOfSize:17.0];
+    }
+    else{
+         self.calendar.calendarAppearance.dayTextFont = [UIFont systemFontOfSize:14.0];
+    }
     
     [self transitionExample];
 }
@@ -208,7 +172,7 @@
                      animations:^{
                          self.calendarContentView.height = newHeight ;
                        
-                         //[self layoutSubviews];
+                         [self layoutSubviews];
                          
                      }];
     
@@ -228,7 +192,7 @@
     
     self.height = newHeight ;
     
-//    NSLog(@"%f , %f , %f , %f" ,self.calendarContentView.left , self.calendarContentView.top , self.calendarContentView.width , self.calendarContentView.height );
+
 }
 
 #pragma mark - Fake data
@@ -247,7 +211,7 @@
     return dateFormatter;
 }
 
-/*
+
 - (void)createRandomEvents
 {
     eventsByDate = [NSMutableDictionary new];
@@ -266,46 +230,6 @@
         [eventsByDate[key] addObject:randomDate];
     }
 }
- */
-/*
-@synthesize eventArr = _eventArr ;
-- (void)setEventArr:(NSArray *)eventArr
-{
-    if (_eventArr != eventArr) {
-        _eventArr = eventArr ;
-    }
-    
-    for (id obj in _eventArr) {
-        if ([obj isKindOfClass:[Task class]]) {
-            if (!eventsByDate) {
-                eventsByDate = [NSMutableDictionary new];
-            }
-            
-            Task *task = (Task*)obj ;
-            NSString *dateStr = [[self dateFormatter] stringFromDate:task.taskCreatDateDay];
-            
-            
-            if(!eventsByDate[dateStr]){
-                eventsByDate[dateStr] = [NSMutableArray new];
-            }
-            
-            [eventsByDate[dateStr] addObject:task.taskCreatDateDay];
-        }
-        else if ([obj isKindOfClass:[Schedule class]]){
-            if (!eventsByDate) {
-                eventsByDate = [NSMutableDictionary new];
-            }
-            
-            Schedule *schedule = (Schedule*)obj ;
-            NSString *dateStr = [[self dateFormatter] stringFromDate:schedule.scheduleCreatDateDay];
-            
-            if(!eventsByDate[dateStr]){
-                eventsByDate[dateStr] = [NSMutableArray new];
-            }
-            
-            [eventsByDate setObject:schedule.scheduleCreatDateDay forKey:dateStr];
-        }
-    }
-}
- */
+
+
 @end

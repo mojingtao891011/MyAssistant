@@ -17,7 +17,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.navigationBar setBackgroundImage:[self imageWithColor:NAVIGATIONBAR_COLOR] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setBarTintColor:NAVIGATIONBAR_COLOR];
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
+    
+    
     
     [self.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                                                      GREY_FONT_COLOR, NSForegroundColorAttributeName,

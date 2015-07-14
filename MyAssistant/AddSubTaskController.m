@@ -8,8 +8,8 @@
 
 #import "AddSubTaskController.h"
 #import "DatePickerViewController.h"
-#import "ExecutorController.h"
 #import "User.h"
+#import "FriendListController.h"
 
 @interface AddSubTaskController ()
 
@@ -148,15 +148,38 @@
        
         
     }
-    else if([segue.identifier isEqualToString:@"addSubTaskCtlPushExecutorCtlSegue"]){
+    else if ([segue.identifier isEqualToString:@"pushFriendListControllerSegue"]){
         
-        ExecutorController *executor = segue.destinationViewController;
+        /*
+         
+         
+         ExecutorController *executor = segue.destinationViewController;
+         
+         executor.executorUser = weakself.subTask.executor ;
+         
+         executor.selectExecutorBlock = ^(User *user){
+         
+         //保存执行者
+         weakself.subTask.executor = user ;
+         
+         dispatch_async(dispatch_get_main_queue(), ^{
+         
+         weakself.executorLabel.text = user.userName ;
+         
+         });
+         
+         };
+         
+    */
         
-        executor.executorUser = weakself.subTask.executor ;
-        
-        executor.selectExecutorBlock = ^(User *user){
-            
+        FriendListController *friendListCtl = segue.destinationViewController;
+        friendListCtl.isExecutor = YES ;
+        if (self.subTask.executor) {
+            friendListCtl.colletionDataSources = [NSMutableArray arrayWithObject:self.subTask.executor];
+        }
+        friendListCtl.selectedFriendBlock = ^(NSMutableArray *userArr){
             //保存执行者
+            User *user = [userArr firstObject];
             weakself.subTask.executor = user ;
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -164,9 +187,7 @@
                 weakself.executorLabel.text = user.userName ;
                 
             });
-            
         };
-       
     }
 }
 #pragma mark - SaveSubTask

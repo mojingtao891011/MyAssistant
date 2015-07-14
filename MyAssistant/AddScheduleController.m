@@ -9,10 +9,10 @@
 #import "AddScheduleController.h"
 #import "DatePickerViewController.h"
 #import "RepeatRemindController.h"
-#import "ExecutorController.h"
 #import "PhtotoController.h"
 #import "DatePickerController.h"
 #import "SubRemindController.h"
+#import "FriendListController.h"
 
 #import "AddScheduleContentCell.h"
 #import "AddSubRemindCell.h"
@@ -428,29 +428,31 @@
 #pragma mark - 参与者
 - (void)didSelectedSecondSection:(NSIndexPath*)indexPath
 {
-    __weak AddScheduleController *weakSelf = self ;
     
-    ExecutorController *executor = [self fetchViewControllerByIdentifier:@"ExecutorController"];
-    
-    executor.follows = [NSMutableArray arrayWithArray:[self.scheduleModel.scheduleFollowers allObjects]];
-    
-    executor.selectFollowersBlock = ^(NSMutableArray *followers){
-        
+    WS(weaSelf);
+    FriendListController *friendListCtl = [self fetchViewControllerByIdentifier:@"FriendListController"];
+    friendListCtl.isExecutor = NO ;
+    if (self.scheduleModel.scheduleFollowers.count != 0) {
+        NSMutableArray *arr = [NSMutableArray arrayWithArray:[self.scheduleModel.scheduleFollowers allObjects]];
+        friendListCtl.colletionDataSources = [arr mutableCopy];
+    }
+    friendListCtl.selectedFriendBlock = ^(NSMutableArray *userArr){
         //参与者
-        NSSet *set = [NSSet setWithArray:followers];
-       weakSelf.scheduleModel.scheduleFollowers = set ;
+        NSSet *set = [NSSet setWithArray:userArr];
+        weaSelf.scheduleModel.scheduleFollowers = set ;
         
         NSMutableString *appNameStr = [NSMutableString new];
-        for (User *user in followers) {
+        for (User *user in userArr) {
             [appNameStr appendFormat:@" %@" , user.userName];
         }
         
-       AddScheduleContentCell *cell = (AddScheduleContentCell*)[self.tableView cellForRowAtIndexPath:indexPath];
-        cell.cellSubTextLabel.text= appNameStr ;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            AddScheduleContentCell *cell = (AddScheduleContentCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+            cell.cellSubTextLabel.text= appNameStr ;
+        });
         
     };
-    [self.navigationController pushViewController:executor animated:YES];
-
+    [self.navigationController pushViewController:friendListCtl animated:YES];
 }
 #pragma mark - 添加附件
 - (void)didSelectedFourSection:(NSIndexPath*)indexPath
