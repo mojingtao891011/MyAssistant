@@ -233,12 +233,18 @@
     self.taskModel.taskName = self.taskNameTF.text;
     self.taskModel.taskCreatTime = [NSDate date];
     
-    //创建的是那天的task
-    self.taskModel.taskTheDate= CUR_SELECTEDDATE ;
-    
     
     if (self.taskModel.taskStartTime == nil) {
         self.taskModel.taskStartTime = CUR_SELECTEDDATE ;
+        //创建的是那天的task
+        self.taskModel.taskTheDate= CUR_SELECTEDDATE ;
+    }
+    else{
+        NSCalendar* calendar = [NSCalendar currentCalendar];
+        unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
+        NSDateComponents* comp1 = [calendar components:unitFlags fromDate:self.taskModel.taskStartTime];
+        NSDate *date = [calendar dateFromComponents:comp1];
+        self.taskModel.taskTheDate = date ;
     }
     
     if (self.taskModel.taskEndTime == nil) {

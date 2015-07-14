@@ -30,4 +30,6 @@
 
 - (void)didChangeModeTouch ;
 
+- (void)createRandomEvents:(NSDate*)randomDate ;
+
 @end

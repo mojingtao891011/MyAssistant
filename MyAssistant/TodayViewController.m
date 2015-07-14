@@ -128,6 +128,9 @@
 #pragma mark - Note
 - (void)pushScheduleDetailCtl:(NSNotification*)sender
 {
+    Schedule *schedule = [sender object];
+    [self.calendView createRandomEvents:schedule.scheduleTheDay];
+    
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ScheduleDetailController *scheduleDetailCtl = [storyboard instantiateViewControllerWithIdentifier:@"ScheduleDetailController"];
     scheduleDetailCtl.scheduleModel = sender.object ;
@@ -135,6 +138,8 @@
 }
 - (void)pushTaskDetailCtl:(NSNotification*)sender
 {
+    Task *task = [sender object];
+    [self.calendView createRandomEvents:task.taskTheDate];
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     TaskDetailsController *taskDetailCtl = [storyboard instantiateViewControllerWithIdentifier:@"TaskDetailsController"];

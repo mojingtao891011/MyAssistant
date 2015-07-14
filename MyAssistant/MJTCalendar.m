@@ -12,10 +12,13 @@
 #import "Schedule.h"
 
 
+#define     EVENT_KEY                       @"eventKey"
+
 @interface MJTCalendar ()
 {
     NSMutableDictionary *eventsByDate;
     CGFloat                         calenderHeight ;
+    NSDate                          *lastSelectedDate;
 }
 @end
 
@@ -42,6 +45,7 @@
 }
 - (void)_initCalender
 {
+    lastSelectedDate = [NSDate date];
     
     self.calendar = [JTCalendar new];
     
@@ -54,7 +58,7 @@
         self.calendar.calendarAppearance.ratioContentMenu = 3.;
         self.calendar.calendarAppearance.focusSelectedDayChangeMode = YES;
         self.calendar.calendarAppearance.isWeekMode = YES;
-        self.calendar.calendarAppearance.dayDotColor= [UIColor colorWithRed:153/255.0 green:153/255.0  blue:153/255.0  alpha:1.0];
+        self.calendar.calendarAppearance.dayDotColor= [UIColor redColor];
         self.calendar.calendarAppearance.dayCircleColorToday = ORANGE_COLOR ;
         self.calendar.calendarAppearance.dayCircleColorSelected = LIGHTGREY_FONT_COLOR ;
         self.calendar.calendarAppearance.dayCircleRatio = 0.8 ;
@@ -69,8 +73,11 @@
     
     [self.calendar setDataSource:self];
     
-    //[self createRandomEvents];
-    
+
+    // 事件
+    eventsByDate = [[NSUserDefaults standardUserDefaults]objectForKey:EVENT_KEY];
+   
+    [self.calendar reloadData];
 }
 
 - (void)layoutSubviews
@@ -78,30 +85,18 @@
     [self.calendar repositionViews];
 }
 #pragma mark - Note
-- (void)createTaskRandomEvents:(NSNotification*)note
-{
-    if (!eventsByDate) {
-        eventsByDate = [NSMutableDictionary new];
-    }
-    
-    Task *task = note.object ;
-    NSString *dateStr = [[self dateFormatter] stringFromDate:task.taskTheDate];
-    
-    
-    if(!eventsByDate[dateStr]){
-        eventsByDate[dateStr] = [NSMutableArray new];
-    }
-    
-    [eventsByDate[dateStr] addObject:task.taskTheDate];
-    
-    
-}
 
 #pragma mark - Buttons callback
 
 - (void)didGoTodayTouch
 {
     [self.calendar setCurrentDate:[NSDate date]];
+    
+    lastSelectedDate = [NSDate date];
+    
+    if (self.selectedDateBlock) {
+        self.selectedDateBlock(lastSelectedDate);
+    }
 }
 
 - (void)didChangeModeTouch
@@ -124,8 +119,6 @@
 {
     NSString *key = [[self dateFormatter] stringFromDate:date];
     
-    //NSLog(@"== %@" , key);
-    
     if(eventsByDate[key] && [eventsByDate[key] count] > 0){
         return YES;
     }
@@ -136,25 +129,56 @@
 
 - (void)calendarDidDateSelected:(JTCalendar *)calendar date:(NSDate *)date
 {
-//    NSString *key = [[self dateFormatter] stringFromDate:date];
-//    NSArray *events = eventsByDate[key];
-//    
-//    NSLog(@"Date: %@ - %ld events", key, [events count]);
+
     if (self.selectedDateBlock) {
         self.selectedDateBlock(date);
     }
+    
+    
+    lastSelectedDate = date ;
 }
 
 - (void)calendarDidLoadPreviousPage
 {
-    //NSLog(@"Previous page loaded");
+    static NSInteger count;
+    if ( self.calendar.calendarAppearance.isWeekMode) {
+        count = -7 ;
+    }
+    else{
+        count = -30 ;
+    }
     
-   // self.calendar.currentDateSelected = []
+    [self.calendar setCurrentDateSelected:[NSDate dateWithTimeInterval:count *60*60*24 sinceDate:lastSelectedDate]];
+    
+    [self.calendar reloadData];
+    
+    lastSelectedDate = self.calendar.currentDateSelected ;
+   
+    if (self.selectedDateBlock) {
+        self.selectedDateBlock(lastSelectedDate);
+    }
 }
 
 - (void)calendarDidLoadNextPage
 {
-    //NSLog(@"Next page loaded");
+    static NSInteger count;
+    if ( self.calendar.calendarAppearance.isWeekMode) {
+        count = 7 ;
+    }
+    else{
+        count = 30 ;
+    }
+    
+    [self.calendar setCurrentDateSelected:[NSDate dateWithTimeInterval:count *60*60*24 sinceDate:lastSelectedDate]];
+    
+    [self.calendar reloadData];
+    
+    lastSelectedDate = self.calendar.currentDateSelected ;
+    
+    if (self.selectedDateBlock) {
+        self.selectedDateBlock(lastSelectedDate);
+    }
+
 }
 
 #pragma mark - Transition examples
@@ -205,30 +229,31 @@
         dateFormatter.dateStyle = kCFDateFormatterShortStyle;
         dateFormatter.timeStyle = kCFDateFormatterShortStyle;
         dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-        dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+        dateFormatter.dateFormat = @"yyyy-MM-dd";
     }
     
     return dateFormatter;
 }
 
 
-- (void)createRandomEvents
+- (void)createRandomEvents:(NSDate*)randomDate
 {
-    eventsByDate = [NSMutableDictionary new];
-    
-    for(int i = 0; i < 30; ++i){
-        // Generate 30 random dates between now and 60 days later
-        NSDate *randomDate = [NSDate dateWithTimeInterval:(rand() % (3600 * 24 * 60)) sinceDate:[NSDate date]];
-        
-        // Use the date as key for eventsByDate
-        NSString *key = [[self dateFormatter] stringFromDate:randomDate];
-        
-        if(!eventsByDate[key]){
-            eventsByDate[key] = [NSMutableArray new];
-        }
-        
-        [eventsByDate[key] addObject:randomDate];
+    if (eventsByDate == nil) {
+         eventsByDate = [NSMutableDictionary new];
     }
+
+    NSString *key = [[self dateFormatter] stringFromDate:randomDate];
+    
+    if(!eventsByDate[key]){
+        eventsByDate[key] = [NSMutableArray new];
+    }
+    
+    [eventsByDate[key] addObject:randomDate];
+    
+    [[NSUserDefaults standardUserDefaults]setObject:eventsByDate forKey:EVENT_KEY];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    
+    [self.calendar reloadData];
 }
 
 
