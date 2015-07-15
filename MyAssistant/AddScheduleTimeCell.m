@@ -20,6 +20,20 @@
 
     // Configure the view for the selected state
 }
+- (IBAction)switchAction:(UISwitch *)sender {
+   //打开
+    if (sender.on) {
+        self.topConstraint.constant = 12.0 ;
+        self.startTimeLabel.hidden = YES ;
+        self.endTimeLabel.hidden = YES ;
+    }
+    else{
+        self.topConstraint.constant = 0.0 ;
+        self.startTimeLabel.hidden = NO ;
+        self.endTimeLabel.hidden = NO ;
+    }
+}
+
 - (void)configureCellWith:(UITableView*)tableView  indexPath:(NSIndexPath*)indexPath scheduleModel:(Schedule*)scheduleModel
 {
     NSString *startStr = [Tool stringFromFomate:scheduleModel.schedulestartTime formate:@"MM月dd日"];

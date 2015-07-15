@@ -27,17 +27,17 @@
         if (indexPath.row < 4) {
             NSArray *arr = @[@"zidingyitixing" , @"chongfu"];
             NSString *remindTime = nil ;
-            if (scheduleModel.scheduleRemindTime) {
-                remindTime = [Tool stringFromFomate:scheduleModel.scheduleRemindTime formate:@"HH:mm"];
+            if (scheduleModel.scheduleRemindType) {
+                remindTime = scheduleModel.scheduleRemindType ;
             }
             else{
-                remindTime = @"正点提醒";
+                 remindTime = [Tool stringFromFomate:scheduleModel.scheduleRemindTime formate:@"MM-dd HH:mm"];
             }
-            NSArray*arr1 = @[remindTime, @"重复"];
+            NSArray*arr1 = @[@"提醒", @"重复"];
             UIImage *image = [UIImage imageNamed:arr[indexPath.row - 2]];
             self.cellImageView.image = image ;
             self.cellTextLabel.text = arr1[indexPath.row - 2];
-            self.cellSubTextLabel.text = @"";
+            self.cellSubTextLabel.text = remindTime;
             
             if (indexPath.row == 3) {
                 self.cellSubTextLabel.text = scheduleModel.schedulerepeat.stringValue ;

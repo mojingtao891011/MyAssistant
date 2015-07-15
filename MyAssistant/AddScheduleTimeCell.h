@@ -18,6 +18,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *endTimeLabel;
 
 @property (weak, nonatomic) IBOutlet UISwitch *rimindSwitch;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topConstraint;
+
+- (IBAction)switchAction:(UISwitch *)sender;
 
 - (void)configureCellWith:(UITableView*)tableView  indexPath:(NSIndexPath*)indexPath scheduleModel:(Schedule*)scheduleModel;
 

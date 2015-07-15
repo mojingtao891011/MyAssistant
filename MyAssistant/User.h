@@ -26,6 +26,7 @@
 @property (nonatomic, retain) NSSet *taskExecutors;
 @property (nonatomic, retain) NSSet *taskFollowers;
 @property (nonatomic, retain) NSSet *subTaskExecutors;
+
 @end
 
 @interface User (CoreDataGeneratedAccessors)

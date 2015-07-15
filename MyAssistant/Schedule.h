@@ -2,7 +2,7 @@
 //  Schedule.h
 //  MyAssistant
 //
-//  Created by taomojingato on 15/7/11.
+//  Created by taomojingato on 15/7/15.
 //  Copyright (c) 2015年 mojingato. All rights reserved.
 //
 
@@ -14,7 +14,6 @@
 @interface Schedule : NSManagedObject
 
 @property (nonatomic, retain) NSString * scheduleAddress;
-@property (nonatomic, retain) NSDate * scheduleTheDay;
 @property (nonatomic, retain) NSDate * scheduleCreatTime;
 @property (nonatomic, retain) NSString * scheduleDescribe;
 @property (nonatomic, retain) NSDate * scheduleEndTime;
@@ -22,6 +21,8 @@
 @property (nonatomic, retain) NSDate * scheduleRemindTime;
 @property (nonatomic, retain) NSNumber * schedulerepeat;
 @property (nonatomic, retain) NSDate * schedulestartTime;
+@property (nonatomic, retain) NSDate * scheduleTheDay;
+@property (nonatomic, retain) NSString * scheduleRemindType;
 @property (nonatomic, retain) NSSet *annexs;
 @property (nonatomic, retain) NSSet *comments;
 @property (nonatomic, retain) User *creatScheduleUser;

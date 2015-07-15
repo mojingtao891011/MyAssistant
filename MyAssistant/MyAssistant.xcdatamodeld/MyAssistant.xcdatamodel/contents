@@ -24,6 +24,7 @@
         <attribute name="scheduleEndTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="scheduleName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="scheduleRemindTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="scheduleRemindType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="schedulerepeat" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="schedulestartTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="scheduleTheDay" optional="YES" attributeType="Date" syncable="YES"/>
@@ -80,7 +81,7 @@
     <elements>
         <element name="Annex" positionX="0" positionY="0" width="128" height="165"/>
         <element name="Comment" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Schedule" positionX="0" positionY="0" width="128" height="255"/>
+        <element name="Schedule" positionX="0" positionY="0" width="128" height="270"/>
         <element name="SubRemind" positionX="9" positionY="117" width="128" height="90"/>
         <element name="SubTask" positionX="9" positionY="117" width="128" height="120"/>
         <element name="Task" positionX="0" positionY="0" width="128" height="270"/>

@@ -90,6 +90,7 @@
     else if (indexPath.section == 4 ){
         self.cellTextLabel.text = @"子任务" ;
         self.cellImageView.image = [UIImage imageNamed:@"zirenwu"];
+         self.taskTagLabel.hidden = YES ;
     }
     
     if (indexPath.section == 2) {

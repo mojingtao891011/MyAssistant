@@ -1,33 +1,29 @@
 //
-//  DatePickerViewController.h
+//  ScheduleDateController.h
 //  MyAssistant
 //
-//  Created by taomojingato on 15/6/21.
+//  Created by taomojingato on 15/6/24.
 //  Copyright (c) 2015年 mojingato. All rights reserved.
 //
 
 #import "BaseController.h"
 
-@protocol DatePickerViewControllerDelegate <NSObject>
-
-- (void)selectedDate:(NSDate*)date ;
-
-@end
-
 typedef enum
 {
-    DatePickerModeDate = 0 ,
-    DatePickerModeDateAndTime = 1,
-    DatePickerModeTime = 2 ,
+    ModeTime = 0,
+   ModeDate = 1,
+   ModeDateAndTime = 2,
+   ModeCountDownTimer = 3 ,
     
-}DatePickerShowMode;
+}DATEPICKMODE_ENUM;
 
 @interface DatePickerController : BaseController
 
+@property (nonatomic , retain)NSDate *startTime ;
+@property (nonatomic , retain)NSDate *endTime ;
+@property (nonatomic , copy)void(^scheuleDateBlock)(NSDate *startTime , NSDate *endTime) ;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
-@property (nonatomic , copy)NSDate *curDate ;
-@property (nonatomic , assign)DatePickerShowMode datePickerShowMode ;
-@property (nonatomic , assign)id<DatePickerViewControllerDelegate>datePickerViewControllerDelegate ;
-@property (nonatomic , copy)void(^selectedDateBlock)(NSDate*date);
+//@property (nonatomic , assign)DATEPICKMODE_ENUM  dateModeEnum ;
+@property (nonatomic , assign)NSInteger  typeInt ;
 
 @end

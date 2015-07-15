@@ -7,12 +7,12 @@
 //
 
 #import "AddScheduleController.h"
-#import "DatePickerViewController.h"
+#import "DatePickerController.h"
 #import "RepeatRemindController.h"
 #import "PhtotoController.h"
-#import "DatePickerController.h"
 #import "SubRemindController.h"
 #import "FriendListController.h"
+#import "RemindTimeController.h"
 
 #import "AddScheduleContentCell.h"
 #import "AddSubRemindCell.h"
@@ -84,8 +84,8 @@
     self.scheduleModel = schedule ;
     
     //默认时间
-    self.scheduleModel.schedulestartTime = CUR_SELECTEDDATE ;
-    self.scheduleModel.scheduleEndTime = [NSDate dateWithTimeInterval:60*60 sinceDate:CUR_SELECTEDDATE];
+    self.scheduleModel.schedulestartTime = [NSDate date] ;
+    self.scheduleModel.scheduleEndTime = [NSDate dateWithTimeInterval:60*60 sinceDate:self.scheduleModel.schedulestartTime];
     
     return _scheduleModel ;
 }
@@ -151,6 +151,8 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     
 }
+
+
 #pragma mark - 添加自提醒
 - (void)addSubRemind:(NSIndexPath*)indexPath
 {
@@ -336,11 +338,16 @@
     WS(weakSelf);
     //日程时间
     if (indexPath.row == 1) {
-        DatePickerViewController *dataPickerCtl = [self fetchViewControllerByIdentifier:@"DatePickerController"];
+        DatePickerController *dataPickerCtl = [self fetchViewControllerByIdentifier:@"DatePickerController"];
         dataPickerCtl.typeInt = 2 ;
         dataPickerCtl.startTime = self.scheduleModel.schedulestartTime ;
         dataPickerCtl.endTime = [NSDate dateWithTimeInterval:60*60 sinceDate:self.scheduleModel.schedulestartTime];
         dataPickerCtl.scheuleDateBlock = ^(NSDate *startTime , NSDate *endTime){
+            
+            if ([[startTime laterDate:endTime]isEqualToDate:startTime]) {
+                endTime = startTime;
+            }
+            
             AddScheduleTimeCell *cell = (AddScheduleTimeCell*)[self.tableView cellForRowAtIndexPath:indexPath];
             NSString *startStr = [Tool stringFromFomate:startTime formate:@"MM月dd日"];
             NSString *endStr = [Tool stringFromFomate:endTime formate:@"MM月dd日"];
@@ -364,6 +371,8 @@
     }
     //提醒
     else if (indexPath.row == 2){
+        
+        /*
         DatePickerController *dataPickerCtl = [self fetchViewControllerByIdentifier:@"DatePickerViewController"];
         dataPickerCtl.curDate = self.scheduleModel.scheduleRemindTime ;
         dataPickerCtl.datePickerShowMode = DatePickerModeTime ;
@@ -378,7 +387,30 @@
         };
         
         [self.navigationController pushViewController:dataPickerCtl animated:YES];
-        
+        */
+        RemindTimeController *remindCtl = [self fetchViewControllerByIdentifier:@"RemindTimeController"];
+        remindCtl.scheduleStartTime = self.scheduleModel.schedulestartTime ;
+        remindCtl.remindDateBlock = ^(NSDate *date , NSString *remindType){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                AddScheduleContentCell *cell = (AddScheduleContentCell*)[weakSelf.tableView cellForRowAtIndexPath:indexPath];
+                if (date) {
+                    if (remindType) {
+                        cell.cellSubTextLabel.text =  remindType ;
+                    }else{
+                        cell.cellSubTextLabel.text = [Tool stringFromFomate:date formate:@"MM-dd HH:mm"];
+                    }
+                    
+                    weakSelf.scheduleModel.scheduleRemindTime = date ;
+                    weakSelf.scheduleModel.scheduleRemindType = remindType ;
+                }else{
+                    cell.cellSubTextLabel.text = @"无";
+                }
+                
+                
+               
+            });
+        };
+        [self.navigationController pushViewController:remindCtl animated:YES];
     }
     //重复
     else if (indexPath.row == 3){

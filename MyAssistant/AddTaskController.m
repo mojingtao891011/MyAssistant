@@ -9,7 +9,7 @@
 #import "AddTaskController.h"
 #import "AddTaskSetTimeCell.h"
 #import "AddSubTaskContentCell.h"
-#import "DatePickerViewController.h"
+#import "DatePickerController.h"
 #import "PhtotoController.h"
 #import "SetTagController.h"
 #import "AddSubTaskController.h"
@@ -275,11 +275,15 @@
     WS(weakself);
     //设置时间
     if (indexPath.row == 1) {
-        DatePickerViewController *dataPickerCtl = [self fetchViewControllerByIdentifier:@"DatePickerController"];
+        DatePickerController *dataPickerCtl = [self fetchViewControllerByIdentifier:@"DatePickerController"];
         dataPickerCtl.typeInt = 0 ;
         dataPickerCtl.startTime = self.taskModel.taskStartTime ;
         dataPickerCtl.endTime = self.taskModel.taskEndTime;
         dataPickerCtl.scheuleDateBlock = ^(NSDate *startTime , NSDate *endTime){
+            
+            if ([[startTime laterDate:endTime]isEqualToDate:startTime]) {
+                endTime = [NSDate dateWithTimeInterval:24*60*60 sinceDate:startTime];
+            }
             
             //保存时间
             weakself.taskModel.taskStartTime = startTime ;

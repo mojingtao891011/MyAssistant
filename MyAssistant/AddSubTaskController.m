@@ -7,7 +7,6 @@
 //
 
 #import "AddSubTaskController.h"
-#import "DatePickerViewController.h"
 #import "User.h"
 #import "FriendListController.h"
 
@@ -96,59 +95,59 @@
 {
     WS(weakself);
     
-    if ([segue.identifier isEqualToString:@"addSubTaskCtlPushDatePickSegue"]) {
-        
-        DatePickerViewController *dataPickerCtl = segue.destinationViewController;
-        dataPickerCtl.typeInt = 0 ;
-        dataPickerCtl.startTime = self.subTask.subTaskStartTime ;
-        dataPickerCtl.endTime = self.subTask.subTaskEndTime;
-        dataPickerCtl.scheuleDateBlock = ^(NSDate *startTime , NSDate *endTime){
-            
-            //保存时间
-            weakself.subTask.subTaskStartTime = startTime ;
-            weakself.subTask.subTaskEndTime = endTime ;
-            
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //判断是否是今年 、今天
-                NSString *startString = nil ;
-                NSString *endString = nil ;
-                //开始时间
-                if ([startTime isThisYear]) {
-                    startString = [Tool stringFromFomate:startTime formate:@"MM月dd日"];
-                }
-                else{
-                    startString = [Tool stringFromFomate:startTime formate:@"yyyy年MM月dd日"] ;
-                }
-                
-                if ([startTime isToday]) {
-                    startString = @"今天";
-                }
-                //结束时间
-                if ([endTime isThisYear]) {
-                    endString = [Tool stringFromFomate:endTime formate:@"MM月dd日"] ;
-                }
-                else{
-                    endString = [Tool stringFromFomate:endTime formate:@"yyyy年MM月dd日"] ;
-                }
-                
-                //开始时间、结束时间都是今天(今天00:15-0630)
-                if ([startTime isToday] &&[endTime isToday] ) {
-                    startString  = [NSString stringWithFormat:@"今天%@",[Tool stringFromFomate:startTime formate:@"HH:mm"]];
-                    endString = [Tool stringFromFomate:endTime formate:@"HH:mm"] ;
-                }
-                
-                
-                weakself.setTimeLabel.text = [NSString stringWithFormat:@"%@-%@" , startString , endString];
-                
-            });
-            
-            
-        };
-       
-        
-    }
-    else if ([segue.identifier isEqualToString:@"pushFriendListControllerSegue"]){
+//    if ([segue.identifier isEqualToString:@"addSubTaskCtlPushDatePickSegue"]) {
+//        
+//        DatePickerViewController *dataPickerCtl = segue.destinationViewController;
+//        dataPickerCtl.typeInt = 0 ;
+//        dataPickerCtl.startTime = self.subTask.subTaskStartTime ;
+//        dataPickerCtl.endTime = self.subTask.subTaskEndTime;
+//        dataPickerCtl.scheuleDateBlock = ^(NSDate *startTime , NSDate *endTime){
+//            
+//            //保存时间
+//            weakself.subTask.subTaskStartTime = startTime ;
+//            weakself.subTask.subTaskEndTime = endTime ;
+//            
+//            
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                //判断是否是今年 、今天
+//                NSString *startString = nil ;
+//                NSString *endString = nil ;
+//                //开始时间
+//                if ([startTime isThisYear]) {
+//                    startString = [Tool stringFromFomate:startTime formate:@"MM月dd日"];
+//                }
+//                else{
+//                    startString = [Tool stringFromFomate:startTime formate:@"yyyy年MM月dd日"] ;
+//                }
+//                
+//                if ([startTime isToday]) {
+//                    startString = @"今天";
+//                }
+//                //结束时间
+//                if ([endTime isThisYear]) {
+//                    endString = [Tool stringFromFomate:endTime formate:@"MM月dd日"] ;
+//                }
+//                else{
+//                    endString = [Tool stringFromFomate:endTime formate:@"yyyy年MM月dd日"] ;
+//                }
+//                
+//                //开始时间、结束时间都是今天(今天00:15-0630)
+//                if ([startTime isToday] &&[endTime isToday] ) {
+//                    startString  = [NSString stringWithFormat:@"今天%@",[Tool stringFromFomate:startTime formate:@"HH:mm"]];
+//                    endString = [Tool stringFromFomate:endTime formate:@"HH:mm"] ;
+//                }
+//                
+//                
+//                weakself.setTimeLabel.text = [NSString stringWithFormat:@"%@-%@" , startString , endString];
+//                
+//            });
+//            
+//            
+//        };
+//       
+//        
+//    }
+     if ([segue.identifier isEqualToString:@"pushFriendListControllerSegue"]){
         
         /*
          
