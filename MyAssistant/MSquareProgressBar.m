@@ -43,7 +43,7 @@
    
     //1
     self.MLayer = [CALayer layer];
-    self.MLayer.frame = CGRectMake(0, 0, 50, self.height);
+    self.MLayer.frame = CGRectMake(0, 0, 0, self.height);
     self.MLayer.backgroundColor = [UIColor colorWithRed:239/255.0 green:103/255.0 blue:60/255.0 alpha:0.5].CGColor ;
     [self.layer addSublayer:self.MLayer];
     

@@ -22,17 +22,22 @@
 
     // Configure the view for the selected state
 }
-- (void)configureCellWithTableView:(UITableView*)tableView indexPath:(NSIndexPath*)indexPath taskModel:(Task*)taskModel
+- (void)configureCellWithTableView:(UITableView*)tableView indexPath:(NSIndexPath*)indexPath subTaskModel:(SubTask*)subTask
 {
-    SubTask *subTask = [taskModel.subTasks allObjects][indexPath.row - 1];
+    
     self.subTaskName.text = subTask.subTaskName ;
     self.subTaskExecutor.text = subTask.executor.userName ;
-    
+    self.selectButton.selected = subTask.isFininsh.boolValue ;
     self.subTaskEndTime.text = [NSString stringWithFormat:@"%@截止",[Tool stringFromFomate:subTask.subTaskEndTime formate:@"MM月dd日"]];
 }
 
 - (IBAction)selectButtonAction:(UIButton *)sender {
     
     sender.selected = !sender.selected ;
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(setSubTaskState:index:)]) {
+        [_delegate setSubTaskState:sender.selected index:sender.tag];
+    }
+
 }
 @end

@@ -48,10 +48,13 @@
     self.taskNameLabel.text = _myTask.taskName ;
     NSString *endStr = [Tool stringFromFomate:_myTask.taskEndTime formate:@"MM月dd日"];
     self.taskEndtimeLabel.text =[NSString stringWithFormat:@"结束%@",endStr] ;
+    self.taskStateView.labelTitle = [NSString stringWithFormat:@"%0.0f%@" , [_myTask.taskProgress floatValue] , @"%"];
     
     self.taskStateView.labelFontSize = 7.0 ;
+    self.taskStateView.strokeStartValues = 0;
+    self.taskStateView.strokeEndValues = [_myTask.taskProgress floatValue] ;
     
-
+    
     NSTimeInterval  seconds_f = [_myTask.taskEndTime timeIntervalSinceDate:[NSDate date]];
     CGFloat day_f = seconds_f / (24*60*60);
     if (day_f < 0) {
@@ -63,5 +66,6 @@
     else {
         self.taskEndDayLabel.text = [NSString stringWithFormat:@"还剩%0.0f天" , day_f ];
     }
+    
 }
 @end

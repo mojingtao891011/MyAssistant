@@ -265,7 +265,9 @@
     }
    
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+         [[NSNotificationCenter defaultCenter]postNotificationName:NOTE_MODIFICATION_TASK object:self.taskModel];
+    }];
 
 }
 #pragma mark - ClickRow

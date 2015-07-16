@@ -40,6 +40,7 @@
         <relationship name="schedule" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Schedule" inverseName="subReminds" inverseEntity="Schedule" syncable="YES"/>
     </entity>
     <entity name="SubTask" representedClassName="SubTask" syncable="YES">
+        <attribute name="isFininsh" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="subTaskEndTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="subTaskName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subTaskStartTime" optional="YES" attributeType="Date" syncable="YES"/>
@@ -83,7 +84,7 @@
         <element name="Comment" positionX="0" positionY="0" width="128" height="120"/>
         <element name="Schedule" positionX="0" positionY="0" width="128" height="270"/>
         <element name="SubRemind" positionX="9" positionY="117" width="128" height="90"/>
-        <element name="SubTask" positionX="9" positionY="117" width="128" height="120"/>
+        <element name="SubTask" positionX="9" positionY="117" width="128" height="135"/>
         <element name="Task" positionX="0" positionY="0" width="128" height="270"/>
         <element name="User" positionX="0" positionY="0" width="128" height="240"/>
     </elements>

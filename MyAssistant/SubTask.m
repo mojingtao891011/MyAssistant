@@ -2,7 +2,7 @@
 //  SubTask.m
 //  MyAssistant
 //
-//  Created by taomojingato on 15/7/7.
+//  Created by taomojingato on 15/7/16.
 //  Copyright (c) 2015年 mojingato. All rights reserved.
 //
 
@@ -16,7 +16,8 @@
 @dynamic subTaskEndTime;
 @dynamic subTaskName;
 @dynamic subTaskStartTime;
-@dynamic task;
+@dynamic isFininsh;
 @dynamic executor;
+@dynamic task;
 
 @end

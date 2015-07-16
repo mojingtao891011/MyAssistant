@@ -2,7 +2,7 @@
 //  SubTask.h
 //  MyAssistant
 //
-//  Created by taomojingato on 15/7/7.
+//  Created by taomojingato on 15/7/16.
 //  Copyright (c) 2015年 mojingato. All rights reserved.
 //
 
@@ -16,7 +16,8 @@
 @property (nonatomic, retain) NSDate * subTaskEndTime;
 @property (nonatomic, retain) NSString * subTaskName;
 @property (nonatomic, retain) NSDate * subTaskStartTime;
-@property (nonatomic, retain) Task *task;
+@property (nonatomic, retain) NSNumber * isFininsh;
 @property (nonatomic, retain) User *executor;
+@property (nonatomic, retain) Task *task;
 
 @end

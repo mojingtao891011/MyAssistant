@@ -7,11 +7,9 @@
 //
 
 #import "TaskDetailsController.h"
-#import "TaskDetailNameCel.h"
+#import "TaskDetailNameCell.h"
 #import "TaskDetailContentCell.h"
 #import "TaskDetailTagCell.h"
-
-
 #import "User.h"
 #import "PhtotoController.h"
 #import "EditTaskNameController.h"
@@ -20,13 +18,14 @@
 #import "SubTaskCell.h"
 #import "AddTaskController.h"
 #import "BaseNavgationController.h"
+#import "FollowersController.h"
 
-@interface TaskDetailsController ()<UITableViewDataSource , UITableViewDelegate>
+
+@interface TaskDetailsController ()<UITableViewDataSource , UITableViewDelegate , TaskDetailNameCellDelegate , SubTaskCellDelegate>
 {
     SetTagController *setTaskTagCtl ;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-//@property (nonatomic ,retain)EditTaskNameController *editTaskNameCtl ;
 
 @end
 
@@ -36,6 +35,8 @@
     [super viewDidLoad];
     
     [self _initBarButtonItem];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(modificationComplection:) name:NOTE_MODIFICATION_TASK object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -64,21 +65,29 @@
     [self presentViewController:AddTaskNavCtl animated:YES completion:nil];
     
 }
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)modificationComplection:(NSNotification*)note
 {
+    self.taskModel = note.object ;
+    [self.tableView reloadData];
+}
+#pragma mark - CellDelegate
+- (void)setTaskState:(BOOL)isFinish
+{
+    self.taskModel.taskIsFininsh = [NSNumber numberWithBool:isFinish];
     
-    WS(weakSelf );
-    
-    if ([segue.identifier isEqualToString:@"SetTagControllerSegue"]){
-       setTaskTagCtl = segue.destinationViewController ;
-        setTaskTagCtl.curTaskTagType = [self.taskModel.taskTag intValue] ;
-        setTaskTagCtl.selectedTaskTagBlock = ^(NSInteger taskTag){
-            weakSelf.taskModel.taskTag = [NSNumber numberWithInteger:taskTag];
-            [[CoreDataStack shareManaged].managedObjectContext save:nil];
-             [weakSelf.tableView reloadData];
-        };
-
+    if (![[CoreDataStack shareManaged].managedObjectContext save:nil]) {
+        debugLog(@"isfininsh error");
     }
+    
+}
+- (void)setSubTaskState:(BOOL)isFininsh index:(NSInteger)index
+{
+    SubTask *subTask = [self.taskModel.subTasks allObjects][index];
+    subTask.isFininsh = [NSNumber numberWithBool:isFininsh] ;
+    if (![[CoreDataStack shareManaged].managedObjectContext save:nil]) {
+        debugLog(@"isfininsh error");
+    }
+    
 }
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -97,15 +106,20 @@
     //主任务、子任务
     if (indexPath.section == 0 ) {
         if (indexPath.row == 0) {
-            TaskDetailNameCel*cell = [tableView dequeueReusableCellWithIdentifier:@"TaskDetailNameCell" forIndexPath:indexPath];
+            TaskDetailNameCell*cell = [tableView dequeueReusableCellWithIdentifier:@"TaskDetailNameCell" forIndexPath:indexPath];
+            cell.delegate = self ;
             [cell configureCellWithTableView:tableView indexPath:indexPath taskModel:self.taskModel];
             return cell ;
         }
-        if (indexPath.row < self.taskModel.subTasks.count + 1) {
+        else if (indexPath.row < self.taskModel.subTasks.count + 1) {
             SubTaskCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SubTaskCell" forIndexPath:indexPath];
-            [cell configureCellWithTableView:tableView indexPath:indexPath taskModel:self.taskModel];
+            cell.delegate = self ;
+            cell.selectButton.tag = indexPath.row - 1 ;
+            NSArray *arr = [self.taskModel.subTasks allObjects];
+            [cell configureCellWithTableView:tableView indexPath:indexPath subTaskModel:arr[indexPath.row - 1]];
             return cell ;
         }
+        
     }
     
     //普通
@@ -115,8 +129,19 @@
         return cell ;
     }
     
+    
+    //other cell
     TaskDetailContentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TaskDetailContentCell" forIndexPath:indexPath];
     [cell configureCellWithTable:tableView indexPath:indexPath taskModel:self.taskModel];
+    
+    //有更多箭头
+    if (indexPath.section == 1 || indexPath.section == 3) {
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator ;
+    }
+    else{
+        cell.accessoryType = UITableViewCellAccessoryNone ;
+    }
+    
     return cell ;
 }
 #pragma mark - UITableViewDelegate
@@ -132,8 +157,17 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    
-    
+    if (indexPath.section == 1) {
+        FollowersController *followersCtl = [self fetchViewControllerByIdentifier:@"FollowersController"];
+        followersCtl.followers = [self.taskModel.followers allObjects];
+        [self.navigationController pushViewController:followersCtl animated:YES];
+    }
+    else if (indexPath.section == 3){
+        PhtotoController *photoCtl = [[PhtotoController alloc]init];
+        photoCtl.isHideRight = YES ;
+        photoCtl.taskModel = self.taskModel ;
+        [self.navigationController pushViewController:photoCtl animated:YES];
+    }
 }
 
 @end

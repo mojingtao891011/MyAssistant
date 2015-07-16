@@ -26,6 +26,8 @@
     [super viewDidLoad];
     
     [self _initBarButtonItem];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(modificationComplection:)name:NOTE_MODIFICATION_SCHEDULE object:nil];
 }
 #pragma mark - UI
 - (void)_initBarButtonItem
@@ -51,6 +53,11 @@
     scheduleCtl.scheduleModel = self.scheduleModel ;
     
     [self presentViewController:addScheduleNavCtl animated:YES completion:nil];
+}
+- (void)modificationComplection:(NSNotification*)note
+{
+    self.scheduleModel = note.object ;
+    [self.tableView reloadData];
 }
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

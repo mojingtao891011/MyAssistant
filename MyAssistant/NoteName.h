@@ -13,4 +13,7 @@
 #define NOTE_ADDSCHEDULECOMPLETE                                             @"note_addScheduleComplete"
 #define NOTE_RECEIVE_MESSAGE                                                            @"note_receive_message"
 
+#define NOTE_MODIFICATION_TASK                                                                   @"note_modification_Task"
+#define NOTE_MODIFICATION_SCHEDULE                                                         @"note_modification_Schedule"
+
 #endif

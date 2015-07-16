@@ -9,7 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "MSquareProgressBar.h"
 
-@class  Task ;
+@class  Task ,SubTask;
+@protocol SubTaskCellDelegate <NSObject>
+
+- (void)setSubTaskState:(BOOL)isFininsh index:(NSInteger)index;
+
+@end
+
 @interface SubTaskCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIButton *selectButton;
@@ -17,8 +23,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *subTaskExecutor;
 @property (weak, nonatomic) IBOutlet MSquareProgressBar *subtaskProgress;
 @property (weak, nonatomic) IBOutlet UILabel *subTaskEndTime;
+@property (nonatomic , assign)id<SubTaskCellDelegate>delegate ;
 
-- (void)configureCellWithTableView:(UITableView*)tableView indexPath:(NSIndexPath*)indexPath taskModel:(Task*)taskModel ;
+- (void)configureCellWithTableView:(UITableView*)tableView indexPath:(NSIndexPath*)indexPath subTaskModel:(SubTask*)subTask ;
+
 - (IBAction)selectButtonAction:(UIButton *)sender;
 
 @end

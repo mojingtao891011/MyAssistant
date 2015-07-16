@@ -43,7 +43,7 @@
     //self.shapeLayer1.position = self.center ;
     
     self.shapeLayer1.fillColor = [UIColor clearColor].CGColor ;
-    self.shapeLayer1.strokeColor = [UIColor colorWithRed:246/255.0 green:185/255.0 blue:163/255.0 alpha:1].CGColor;
+    self.shapeLayer1.strokeColor = [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:0.3].CGColor ;
     self.shapeLayer1.lineWidth = 5.f ;
     self.shapeLayer1.strokeStart = 0.f ;
     self.shapeLayer1.strokeEnd = 1.f ;
@@ -63,7 +63,7 @@
     
     self.shapeLayer.fillColor = [UIColor clearColor].CGColor ;
     self.shapeLayer.strokeColor = [UIColor colorWithRed:239/255.0 green:103/255.0 blue:60/255.0 alpha:0.5].CGColor;
-    self.shapeLayer.lineWidth = 7.f ;
+    self.shapeLayer.lineWidth = 5.f ;
     self.shapeLayer.strokeStart =0.f ;
     self.shapeLayer.strokeEnd = 0.f ;
 //    self.shapeLayer.lineCap = @"square";
@@ -77,7 +77,7 @@
     
     //UIlabel
     self.progressBarLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.width  , self.height)];
-    self.progressBarLabel.font = [UIFont systemFontOfSize:15.0];
+    self.progressBarLabel.font = [UIFont systemFontOfSize:8.0];
     //self.progressBarLabel.center = self.center ;
     self.progressBarLabel.text = @"0%";
     self.progressBarLabel.textAlignment = NSTextAlignmentCenter ;

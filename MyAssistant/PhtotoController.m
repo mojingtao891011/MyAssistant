@@ -60,6 +60,7 @@
         [self setupButtons];
     }
     
+    self.title = @"附件" ;
     
     [self tableView];
 }
