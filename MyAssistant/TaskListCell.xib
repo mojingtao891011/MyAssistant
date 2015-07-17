@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C2055" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="60" id="KGk-i7-Jjw" customClass="TaskListCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jsP-Vm-A26">
+                        <rect key="frame" x="-8" y="2" width="4" height="55"/>
+                        <color key="backgroundColor" red="0.94117647059999998" green="0.4039215686" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="4" id="7ch-TU-q11"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="今日任务" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ges-jA-NQI">
+                        <rect key="frame" x="121" y="18" width="118" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="Dex-LX-N6a"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UC8-cA-Gj9" customClass="MRoundProgressBar">
+                        <rect key="frame" x="269" y="15" width="30" height="30"/>
+                        <color key="backgroundColor" red="0.94117647059999998" green="0.4039215686" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="pDd-m9-ndL"/>
+                            <constraint firstAttribute="width" constant="30" id="xGD-1Y-XWE"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="剩余3天" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A3I-4F-u32">
+                        <rect key="frame" x="16" y="30" width="88" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="R5l-G1-6Te"/>
+                            <constraint firstAttribute="width" constant="88" id="obK-RM-2KM"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="结束06月10日" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B0v-47-br2">
+                        <rect key="frame" x="16" y="8" width="107" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="107" id="CuX-5D-O6x"/>
+                            <constraint firstAttribute="height" constant="21" id="ank-4D-HXi"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="B0v-47-br2" firstAttribute="leading" secondItem="A3I-4F-u32" secondAttribute="leading" id="6Kt-ul-4hC"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="jsP-Vm-A26" secondAttribute="bottom" constant="-5.5" id="8DX-Mp-bJF"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="UC8-cA-Gj9" secondAttribute="trailing" constant="13" id="D9J-2H-LsQ"/>
+                    <constraint firstItem="A3I-4F-u32" firstAttribute="top" secondItem="B0v-47-br2" secondAttribute="bottom" constant="1" id="Hfn-1U-jvh"/>
+                    <constraint firstItem="B0v-47-br2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="N2K-cN-uPe"/>
+                    <constraint firstItem="Ges-jA-NQI" firstAttribute="leading" secondItem="jsP-Vm-A26" secondAttribute="trailing" constant="125" id="SDe-vx-SSW"/>
+                    <constraint firstItem="B0v-47-br2" firstAttribute="leading" secondItem="jsP-Vm-A26" secondAttribute="trailing" constant="20" id="ZyG-iA-YXv"/>
+                    <constraint firstAttribute="centerY" secondItem="Ges-jA-NQI" secondAttribute="centerY" id="cGB-o9-gkQ"/>
+                    <constraint firstAttribute="centerY" secondItem="UC8-cA-Gj9" secondAttribute="centerY" id="lsy-or-B8f"/>
+                    <constraint firstItem="jsP-Vm-A26" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-6" id="piZ-WG-lxh"/>
+                    <constraint firstItem="UC8-cA-Gj9" firstAttribute="leading" secondItem="Ges-jA-NQI" secondAttribute="trailing" constant="30" id="rnB-pi-VVG"/>
+                    <constraint firstItem="jsP-Vm-A26" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-16" id="xX2-9I-FnR"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="endTimeLabel" destination="B0v-47-br2" id="HDM-AN-YbT"/>
+                <outlet property="remainderTimeLabel" destination="A3I-4F-u32" id="g1O-CF-9BZ"/>
+                <outlet property="taskNameLabel" destination="Ges-jA-NQI" id="lBN-fz-7Sj"/>
+                <outlet property="taskProgressBar" destination="UC8-cA-Gj9" id="Icy-3R-8kx"/>
+                <outlet property="taskStateImageView" destination="jsP-Vm-A26" id="r6W-sl-GHk"/>
+            </connections>
+            <point key="canvasLocation" x="48" y="238"/>
+        </tableViewCell>
+    </objects>
+</document>
