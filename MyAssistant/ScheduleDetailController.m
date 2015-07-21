@@ -8,12 +8,12 @@
 
 #import "ScheduleDetailController.h"
 #import "ScheduleDetailNameCell.h"
-#import "ScheduleSubRemindCell.h"
 #import "ScheduleContentCell.h"
 #import "AddScheduleController.h"
 #import "BaseNavgationController.h"
 #import "ScheduleFollowerController.h"
 #import "PhtotoController.h"
+#import "ScheduleSubRemindCell.h"
 
 @interface ScheduleDetailController ()<UITableViewDataSource , UITableViewDelegate>
 
@@ -67,7 +67,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
    
-    NSArray *arr = @[@(1) , @(1) , @(_scheduleModel.subReminds.count + 1) , @(1)];
+    NSArray *arr = @[@(1) , @(1) , @(_scheduleModel.subReminds.count) , @(1)];
     return [arr[section] integerValue];
     
 }

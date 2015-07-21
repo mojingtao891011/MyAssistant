@@ -58,9 +58,9 @@
 {
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Task"];
     
-    User *curUser = [CoreDataModelService fetchUserByName:DEVICE_NAME];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"creatTaskUser.userName = %@" ,curUser.userName ];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"taskName != nil"];
     [fetchRequest setPredicate:predicate];
+    
     
     NSError *error = nil ;
     NSArray *results = [[CoreDataStack shareManaged].managedObjectContext executeFetchRequest:fetchRequest error:&error];
@@ -79,6 +79,8 @@
 {
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Schedule"];
     
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"scheduleName != nil"];
+    [fetchRequest setPredicate:predicate];
     
     NSError *error = nil ;
     NSArray *results = [[CoreDataStack shareManaged].managedObjectContext executeFetchRequest:fetchRequest error:&error];
@@ -93,26 +95,6 @@
     
     return results;
 
-}
-+ (Project*)fetchProjectByName:(NSString*)projectName
-{
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Project"];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"projectName == %@",projectName];
-    [fetchRequest setPredicate:predicate];
-    
-    NSError *error = nil ;
-    NSArray *results = [[CoreDataStack shareManaged].managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (error) {
-        NSLog(@"ByNameFetchProjectFail");
-        abort();
-    }
-    
-    if (results.count == 0) {
-        return nil ;
-    }
-    
-    Project *project = [results firstObject];
-    return project;
 }
 
 +(NSArray*)fetchTaskByDate:(NSDate*)date
@@ -173,5 +155,22 @@
     [[CoreDataStack shareManaged].managedObjectContext deleteObject:taskModel];
     
     return  [[CoreDataStack shareManaged].managedObjectContext  save:nil];
+}
++ (SubRemind*)fetchSubRemindBySubRemindNumber:(NSInteger)number  schedule:(Schedule*)schedule
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"SubRemind"];
+    request.predicate = [NSPredicate predicateWithFormat:@"subRemindNumber ==%@ && schedule == %@" , [NSNumber numberWithInteger:number] , schedule];
+    NSError *error;
+    SubRemind *subRemind = nil ;
+    //进行查询
+    NSArray *results=[[CoreDataStack shareManaged].managedObjectContext executeFetchRequest:request error:&error];
+    if (error) {
+        NSLog(@"查询过程中发生错误，错误信息：%@！",error.localizedDescription);
+        abort() ;
+    }else{
+        subRemind =[results firstObject];
+    }
+
+    return subRemind ;
 }
 @end

@@ -89,15 +89,16 @@
 		FBC2981E1B44DB2A00DBB57E /* ZLPhotoPickerGroupTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC297E61B44DB2A00DBB57E /* ZLPhotoPickerGroupTableViewCell.m */; };
 		FBC2981F1B44DB2A00DBB57E /* ZLPhotoPickerGroupTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBC297E71B44DB2A00DBB57E /* ZLPhotoPickerGroupTableViewCell.xib */; };
 		FBC298201B44DB2A00DBB57E /* ZLPhotoPickerImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC297E91B44DB2A00DBB57E /* ZLPhotoPickerImageView.m */; };
-		FBC2A8B81B56AB620019C938 /* Schedule.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC2A8B71B56AB620019C938 /* Schedule.m */; };
 		FBC2A8BB1B56B2220019C938 /* DatePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC2A8BA1B56B2220019C938 /* DatePickerController.m */; };
 		FBC2D8C21B4E43B90098498A /* AddScheduleTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC2D8BA1B4E43B90098498A /* AddScheduleTimeCell.m */; };
 		FBC2D8C31B4E43B90098498A /* AddScheduleContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC2D8BC1B4E43B90098498A /* AddScheduleContentCell.m */; };
 		FBC2D8C41B4E43B90098498A /* AddSubRemindCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC2D8BE1B4E43B90098498A /* AddSubRemindCell.m */; };
 		FBC2D8C51B4E43B90098498A /* AddScheduleController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC2D8C01B4E43B90098498A /* AddScheduleController.m */; };
 		FBC2D8C91B4E46AB0098498A /* SubRemindContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC2D8C81B4E46AB0098498A /* SubRemindContentCell.m */; };
-		FBC2D8CF1B4E4FA50098498A /* SubRemindController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC2D8CE1B4E4FA50098498A /* SubRemindController.m */; };
 		FBC2FF281B33AF1C0068E0D9 /* ScheduleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC2FF271B33AF1C0068E0D9 /* ScheduleCell.m */; };
+		FBC33B321B5E1B240048CDBC /* SubRemind.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC33B311B5E1B240048CDBC /* SubRemind.m */; };
+		FBC33B381B5E2A110048CDBC /* ScheduleSubRemindCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC33B371B5E2A110048CDBC /* ScheduleSubRemindCell.m */; };
+		FBC33B3B1B5E4FC10048CDBC /* Schedule.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC33B3A1B5E4FC10048CDBC /* Schedule.m */; };
 		FBC358FD1B594B72007C9242 /* ScheduleHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC358FB1B594B72007C9242 /* ScheduleHeaderCell.m */; };
 		FBC358FE1B594B72007C9242 /* ScheduleHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBC358FC1B594B72007C9242 /* ScheduleHeaderCell.xib */; };
 		FBC35ABC1B40E03200119BA9 /* Mbutton.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC35ABB1B40E03200119BA9 /* Mbutton.m */; };
@@ -128,7 +129,6 @@
 		FBC7D8671B5789D700130645 /* SubTask.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC7D8661B5789D700130645 /* SubTask.m */; };
 		FBC7D86A1B57975400130645 /* FollowersController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC7D8691B57975400130645 /* FollowersController.m */; };
 		FBC7D86E1B57990B00130645 /* FollowersCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC7D86D1B57990B00130645 /* FollowersCell.m */; };
-		FBC7EE1A1B499FCD0062DD3D /* SubRemind.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC7EE191B499FCD0062DD3D /* SubRemind.m */; };
 		FBC7EE241B4A2F560062DD3D /* NetworkService.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC7EE231B4A2F560062DD3D /* NetworkService.m */; };
 		FBC7EE271B4A2F830062DD3D /* NSMutableURLRequest+Upload.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC7EE261B4A2F830062DD3D /* NSMutableURLRequest+Upload.m */; };
 		FBC7EE2F1B4A79FA0062DD3D /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC7EE2A1B4A79FA0062DD3D /* SVIndefiniteAnimatedView.m */; };
@@ -141,7 +141,6 @@
 		FBC8F8091B4D3CC900021FA7 /* SubTaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC8F8081B4D3CC900021FA7 /* SubTaskCell.m */; };
 		FBC91C8D1B4F726B008B6F69 /* ScheduleDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC91C8C1B4F726B008B6F69 /* ScheduleDetailController.m */; };
 		FBC91C901B4F7C06008B6F69 /* ScheduleDetailNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC91C8F1B4F7C06008B6F69 /* ScheduleDetailNameCell.m */; };
-		FBC91C931B4F7C3B008B6F69 /* ScheduleSubRemindCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC91C921B4F7C3B008B6F69 /* ScheduleSubRemindCell.m */; };
 		FBC91C961B4F7C58008B6F69 /* ScheduleContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC91C951B4F7C58008B6F69 /* ScheduleContentCell.m */; };
 		FBC9B1BE1B3E5A900053FE96 /* SelfController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC9B1BD1B3E5A900053FE96 /* SelfController.m */; };
 		FBCB32E81B47CA18007F4BF9 /* TodayCalendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBCB32E71B47CA18007F4BF9 /* TodayCalendCell.m */; };
@@ -328,8 +327,6 @@
 		FBC297E81B44DB2A00DBB57E /* ZLPhotoPickerImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLPhotoPickerImageView.h; sourceTree = "<group>"; };
 		FBC297E91B44DB2A00DBB57E /* ZLPhotoPickerImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLPhotoPickerImageView.m; sourceTree = "<group>"; };
 		FBC297EA1B44DB2A00DBB57E /* ZLPhotoPickerCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLPhotoPickerCommon.h; sourceTree = "<group>"; };
-		FBC2A8B61B56AB620019C938 /* Schedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Schedule.h; sourceTree = "<group>"; };
-		FBC2A8B71B56AB620019C938 /* Schedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Schedule.m; sourceTree = "<group>"; };
 		FBC2A8B91B56B2220019C938 /* DatePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerController.h; sourceTree = "<group>"; };
 		FBC2A8BA1B56B2220019C938 /* DatePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerController.m; sourceTree = "<group>"; };
 		FBC2D8B91B4E43B90098498A /* AddScheduleTimeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddScheduleTimeCell.h; sourceTree = "<group>"; };
@@ -342,10 +339,14 @@
 		FBC2D8C01B4E43B90098498A /* AddScheduleController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddScheduleController.m; sourceTree = "<group>"; };
 		FBC2D8C71B4E46AB0098498A /* SubRemindContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubRemindContentCell.h; sourceTree = "<group>"; };
 		FBC2D8C81B4E46AB0098498A /* SubRemindContentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubRemindContentCell.m; sourceTree = "<group>"; };
-		FBC2D8CD1B4E4FA50098498A /* SubRemindController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubRemindController.h; sourceTree = "<group>"; };
-		FBC2D8CE1B4E4FA50098498A /* SubRemindController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubRemindController.m; sourceTree = "<group>"; };
 		FBC2FF261B33AF1C0068E0D9 /* ScheduleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduleCell.h; sourceTree = "<group>"; };
 		FBC2FF271B33AF1C0068E0D9 /* ScheduleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduleCell.m; sourceTree = "<group>"; };
+		FBC33B301B5E1B240048CDBC /* SubRemind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubRemind.h; sourceTree = "<group>"; };
+		FBC33B311B5E1B240048CDBC /* SubRemind.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubRemind.m; sourceTree = "<group>"; };
+		FBC33B361B5E277F0048CDBC /* ScheduleSubRemindCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduleSubRemindCell.h; sourceTree = "<group>"; };
+		FBC33B371B5E2A110048CDBC /* ScheduleSubRemindCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduleSubRemindCell.m; sourceTree = "<group>"; };
+		FBC33B391B5E4FC10048CDBC /* Schedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Schedule.h; sourceTree = "<group>"; };
+		FBC33B3A1B5E4FC10048CDBC /* Schedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Schedule.m; sourceTree = "<group>"; };
 		FBC358FA1B594B72007C9242 /* ScheduleHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduleHeaderCell.h; sourceTree = "<group>"; };
 		FBC358FB1B594B72007C9242 /* ScheduleHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduleHeaderCell.m; sourceTree = "<group>"; };
 		FBC358FC1B594B72007C9242 /* ScheduleHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScheduleHeaderCell.xib; sourceTree = "<group>"; };
@@ -393,8 +394,6 @@
 		FBC7D8691B57975400130645 /* FollowersController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FollowersController.m; sourceTree = "<group>"; };
 		FBC7D86C1B57990B00130645 /* FollowersCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FollowersCell.h; sourceTree = "<group>"; };
 		FBC7D86D1B57990B00130645 /* FollowersCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FollowersCell.m; sourceTree = "<group>"; };
-		FBC7EE181B499FCD0062DD3D /* SubRemind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubRemind.h; sourceTree = "<group>"; };
-		FBC7EE191B499FCD0062DD3D /* SubRemind.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubRemind.m; sourceTree = "<group>"; };
 		FBC7EE221B4A2F560062DD3D /* NetworkService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkService.h; sourceTree = "<group>"; };
 		FBC7EE231B4A2F560062DD3D /* NetworkService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkService.m; sourceTree = "<group>"; };
 		FBC7EE251B4A2F830062DD3D /* NSMutableURLRequest+Upload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+Upload.h"; sourceTree = "<group>"; };
@@ -418,8 +417,6 @@
 		FBC91C8C1B4F726B008B6F69 /* ScheduleDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduleDetailController.m; sourceTree = "<group>"; };
 		FBC91C8E1B4F7C06008B6F69 /* ScheduleDetailNameCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduleDetailNameCell.h; sourceTree = "<group>"; };
 		FBC91C8F1B4F7C06008B6F69 /* ScheduleDetailNameCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduleDetailNameCell.m; sourceTree = "<group>"; };
-		FBC91C911B4F7C3B008B6F69 /* ScheduleSubRemindCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduleSubRemindCell.h; sourceTree = "<group>"; };
-		FBC91C921B4F7C3B008B6F69 /* ScheduleSubRemindCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduleSubRemindCell.m; sourceTree = "<group>"; };
 		FBC91C941B4F7C58008B6F69 /* ScheduleContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduleContentCell.h; sourceTree = "<group>"; };
 		FBC91C951B4F7C58008B6F69 /* ScheduleContentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduleContentCell.m; sourceTree = "<group>"; };
 		FBC9B1BC1B3E5A900053FE96 /* SelfController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelfController.h; sourceTree = "<group>"; };
@@ -510,8 +507,6 @@
 				FBB489F81B58EEC400613E0E /* ScheduleListController.m */,
 				FBB13D951B56404300AD98B0 /* RemindTimeController.h */,
 				FBB13D961B56404300AD98B0 /* RemindTimeController.m */,
-				FBC2D8CD1B4E4FA50098498A /* SubRemindController.h */,
-				FBC2D8CE1B4E4FA50098498A /* SubRemindController.m */,
 				FBC91C8B1B4F726B008B6F69 /* ScheduleDetailController.h */,
 				FBC91C8C1B4F726B008B6F69 /* ScheduleDetailController.m */,
 				FB23332B1B4FCD5600352AA2 /* ScheduleFollowerController.h */,
@@ -828,10 +823,10 @@
 				FBC2D8C81B4E46AB0098498A /* SubRemindContentCell.m */,
 				FBC91C8E1B4F7C06008B6F69 /* ScheduleDetailNameCell.h */,
 				FBC91C8F1B4F7C06008B6F69 /* ScheduleDetailNameCell.m */,
-				FBC91C911B4F7C3B008B6F69 /* ScheduleSubRemindCell.h */,
-				FBC91C921B4F7C3B008B6F69 /* ScheduleSubRemindCell.m */,
 				FBC91C941B4F7C58008B6F69 /* ScheduleContentCell.h */,
 				FBC91C951B4F7C58008B6F69 /* ScheduleContentCell.m */,
+				FBC33B361B5E277F0048CDBC /* ScheduleSubRemindCell.h */,
+				FBC33B371B5E2A110048CDBC /* ScheduleSubRemindCell.m */,
 				FBB13D981B56427300AD98B0 /* RemindCell.h */,
 				FBB13D991B56427300AD98B0 /* RemindCell.m */,
 			);
@@ -1035,16 +1030,16 @@
 				FBC238E51B48F34200730559 /* Comment.m */,
 				FBC238DE1B48F34200730559 /* Annex.h */,
 				FBC238DF1B48F34200730559 /* Annex.m */,
-				FBC7EE181B499FCD0062DD3D /* SubRemind.h */,
-				FBC7EE191B499FCD0062DD3D /* SubRemind.m */,
 				FB51D13A1B4B87DE00CF4867 /* User.h */,
 				FB51D13B1B4B87DE00CF4867 /* User.m */,
 				FB51D1341B4B87DE00CF4867 /* Task.h */,
 				FB51D1351B4B87DE00CF4867 /* Task.m */,
-				FBC2A8B61B56AB620019C938 /* Schedule.h */,
-				FBC2A8B71B56AB620019C938 /* Schedule.m */,
 				FBC7D8651B5789D700130645 /* SubTask.h */,
 				FBC7D8661B5789D700130645 /* SubTask.m */,
+				FBC33B301B5E1B240048CDBC /* SubRemind.h */,
+				FBC33B311B5E1B240048CDBC /* SubRemind.m */,
+				FBC33B391B5E4FC10048CDBC /* Schedule.h */,
+				FBC33B3A1B5E4FC10048CDBC /* Schedule.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1393,6 +1388,7 @@
 				FBC298171B44DB2A00DBB57E /* ZLPhotoPickerGroup.m in Sources */,
 				FBC8F8091B4D3CC900021FA7 /* SubTaskCell.m in Sources */,
 				FBC2981A1B44DB2A00DBB57E /* ZLPhotoPickerViewController.m in Sources */,
+				FBC33B381B5E2A110048CDBC /* ScheduleSubRemindCell.m in Sources */,
 				FBCB57601B48571F00CB3616 /* AddSubTaskContentCell.m in Sources */,
 				FBDD425E1B3268370050C313 /* BaseTableView.m in Sources */,
 				FBB13D971B56404300AD98B0 /* RemindTimeController.m in Sources */,
@@ -1412,7 +1408,6 @@
 				FBC297FB1B44DB2A00DBB57E /* UIImageView+WebCache.m in Sources */,
 				FBC297ED1B44DB2A00DBB57E /* MKAnnotationView+WebCache.m in Sources */,
 				FBC298151B44DB2A00DBB57E /* ZLPhotoAssets.m in Sources */,
-				FBC2D8CF1B4E4FA50098498A /* SubRemindController.m in Sources */,
 				FBC358FD1B594B72007C9242 /* ScheduleHeaderCell.m in Sources */,
 				FBC2981E1B44DB2A00DBB57E /* ZLPhotoPickerGroupTableViewCell.m in Sources */,
 				FBDD427A1B3274510050C313 /* MessageController.m in Sources */,
@@ -1424,6 +1419,7 @@
 				FBC42A091B394E2500587FA6 /* CoreDataModelService.m in Sources */,
 				FBC2981C1B44DB2A00DBB57E /* ZLPhotoPickerCollectionViewCell.m in Sources */,
 				FBC2D8C31B4E43B90098498A /* AddScheduleContentCell.m in Sources */,
+				FBC33B321B5E1B240048CDBC /* SubRemind.m in Sources */,
 				FBC297F41B44DB2A00DBB57E /* SDWebImageManager.m in Sources */,
 				FBC238E61B48F34200730559 /* Comment.m in Sources */,
 				FBDD42571B3265EB0050C313 /* TabBarViewController.m in Sources */,
@@ -1449,7 +1445,6 @@
 				FBC298201B44DB2A00DBB57E /* ZLPhotoPickerImageView.m in Sources */,
 				FBC2980C1B44DB2A00DBB57E /* ZLCameraImageView.m in Sources */,
 				FBC297F11B44DB2A00DBB57E /* SDWebImageDecoder.m in Sources */,
-				FBC2A8B81B56AB620019C938 /* Schedule.m in Sources */,
 				FBC297721B44D98300DBB57E /* PhtotoController.m in Sources */,
 				FBB489F51B589C7300613E0E /* TaskListCell.m in Sources */,
 				FB694B501B3454FE00D79E93 /* TaskCommentCell.m in Sources */,
@@ -1468,8 +1463,8 @@
 				FBC7D86E1B57990B00130645 /* FollowersCell.m in Sources */,
 				FBC2D8C21B4E43B90098498A /* AddScheduleTimeCell.m in Sources */,
 				FBC298161B44DB2A00DBB57E /* ZLPhotoPickerDatas.m in Sources */,
+				FBC33B3B1B5E4FC10048CDBC /* Schedule.m in Sources */,
 				FBCB575A1B484DA000CB3616 /* AddTaskController.m in Sources */,
-				FBC7EE1A1B499FCD0062DD3D /* SubRemind.m in Sources */,
 				FB51D1421B4BB76A00CF4867 /* NSDate+Utilities.m in Sources */,
 				FB51D1361B4B87DE00CF4867 /* Task.m in Sources */,
 				FBB489F11B58961A00613E0E /* TaskListController.m in Sources */,
@@ -1478,7 +1473,6 @@
 				FBC7EE271B4A2F830062DD3D /* NSMutableURLRequest+Upload.m in Sources */,
 				FBC2D8C41B4E43B90098498A /* AddSubRemindCell.m in Sources */,
 				FBDD426B1B3268EE0050C313 /* Tool.m in Sources */,
-				FBC91C931B4F7C3B008B6F69 /* ScheduleSubRemindCell.m in Sources */,
 				FBC238F51B4907D800730559 /* TaskDetailContentCell.m in Sources */,
 				FBC238DA1B48E27400730559 /* AddSubTaskController.m in Sources */,
 			);

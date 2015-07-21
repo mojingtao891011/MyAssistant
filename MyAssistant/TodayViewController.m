@@ -277,6 +277,7 @@
      NSPredicate *predicateScheduleUser = [NSPredicate predicateWithFormat:@"creatScheduleUser.userName = %@" , curUser.userName];
     self.myCreatSchedules = [sortScheduleArr filteredArrayUsingPredicate:predicateSchedule];
     self.myCreatSchedules = [self.myCreatSchedules filteredArrayUsingPredicate:predicateScheduleUser];
+    
     [self.tableView reloadData];
     
 }

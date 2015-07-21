@@ -24,45 +24,75 @@
 - (void)configureCellWithTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath scheduleModel:(Schedule *)scheduleModel
 {
     if (indexPath.section == 0) {
-        if (indexPath.row < 4) {
-            NSArray *arr = @[@"zidingyitixing" , @"chongfu"];
-            NSString *remindTime = nil ;
-            if (scheduleModel.scheduleRemindType) {
-                remindTime = scheduleModel.scheduleRemindType ;
-            }
-            else{
-                 remindTime = [Tool stringFromFomate:scheduleModel.scheduleRemindTime formate:@"MM-dd HH:mm"];
-            }
-            NSArray*arr1 = @[@"提醒", @"重复"];
-            UIImage *image = [UIImage imageNamed:arr[indexPath.row - 2]];
-            self.cellImageView.image = image ;
-            self.cellTextLabel.text = arr1[indexPath.row - 2];
-            self.cellSubTextLabel.text = remindTime;
+        
+        if (indexPath.row == 3 + scheduleModel.subReminds.count - 1) {
+            self.cellImageView.image = [UIImage imageNamed:@"chongfu"];
+            self.cellTextLabel.text = @"重复";
             
-            if (indexPath.row == 3) {
-                self.cellSubTextLabel.text = scheduleModel.schedulerepeat.stringValue ;
-                NSInteger selectedIndex = scheduleModel.schedulerepeat.integerValue ;
-                switch (selectedIndex) {
-                    case 0:
-                        self.cellSubTextLabel.text = @"永不";
-                        break;
-                    case 1:
-                        self.cellSubTextLabel.text = @"每日重复";
-                        break;
-                    case 2:
-                        self.cellSubTextLabel.text = @"每周重复";
-                        break;
-                    case 3:
-                        self.cellSubTextLabel.text = @"每月重复";
-                        break;
-                    case 4:
-                        self.cellSubTextLabel.text = @"每年重复";
-                        break;
-                        
-                    default:
-                        break;
+            self.cellSubTextLabel.text = scheduleModel.schedulerepeat.stringValue ;
+            NSInteger selectedIndex = scheduleModel.schedulerepeat.integerValue ;
+            switch (selectedIndex) {
+                case 0:
+                    self.cellSubTextLabel.text = @"永不";
+                    break;
+                case 1:
+                    self.cellSubTextLabel.text = @"每日重复";
+                    break;
+                case 2:
+                    self.cellSubTextLabel.text = @"每周重复";
+                    break;
+                case 3:
+                    self.cellSubTextLabel.text = @"每月重复";
+                    break;
+                case 4:
+                    self.cellSubTextLabel.text = @"每年重复";
+                    break;
+                    
+                default:
+                    break;
+            }
+
+        }
+        else{
+            
+             SubRemind *subRemind = [CoreDataModelService fetchSubRemindBySubRemindNumber:indexPath.row-2 schedule:scheduleModel];
+            
+            if (scheduleModel.subReminds.count > 1) {
+                NSArray *imgNameArr = @[@"tixing1" , @"tixing2" , @"tixing3"];
+                NSArray *titleArr = @[@"提醒" , @"第二次提醒" , @"第三次提醒"];
+                
+                self.cellImageView.image = [UIImage imageNamed:imgNameArr[indexPath.row - 2]];
+                self.cellTextLabel.text = titleArr[indexPath.row - 2];
+                
+                NSString *remindType = nil ;
+                if (subRemind.subRemindType) {
+                    remindType = subRemind.subRemindType ;
+                }
+                else{
+                    remindType = [Tool stringFromFomate:subRemind.subRemindTime formate:@"MM-dd HH:mm"];
+                }
+                
+                 self.cellSubTextLabel.text = remindType ;
+                
+            }
+            else
+            {
+                NSString *remindType = nil ;
+                if (subRemind.subRemindType) {
+                    remindType = subRemind.subRemindType ;
+                }
+                else{
+                    if (subRemind.subRemindTime) {
+                         remindType = [Tool stringFromFomate:subRemind.subRemindTime formate:@"MM-dd HH:mm"];
+                    }
+                    else{
+                        remindType = @"无";
+                    }
                 }
 
+                self.cellImageView.image = [UIImage imageNamed:@"zidingyitixing"];
+                self.cellTextLabel.text = @"提醒";
+                self.cellSubTextLabel.text = remindType ;
             }
         }
         
@@ -87,5 +117,6 @@
         self.cellTextLabel.text = @"附件";
         self.cellSubTextLabel.text = [NSString stringWithFormat:@"%d", (int)scheduleModel.annexs.count];
     }
+    
 }
 @end

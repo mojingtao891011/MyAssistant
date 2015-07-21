@@ -59,6 +59,10 @@
         
         [self.scrollView addSubview:tableView];
         [self.tableViews addObject:tableView];
+        
+        if (i == 0) {
+            self.curTableView = tableView ;
+        }
     }
 }
 #pragma mark - Private fun
@@ -89,7 +93,7 @@
     switch (tableView.tag) {
         case 1:
             //全部任务
-             
+             predicate = [NSPredicate predicateWithFormat:@"taskName!=nil" ];
             break;
         case 2:
             //我创建
@@ -191,12 +195,8 @@
     NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"taskCreatTime" ascending:NO];
     [fetchRequest setSortDescriptors:@[sort]];
     
-    
-    if (self.curTableView.tag != 1) {
-        NSPredicate *predicate = [self setPredicate:self.curTableView];
-        [fetchRequest setPredicate:predicate];
-    }
-   
+    NSPredicate *predicate = [self setPredicate:self.curTableView];
+    [fetchRequest setPredicate:predicate];
     
     [fetchRequest setFetchBatchSize:20];
     

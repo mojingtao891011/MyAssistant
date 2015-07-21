@@ -17,7 +17,7 @@
 #define ListCellIdentifier                   @"ScheduleListCellID"
 #define HeaderCellIdentifier          @"ScheduleHeaderCellID"
 
-@interface ScheduleListController ()<UIScrollViewDelegate , UITableViewDataSource , UITableViewDelegate , NSFetchedResultsControllerDelegate>
+@interface ScheduleListController ()<UIScrollViewDelegate , UITableViewDataSource , UITableViewDelegate , NSFetchedResultsControllerDelegate , ScheduleListCellDelegate>
 
 @property (nonatomic , retain)NSFetchedResultsController        *fetchedResultsController ;
 @property (nonatomic , retain)NSManagedObjectContext        *context ;
@@ -67,6 +67,10 @@
         
         [self.scrollView addSubview:tableView];
         [self.tableViews addObject:tableView];
+        
+        if (i == 0) {
+            self.curTableView = tableView ;
+        }
     }
 }
 #pragma mark - Private fun
@@ -97,19 +101,19 @@
     switch (tableView.tag) {
         case 1:
             //全部任务
-            
+              predicate = [NSPredicate predicateWithFormat:@"scheduleName!=nil" ];
             break;
         case 2:
             //我创建
-            predicate = [NSPredicate predicateWithFormat:@"creatTaskUser.userName == %@" , CUR_USER.userName];
+            predicate = [NSPredicate predicateWithFormat:@"creatScheduleUser.userName == %@" , CUR_USER.userName];
             break;
         case 3:
             //与我有关
-            predicate = [NSPredicate predicateWithFormat:@"followers CONTAINS %@ || executor.userName == %@" , CUR_USER , CUR_USER.userName];
+            predicate = [NSPredicate predicateWithFormat:@"scheduleFollowers CONTAINS %@" , CUR_USER ];
             break;
         case 4:
             //已完成
-            predicate = [NSPredicate predicateWithFormat:@"taskIsFininsh == %@" , [NSNumber numberWithBool:YES]];
+            predicate = [NSPredicate predicateWithFormat:@"scheduleIsFininsh == %@" , [NSNumber numberWithBool:YES]];
             break;
             
         default:
@@ -118,7 +122,17 @@
     
     return predicate ;
 }
-
+#pragma mark - ScheduleListCellDelegate
+- (void)scheduleState:(BOOL)isFininsh indexPath:(NSIndexPath *)indexPath
+{
+    
+    Schedule *scheduleModel = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    scheduleModel.scheduleIsFininsh = [NSNumber numberWithBool:isFininsh];
+    if ([self.context save:nil]) {
+        //[self.curTableView reloadData];
+    }
+    
+}
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -138,6 +152,7 @@
 }
 - (void)configureCell:(ScheduleListCell*)cell indexPath:(NSIndexPath*)indexPath
 {
+    cell.delegate = self ;
     [cell configureCellWithIndexPath:indexPath scheduleModel:[self.fetchedResultsController objectAtIndexPath:indexPath]];
 }
 #pragma mark - UITableViewDelegate
@@ -256,6 +271,10 @@
     NSSortDescriptor *sort1 = [NSSortDescriptor sortDescriptorWithKey:@"scheduleTheDay" ascending:NO];
     NSSortDescriptor *sort2 = [NSSortDescriptor sortDescriptorWithKey:@"scheduleCreatTime" ascending:NO];
     [fetchRequest setSortDescriptors:@[sort1 , sort2]];
+    
+    
+    NSPredicate *predicate = [self setPredicate:self.curTableView];
+    [fetchRequest setPredicate:predicate];
     
     [fetchRequest setFetchBatchSize:20];
     

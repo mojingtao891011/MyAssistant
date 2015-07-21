@@ -34,7 +34,7 @@
     
     self.dataSources = [NSMutableArray arrayWithArray:@[@"无" ,@"自定义",@"事件发生时" , @"5分钟前",@"15分钟前" ,@"30分钟前" , @"1小时前",@"2小时前" ,@"1天前" , @"2天前",@"1周前" ]];
     
-    
+    self.selectedRemindType = @"无";
 }
 - (NSDate*)beforeTime:(NSInteger)interval
 {
@@ -63,7 +63,7 @@
     }
     
     if (self.remindDateBlock) {
-        self.remindDateBlock(_selecteTime,_selectedRemindType);
+        self.remindDateBlock(_selecteTime,_selectedRemindType , _subRemindNumber);
     }
     
     [self.navigationController popViewControllerAnimated:YES];

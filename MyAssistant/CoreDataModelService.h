@@ -7,13 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SubRemind.h"
 
-@class User , Project ;
+@class User ;
 @interface CoreDataModelService : NSObject
 
 + (User*)fetchUserByName:(NSString *)userName ;
-
-+ (Project*)fetchProjectByName:(NSString*)projectName ;
 
 +(NSArray*)fetchAllUser ;
 
@@ -23,5 +22,7 @@
 
 +(BOOL)deleteTaskByTaskCreatTime:(NSDate*)taskCreatTime;
 +(BOOL)deleteScheduleByScheduleCreatDetailTime:(NSDate*)scheduleCreatDetailTime;
+
++ (SubRemind*)fetchSubRemindBySubRemindNumber:(NSInteger)number  schedule:(Schedule*)schedule ;
 
 @end

@@ -29,6 +29,11 @@
     
     self.scheduleYear.text = [Tool stringFromFomate:scheduleModel.scheduleCreatTime formate:@"yyyy年MM月dd日"];
     
-    self.scheduleAddress.text = scheduleModel.scheduleAddress ;
+    if (scheduleModel.scheduleAddress) {
+        self.scheduleAddress.text = scheduleModel.scheduleAddress ;
+    
+    }else{
+        self.scheduleAddress.text = @"无";
+    }
 }
 @end

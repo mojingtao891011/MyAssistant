@@ -75,22 +75,28 @@
         
         self.datePicker.minimumDate = nil ;
         
-        if (![self.startTime isEqualToDate:self.selectedStartTime]) {
+        if (![self.startTime isEqualToDate:self.selectedStartTime]|| self.selectedStartTime) {
             [self.datePicker setDate:self.selectedStartTime animated:YES];
         }
         else {
-            [self.datePicker setDate:self.startTime animated:YES];
+            if (self.startTime) {
+                [self.datePicker setDate:self.startTime animated:YES];
+            }
+            
         }
     }
     else if (sender.selectedSegmentIndex == 1){
         
         self.datePicker.minimumDate = [NSDate dateWithTimeInterval:60*60*24 sinceDate:self.selectedStartTime] ;
         
-        if (![self.endTime isEqualToDate:self.selectedEndTime]) {
+        if (![self.endTime isEqualToDate:self.selectedEndTime] && self.selectedEndTime) {
             [self.datePicker setDate:self.selectedEndTime animated:YES];
         }
         else{
-            [self.datePicker setDate:self.endTime animated:YES];
+            if (self.endTime) {
+                [self.datePicker setDate:self.endTime animated:YES];
+            }
+            
         }
     }
     

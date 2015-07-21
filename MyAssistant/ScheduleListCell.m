@@ -22,10 +22,14 @@
 
 - (IBAction)scheduleStateAction:(UIButton *)sender {
     sender.selected = !sender.selected ;
+    if (_delegate && [_delegate respondsToSelector:@selector(scheduleState:indexPath:)]) {
+        [_delegate scheduleState:sender.selected indexPath:self.indexPath];
+    }
 }
 
 - (void)configureCellWithIndexPath:(NSIndexPath *)indexPath scheduleModel:(Schedule *)scheduleModel
 {
+    self.indexPath = indexPath ;
     //
     NSString *startTime = [Tool stringFromFomate:scheduleModel.schedulestartTime formate:@"HH:mm"];
     NSString *endtime = [Tool stringFromFomate:scheduleModel.scheduleEndTime formate:@"HH:mm"];
@@ -35,5 +39,6 @@
     self.scheduleNameLabel.text = scheduleModel.scheduleName ;
     
     //
+    self.scheduleStateButton.selected = [scheduleModel.scheduleIsFininsh boolValue];
 }
 @end

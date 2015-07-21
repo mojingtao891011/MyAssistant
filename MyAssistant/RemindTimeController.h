@@ -7,10 +7,12 @@
 //
 
 #import "BaseController.h"
+#import "SubRemind.h"
 
 @interface RemindTimeController : BaseController
 
 @property (nonatomic , retain)NSDate *scheduleStartTime ;
-@property (nonatomic , copy)void(^remindDateBlock)(NSDate *date , NSString *scheduleRemindType);
+@property (nonatomic , assign)NSInteger  subRemindNumber ;
+@property (nonatomic , copy)void(^remindDateBlock)(NSDate *date , NSString *scheduleRemindType , NSInteger  subRemindNumber);
 
 @end

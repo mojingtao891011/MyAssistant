@@ -22,9 +22,8 @@
         <attribute name="scheduleCreatTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="scheduleDescribe" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="scheduleEndTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="scheduleIsFininsh" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="scheduleName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="scheduleRemindTime" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="scheduleRemindType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="schedulerepeat" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="schedulestartTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="scheduleTheDay" optional="YES" attributeType="Date" syncable="YES"/>
@@ -35,8 +34,9 @@
         <relationship name="subReminds" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SubRemind" inverseName="schedule" inverseEntity="SubRemind" syncable="YES"/>
     </entity>
     <entity name="SubRemind" representedClassName="SubRemind" syncable="YES">
+        <attribute name="subRemindNumber" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="subRemindTime" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="subRemindType" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="subRemindType" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="schedule" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Schedule" inverseName="subReminds" inverseEntity="Schedule" syncable="YES"/>
     </entity>
     <entity name="SubTask" representedClassName="SubTask" syncable="YES">
@@ -82,8 +82,8 @@
     <elements>
         <element name="Annex" positionX="0" positionY="0" width="128" height="165"/>
         <element name="Comment" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Schedule" positionX="0" positionY="0" width="128" height="270"/>
-        <element name="SubRemind" positionX="9" positionY="117" width="128" height="90"/>
+        <element name="Schedule" positionX="0" positionY="0" width="128" height="255"/>
+        <element name="SubRemind" positionX="9" positionY="117" width="128" height="105"/>
         <element name="SubTask" positionX="9" positionY="117" width="128" height="135"/>
         <element name="Task" positionX="0" positionY="0" width="128" height="270"/>
         <element name="User" positionX="0" positionY="0" width="128" height="240"/>

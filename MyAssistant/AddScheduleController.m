@@ -10,7 +10,6 @@
 #import "DatePickerController.h"
 #import "RepeatRemindController.h"
 #import "PhtotoController.h"
-#import "SubRemindController.h"
 #import "FriendListController.h"
 #import "RemindTimeController.h"
 
@@ -31,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic , retain)UITextField *scheduleNameTF;
 @property (nonatomic , retain)UITextField *scheduleAddressTF;
+@property (nonatomic , copy)NSString        *scheduleName ;
 
 @end
 
@@ -86,6 +86,13 @@
     //默认时间
     self.scheduleModel.schedulestartTime = [NSDate date] ;
     self.scheduleModel.scheduleEndTime = [NSDate dateWithTimeInterval:60*60 sinceDate:self.scheduleModel.schedulestartTime];
+    
+    //提醒
+    NSEntityDescription *subRemindEntity = [NSEntityDescription entityForName:@"SubRemind" inManagedObjectContext:self.context];
+    SubRemind *subRemind = [[SubRemind alloc]initWithEntity:subRemindEntity insertIntoManagedObjectContext:self.context];
+    subRemind.subRemindNumber = [NSNumber numberWithInt:0];
+    [self.scheduleModel addSubRemindsObject:subRemind];
+    
     
     return _scheduleModel ;
 }
@@ -155,77 +162,16 @@
 }
 
 
-#pragma mark - 添加自提醒
-- (void)addSubRemind:(NSIndexPath*)indexPath
-{
-    //当点击添加子提醒时，如果子提醒个数已大于3个则不能再添加
-    if (self.scheduleModel.subReminds.count + 4 == indexPath.row && self.scheduleModel.subReminds.count >= 3) {
-        [[[UIAlertView alloc]initWithTitle:nil message:@"最多只能添加三个子提醒" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确 定", nil]show ];
-        return ;
-    }
-    
-    WS(weaSelf);
-    SubRemindController *subRemindCtl = [self fetchViewControllerByIdentifier:@"SubRemindController"];
-    if (self.scheduleModel.subReminds.count != 0 && indexPath.row != self.scheduleModel.subReminds.count + 4) {
-        subRemindCtl.subRemindModel = [self.scheduleModel.subReminds allObjects][indexPath.row -4];
-    }
-   
-    subRemindCtl.subRemindBlock = ^(NSDate *date , NSInteger remindType , BOOL isCreatRemind){
-        
-        NSMutableSet *mutableSet = [NSMutableSet setWithSet:weaSelf.scheduleModel.subReminds];
-    
-        if (isCreatRemind) {
-            NSEntityDescription *entity = [NSEntityDescription entityForName:@"SubRemind" inManagedObjectContext:weaSelf.context];
-            SubRemind *subremindModel = [[SubRemind alloc]initWithEntity:entity insertIntoManagedObjectContext:weaSelf.context];
-            subremindModel.subRemindTime = date ;
-            subremindModel.subRemindType =[NSNumber numberWithInteger: remindType] ;
-            [mutableSet addObject:subremindModel];
-        }
-        else{
-            SubRemind *subRemind = [self.scheduleModel.subReminds allObjects][indexPath.row -4];
-            [mutableSet removeObject:subRemind];
-    
-            subRemind.subRemindTime = date ;
-            subRemind.subRemindType = [NSNumber numberWithInteger:remindType];
-            [mutableSet addObject:subRemind];
-            
-        }
-        
-        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"subRemindTime" ascending:YES];
-        
-        if (mutableSet.count < 4) {
-            weaSelf.scheduleModel.subReminds = [NSSet setWithArray:[mutableSet sortedArrayUsingDescriptors:@[sort]]];
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [weaSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic ];
-        });
-    };
-    
-    subRemindCtl.deleteRemindBlock = ^{
-         NSMutableSet *mutableSet = [NSMutableSet setWithSet:weaSelf.scheduleModel.subReminds];
-        SubRemind *subRemind = [self.scheduleModel.subReminds allObjects][indexPath.row -4];
-        [mutableSet removeObject:subRemind];
-        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"subRemindTime" ascending:YES];
-         weaSelf.scheduleModel.subReminds = [NSSet setWithArray:[mutableSet sortedArrayUsingDescriptors:@[sort]]];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [weaSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic ];
-        });
-    };
-    
-    [self.navigationController pushViewController:subRemindCtl animated:YES];
-    
-    return ;
-    
-}
 #pragma mark - UITextFieldDelegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
     
     return YES ;
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    self.scheduleName = textField.text ;
 }
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -235,7 +181,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
-    NSArray *arr = @[ @(5+self.scheduleModel.subReminds.count),@(1), @(1), @(1)];
+    NSArray *arr = @[ @(3+self.scheduleModel.subReminds.count),@(1), @(1), @(1)];
     
     return [arr[section ] integerValue];
 }
@@ -247,7 +193,13 @@
         if (indexPath.row == 0) {
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddScheduleNameCell" forIndexPath:indexPath];
             self.scheduleNameTF = (UITextField*)[cell viewWithTag:1];
-            self.scheduleNameTF.text = self.scheduleModel.scheduleName;
+            if (self.scheduleModel.scheduleName) {
+                 self.scheduleNameTF.text = self.scheduleModel.scheduleName;
+            }
+            else{
+                self.scheduleNameTF.text = self.scheduleName ;
+            }
+           
             return cell ;
         }
         //日程时间
@@ -257,22 +209,12 @@
             return cell ;
         }
         //提醒时间、重复方式
-        else if (indexPath.row == 2 || indexPath.row == 3){
+        else{
             AddScheduleContentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddScheduleContentCell" forIndexPath:indexPath];
             [cell configureCellWithTableView:tableView indexPath:indexPath scheduleModel:self.scheduleModel];
             return cell ;
         }
-        //添加多次提醒
-        else if (indexPath.row == self.scheduleModel.subReminds.count + 4){
-            AddSubRemindCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddSubRemindCell" forIndexPath:indexPath];
-            return cell ;
-        }
-        //子提醒
-        else{
-            SubRemindContentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SubRemindContentCell" forIndexPath:indexPath];
-            [cell configureCellWithIndexPath:indexPath scheduleModel:self.scheduleModel];
-            return cell ;
-        }
+       
     }
     //地点
     if (indexPath.section == 2) {
@@ -307,16 +249,7 @@
             if (indexPath.row == 0) {
                 return ;
             }
-            //日程时间、提醒、重复
-            if(indexPath.row < 4){
-                 [self didSelectedFirstSection:indexPath];
-            }
-            //添加子提醒\子提醒
-            else{
-                
-                [self addSubRemind:indexPath];
-
-            }
+            [self didSelectedFirstSection:indexPath];
         }
             break;
         case 1:
@@ -371,51 +304,8 @@
         [self.navigationController pushViewController:dataPickerCtl animated:YES];
         
     }
-    //提醒
-    else if (indexPath.row == 2){
-        
-        /*
-        DatePickerController *dataPickerCtl = [self fetchViewControllerByIdentifier:@"DatePickerViewController"];
-        dataPickerCtl.curDate = self.scheduleModel.scheduleRemindTime ;
-        dataPickerCtl.datePickerShowMode = DatePickerModeTime ;
-        
-        dataPickerCtl.selectedDateBlock = ^(NSDate *date){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                AddScheduleContentCell *cell = (AddScheduleContentCell*)[weakSelf.tableView cellForRowAtIndexPath:indexPath];
-                cell.cellTextLabel.text = [Tool stringFromFomate:date formate:@"HH:mm"];
-                weakSelf.scheduleModel.scheduleRemindTime = date ;
-                
-            });
-        };
-        
-        [self.navigationController pushViewController:dataPickerCtl animated:YES];
-        */
-        RemindTimeController *remindCtl = [self fetchViewControllerByIdentifier:@"RemindTimeController"];
-        remindCtl.scheduleStartTime = self.scheduleModel.schedulestartTime ;
-        remindCtl.remindDateBlock = ^(NSDate *date , NSString *remindType){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                AddScheduleContentCell *cell = (AddScheduleContentCell*)[weakSelf.tableView cellForRowAtIndexPath:indexPath];
-                if (date) {
-                    if (remindType) {
-                        cell.cellSubTextLabel.text =  remindType ;
-                    }else{
-                        cell.cellSubTextLabel.text = [Tool stringFromFomate:date formate:@"MM-dd HH:mm"];
-                    }
-                    
-                    weakSelf.scheduleModel.scheduleRemindTime = date ;
-                    weakSelf.scheduleModel.scheduleRemindType = remindType ;
-                }else{
-                    cell.cellSubTextLabel.text = @"无";
-                }
-                
-                
-               
-            });
-        };
-        [self.navigationController pushViewController:remindCtl animated:YES];
-    }
     //重复
-    else if (indexPath.row == 3){
+    else if (indexPath.row == 3 + self.scheduleModel.subReminds.count - 1){
         
        // __weak TestAddScheduleController *weakSelf = self ;
         
@@ -456,7 +346,69 @@
          [self.navigationController pushViewController:repeatRemindCtl animated:YES];
         
     }
-    
+    //提醒
+    else {
+        
+        RemindTimeController *remindCtl = [self fetchViewControllerByIdentifier:@"RemindTimeController"];
+        remindCtl.scheduleStartTime = self.scheduleModel.schedulestartTime ;
+       
+        switch (indexPath.row) {
+            case 2:
+                remindCtl.subRemindNumber = 0 ;
+                break;
+            case 3:
+                remindCtl.subRemindNumber = 1 ;
+                break;
+            case 4:
+                remindCtl.subRemindNumber = 2 ;
+                break;
+                
+            default:
+                break;
+        }
+        
+        remindCtl.remindDateBlock = ^(NSDate *date , NSString *remindType , NSInteger subRemindNumber){
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                AddScheduleContentCell *cell = (AddScheduleContentCell*)[weakSelf.tableView cellForRowAtIndexPath:indexPath];
+
+                if (remindType) {
+                    cell.cellSubTextLabel.text =  remindType ;
+                }else{
+                    if (date) {
+                        cell.cellSubTextLabel.text = [Tool stringFromFomate:date formate:@"MM-dd HH:mm"];
+                    }
+                    else{
+                        cell.cellSubTextLabel.text = @"无";
+                    }
+                    
+                }
+                
+                SubRemind *subRemind = [CoreDataModelService fetchSubRemindBySubRemindNumber:subRemindNumber schedule:weakSelf.scheduleModel];
+                if (subRemind) {
+                    subRemind.subRemindTime = date ;
+                    subRemind.subRemindType = remindType ;
+                    subRemind.schedule = weakSelf.scheduleModel;
+                    
+                    SubRemind *subRemind1 = [CoreDataModelService fetchSubRemindBySubRemindNumber:subRemindNumber + 1 schedule:weakSelf.scheduleModel];
+                    if (subRemindNumber < 2 && subRemind1== nil && ![remindType isEqualToString:@"无"]) {
+                        //添加子提醒
+                        NSEntityDescription *entity = [NSEntityDescription entityForName:@"SubRemind" inManagedObjectContext:weakSelf.context];
+                        SubRemind *subRemind1 = [[SubRemind alloc]initWithEntity:entity insertIntoManagedObjectContext:weakSelf.context];
+                        subRemind1.subRemindType = @"无" ;
+                        subRemind1.subRemindNumber = [NSNumber numberWithInteger:subRemindNumber + 1];
+                        subRemind1.schedule = weakSelf.scheduleModel ;
+                    }
+                }
+                
+                //刷新tableView
+                [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+                
+            });
+        };
+        [self.navigationController pushViewController:remindCtl animated:YES];
+    }
+
 }
 
 #pragma mark - 参与者
