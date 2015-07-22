@@ -21,7 +21,7 @@
 @property (nonatomic , copy)NSString *selectedRemindType;
 @property (nonatomic , retain)NSMutableArray  *timeArr ;
 @property (nonatomic , retain)NSIndexPath  *lastIndexPath ;
-
+@property (nonatomic , assign)NSInteger         sectionCount  ;
 @end
 
 @implementation RemindTimeController
@@ -30,11 +30,13 @@
 {
     [super viewDidLoad];
     
-    self.timeArr = [NSMutableArray arrayWithArray:@[@"" ,@"", self.scheduleStartTime , [self beforeTime:5],[self beforeTime:15] , [self beforeTime:30] , [self beforeTime: 60] ,[self beforeTime:2*60], [self beforeTime:24*60] , [self beforeTime:24*2*60] , [self beforeTime:24*7*60]]];
+    self.timeArr = [NSMutableArray arrayWithArray:@[@"" , self.scheduleStartTime , [self beforeTime:5],[self beforeTime:15] , [self beforeTime:30] , [self beforeTime: 60] ,[self beforeTime:2*60], [self beforeTime:24*60] , [self beforeTime:24*2*60] , [self beforeTime:24*7*60]]];
     
-    self.dataSources = [NSMutableArray arrayWithArray:@[@"无" ,@"自定义",@"事件发生时" , @"5分钟前",@"15分钟前" ,@"30分钟前" , @"1小时前",@"2小时前" ,@"1天前" , @"2天前",@"1周前" ]];
+    self.dataSources = [NSMutableArray arrayWithArray:@[@"无" ,@"事件发生时" , @"5分钟前",@"15分钟前" ,@"30分钟前" , @"1小时前",@"2小时前" ,@"1天前" , @"2天前",@"1周前" ]];
     
     self.selectedRemindType = @"无";
+    
+    self.sectionCount = 1 ;
 }
 - (NSDate*)beforeTime:(NSInteger)interval
 {
@@ -65,18 +67,25 @@
     if (self.remindDateBlock) {
         self.remindDateBlock(_selecteTime,_selectedRemindType , _subRemindNumber);
     }
-    
+//    NSLog(@"%@ , %@ , %ld" , [Tool stringFromFomate:_selecteTime formate:@"HH:mm"] , _selectedRemindType , _subRemindNumber);
     [self.navigationController popViewControllerAnimated:YES];
     
 }
 #pragma mark - UITableViewDataSource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2 ;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _dataSources.count ;
+    if (section == 0) {
+         return _dataSources.count ;
+    }
+    return _sectionCount;
 }
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_isOpenDatePicker && indexPath.row == 2) {
+    if (_isOpenDatePicker && indexPath.row == 1 && indexPath.section == 1) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"datePickerCell" forIndexPath:indexPath];
         self.datePicker = (UIDatePicker*)[cell viewWithTag:1];
         return cell ;
@@ -88,7 +97,12 @@
 }
 - (void)configureCell:(RemindCell*)cell indexPath:(NSIndexPath*)indexPath
 {
-    cell.cellTextLabel.text = self.dataSources[indexPath.row];
+    if (indexPath.section == 0) {
+        cell.cellTextLabel.text = self.dataSources[indexPath.row];
+    }
+    else{
+        cell.cellTextLabel.text = @"自定义";
+    }
     
     if ([indexPath isEqual:_lastIndexPath]) {
         cell.cellStateImgView.hidden = NO ;
@@ -102,76 +116,39 @@
 {
     _lastIndexPath = indexPath ;
 
-    //1
-    if (indexPath.row == 1) {
-        
-        _isOpenDatePicker = !_isOpenDatePicker ;
-        
-        if (_isOpenDatePicker) {
-            
-            [_dataSources insertObject:@"" atIndex:2];
-            [_timeArr insertObject:@"" atIndex:2];
-        
-            if (![_timer isValid]) {
-                self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
-            }
-            
-        }
-        else{
-            
-            if ([_timer isValid]) {
-                [_timer invalidate];
-                _timer = nil ;
-            }
-            
-            [_dataSources removeObjectAtIndex:2];
-            [_timeArr removeObjectAtIndex:2];
-        }
-        
-        [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
-        
+    //
+    if (indexPath.section == 1 && indexPath.row == 0) {
+        _isOpenDatePicker = YES ;
+        _sectionCount = 2 ;
     }
     else{
-        if (_isOpenDatePicker) {
-            _isOpenDatePicker = NO ;
-            
-            if ([_timer isValid]) {
-                [_timer invalidate];
-                _timer = nil ;
-            }
-            
-            [_dataSources removeObjectAtIndex:2];
-            [_timeArr removeObjectAtIndex:2];
-            
-            if (indexPath.row != 0) {
-                _lastIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:0];
-            }
-            
-             [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+        _isOpenDatePicker = NO ;
+        _sectionCount = 1 ;
+    }
+    
+    //定时器
+    if (_isOpenDatePicker) {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
+    }
+    else{
+        if ([_timer isValid]) {
+            [_timer invalidate];
+            _timer = nil ;
         }
-        else{
-              [tableView reloadData];
-        }
-        
-        
-       
     }
     
-    _selecteTime = _timeArr[indexPath.row];
-    
-    _selectedRemindType = _dataSources[indexPath.row];
-    
-    if (indexPath.row == 0) {
-        _selecteTime = nil ;
+    //
+    if (indexPath.section == 0) {
+        self.selecteTime = self.timeArr[indexPath.row];
+        _selectedRemindType = _dataSources[indexPath.row];
     }
-    else if (indexPath.row == 1){
-        _selecteTime = _datePicker.date ;
-    }
+   
+    [tableView reloadData];
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_isOpenDatePicker && indexPath.row == 2) {
+    if (_isOpenDatePicker && indexPath.section == 1 && indexPath.row == 1) {
         
         return 165.0 ;
     }

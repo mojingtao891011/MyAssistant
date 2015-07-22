@@ -12,6 +12,8 @@
 #import "PhtotoController.h"
 #import "FriendListController.h"
 #import "RemindTimeController.h"
+#import "LoginController.h"
+#import "BaseNavgationController.h"
 
 #import "AddScheduleContentCell.h"
 #import "AddSubRemindCell.h"
@@ -31,6 +33,7 @@
 @property (nonatomic , retain)UITextField *scheduleNameTF;
 @property (nonatomic , retain)UITextField *scheduleAddressTF;
 @property (nonatomic , copy)NSString        *scheduleName ;
+@property (nonatomic , assign)BOOL          isShowMore ;
 
 @end
 
@@ -43,6 +46,10 @@
     [self _initBarButtonItem];
     
     self.context = [CoreDataStack shareManaged].managedObjectContext ;
+    
+    if (!_isCreatSchedule) {
+        _isShowMore = YES ;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -176,7 +183,11 @@
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4;
+    if (_isShowMore) {
+        return 4 ;
+    }
+    
+    return 2;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -216,6 +227,11 @@
         }
        
     }
+    //第二段
+    if (indexPath.section == 1 && !_isShowMore) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"scheduleMoreCell" forIndexPath:indexPath];
+        return cell ;
+    }
     //地点
     if (indexPath.section == 2) {
         
@@ -253,7 +269,15 @@
         }
             break;
         case 1:
-            [self didSelectedSecondSection:indexPath];
+        {
+            if (_isShowMore) {
+                 [self didSelectedSecondSection:indexPath];
+            }
+            else{
+                _isShowMore = YES ;
+                [tableView reloadData];
+            }
+        }
             break;
         case 2:
             //[self didSelectedSecondSection:indexPath];
@@ -326,15 +350,17 @@
                        cell.cellSubTextLabel.text = @"每日重复";
                         break;
                     case 2:
-                       cell.cellSubTextLabel.text = @"每周重复";
+                       cell.cellSubTextLabel.text = @"每工作日重复";
                         break;
                     case 3:
-                       cell.cellSubTextLabel.text = @"每月重复";
+                       cell.cellSubTextLabel.text = @"每周末重复";
                         break;
                     case 4:
+                        cell.cellSubTextLabel.text = @"每月重复";
+                        break;
+                    case 5:
                         cell.cellSubTextLabel.text = @"每年重复";
                         break;
-                        
                     default:
                         break;
                 }
@@ -384,25 +410,29 @@
                     
                 }
                 
-                SubRemind *subRemind = [CoreDataModelService fetchSubRemindBySubRemindNumber:subRemindNumber schedule:weakSelf.scheduleModel];
-                if (subRemind) {
-                    subRemind.subRemindTime = date ;
-                    subRemind.subRemindType = remindType ;
-                    subRemind.schedule = weakSelf.scheduleModel;
+                if (![remindType isEqualToString:@"无"]) {
                     
-                    SubRemind *subRemind1 = [CoreDataModelService fetchSubRemindBySubRemindNumber:subRemindNumber + 1 schedule:weakSelf.scheduleModel];
-                    if (subRemindNumber < 2 && subRemind1== nil && ![remindType isEqualToString:@"无"]) {
-                        //添加子提醒
-                        NSEntityDescription *entity = [NSEntityDescription entityForName:@"SubRemind" inManagedObjectContext:weakSelf.context];
-                        SubRemind *subRemind1 = [[SubRemind alloc]initWithEntity:entity insertIntoManagedObjectContext:weakSelf.context];
-                        subRemind1.subRemindType = @"无" ;
-                        subRemind1.subRemindNumber = [NSNumber numberWithInteger:subRemindNumber + 1];
-                        subRemind1.schedule = weakSelf.scheduleModel ;
+                    SubRemind *subRemind = [CoreDataModelService fetchSubRemindBySubRemindNumber:subRemindNumber schedule:weakSelf.scheduleModel];
+                    if (subRemind) {
+                        subRemind.subRemindTime = date ;
+                        subRemind.subRemindType = remindType ;
+                        subRemind.schedule = weakSelf.scheduleModel;
+                        
+                        SubRemind *subRemind1 = [CoreDataModelService fetchSubRemindBySubRemindNumber:subRemindNumber + 1 schedule:weakSelf.scheduleModel];
+                        if (subRemindNumber < 2 && subRemind1== nil) {
+                            //添加子提醒
+                            NSEntityDescription *entity = [NSEntityDescription entityForName:@"SubRemind" inManagedObjectContext:weakSelf.context];
+                            SubRemind *subRemind1 = [[SubRemind alloc]initWithEntity:entity insertIntoManagedObjectContext:weakSelf.context];
+                            subRemind1.subRemindType = @"无" ;
+                            subRemind1.subRemindNumber = [NSNumber numberWithInteger:subRemindNumber + 1];
+                            subRemind1.schedule = weakSelf.scheduleModel ;
+                        }
                     }
+                    
+                    //刷新tableView
+                    [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+
                 }
-                
-                //刷新tableView
-                [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
                 
             });
         };
@@ -414,7 +444,18 @@
 #pragma mark - 参与者
 - (void)didSelectedSecondSection:(NSIndexPath*)indexPath
 {
+    //如果没有登录
+    WS(weaSelf);
+    BaseNavgationController *loginNavCtl = [self fetchViewControllerByIdentifier:@"LoginNavCtl"];
+    LoginController *loginCtl = (LoginController*)loginNavCtl.topViewController ;
+    loginCtl.loginControllerBlock = ^(BOOL isLoginSucceed){
+        [weaSelf pushFriendListController:indexPath];
+    };
+    [self presentViewController:loginNavCtl animated:YES completion:nil];
     
+}
+- (void)pushFriendListController:(NSIndexPath*)indexPath
+{
     WS(weaSelf);
     FriendListController *friendListCtl = [self fetchViewControllerByIdentifier:@"FriendListController"];
     friendListCtl.isExecutor = NO ;
@@ -439,6 +480,7 @@
         
     };
     [self.navigationController pushViewController:friendListCtl animated:YES];
+
 }
 #pragma mark - 添加附件
 - (void)didSelectedFourSection:(NSIndexPath*)indexPath
@@ -447,14 +489,14 @@
     
     PhtotoController *photoCtl = [[PhtotoController alloc]init];
     photoCtl.scheduleModel = self.scheduleModel ;
-    photoCtl.annexUploadCountBlock = ^(NSInteger annexUploadCount){
+    photoCtl.annexUploadCountBlock = ^(NSInteger annexUploadCount , id model){
         //
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            self.scheduleModel = model ;
             AddScheduleContentCell *cell = (AddScheduleContentCell*)[self.tableView cellForRowAtIndexPath:indexPath];
             cell.cellSubTextLabel.text= [NSString stringWithFormat:@"%d" , (int)annexUploadCount];
             
-
         });
     };
     [self.navigationController pushViewController:photoCtl animated:YES];

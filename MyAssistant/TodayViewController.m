@@ -187,7 +187,7 @@
     static BOOL flag = YES ;
     
     if (flag) {
-         _headHeight = 180 ;
+         _headHeight = 220 ;
     }
     else{
          _headHeight = 100 ;

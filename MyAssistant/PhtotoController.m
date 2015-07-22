@@ -9,7 +9,7 @@
 #import "PhtotoController.h"
 #import "ZLPhoto.h"
 #import "PhotoCell.h"
-#import "Annex.h"
+
 
 @interface PhtotoController () <ZLPhotoPickerViewControllerDelegate,UITableViewDataSource,UITableViewDelegate,ZLPhotoPickerBrowserViewControllerDataSource,ZLPhotoPickerBrowserViewControllerDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate , NSFetchedResultsControllerDelegate>
 
@@ -70,7 +70,12 @@
     [super viewDidDisappear:animated];
     
     if (self.annexUploadCountBlock) {
-        self.annexUploadCountBlock([self.tableView numberOfRowsInSection:0]);
+        if (self.taskModel && [self.tableView numberOfRowsInSection:0]!= 0) {
+             self.annexUploadCountBlock([self.tableView numberOfRowsInSection:0] , self.taskModel);
+        }
+        else if(self.scheduleModel && [self.tableView numberOfRowsInSection:0]!= 0) {
+            self.annexUploadCountBlock([self.tableView numberOfRowsInSection:0] , self.scheduleModel);
+        }
     }
     
 }
@@ -133,10 +138,6 @@
             annexImage.schedule = _scheduleModel ;
         }
         annexImage.annexUploadTime = [NSDate date];
-        
-        if (![[CoreDataStack shareManaged].managedObjectContext save:nil]) {
-            debugLog(@"save photo fail");
-        }
         
     }
 }
@@ -297,10 +298,10 @@
     
     NSPredicate  *predicate =nil ;
     if (_taskModel) {
-        predicate = [NSPredicate predicateWithFormat:@"task.taskName = %@" , _taskModel.taskName];
+        predicate = [NSPredicate predicateWithFormat:@"task.taskName == %@" , _taskModel.taskName];
     }
     else if (_scheduleModel){
-        predicate = [NSPredicate predicateWithFormat:@"schedule.scheduleName = %@" , _scheduleModel.scheduleName];
+        predicate = [NSPredicate predicateWithFormat:@"schedule.scheduleName == %@" , _scheduleModel.scheduleName];
     }
     [fetchRequest setPredicate:predicate];
     

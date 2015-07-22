@@ -9,13 +9,13 @@
 #import "BaseController.h"
 #import "Task.h"
 #import "Schedule.h"
-
+#import "Annex.h"
 
 @interface PhtotoController : BaseController
 
 @property (nonatomic , retain)Task  *taskModel ;
 @property (nonatomic , retain)Schedule  *scheduleModel ;
-@property (nonatomic , copy)void(^annexUploadCountBlock)(NSInteger annexUploadCount);
+@property (nonatomic , copy)void(^annexUploadCountBlock)(NSInteger annexUploadCount , id model);
 @property (nonatomic , assign)BOOL    isHideRight;
 
 @end

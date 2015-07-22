@@ -30,6 +30,7 @@
 
 @property (nonatomic , retain)AddSubTaskController *subTaskDetailCtl  ;
 @property (nonatomic , retain)SubTask                            *pushToAddSubTaskCtlSubTaskModel;
+@property (nonatomic , assign)BOOL   isShowMore;
 
 @end
 
@@ -41,6 +42,10 @@
     self.tableView.contentInset = UIEdgeInsetsMake(-22, 0, 0, 0);
     
     self.context = [CoreDataStack shareManaged].managedObjectContext;
+    
+    if (!_isCreatTask) {
+        _isShowMore = YES ;
+    }
     
     [self _initBarButtonItem];
 }
@@ -137,7 +142,10 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 5 ;
+    if (_isShowMore) {
+        return 5 ;
+    }
+    return 3 ;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -156,6 +164,11 @@
         self.taskNameTF = (UITextField*)[cell viewWithTag:1];
         self.taskNameTF.text = self.taskModel.taskName ;
         return cell ;
+    }
+    //更多
+    if (!_isShowMore && indexPath.section == 2) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"taskMoreCell" forIndexPath:indexPath];
+        return cell;
     }
     //子任务
     if (indexPath.section == 4 && indexPath.row != 0) {
@@ -201,7 +214,13 @@
             [self didSelectedSecondSection:indexPath];
             break;
         case 2:
-            [self didSelectedThreeSection:indexPath];
+            if (_isShowMore) {
+                [self didSelectedThreeSection:indexPath];
+            }
+            else{
+                _isShowMore = YES ;
+                [tableView reloadData];
+            }
             break;
         case 3:
             [self didSelectedFourSection:indexPath];
@@ -407,9 +426,10 @@
 {
     PhtotoController *photoCtl = [[PhtotoController alloc]init];
     photoCtl.taskModel = self.taskModel ;
-    photoCtl.annexUploadCountBlock = ^(NSInteger annexUploadCount){
+    photoCtl.annexUploadCountBlock = ^(NSInteger annexUploadCount , id model){
         //
         dispatch_async(dispatch_get_main_queue(), ^{
+            self.taskModel = model ;
             AddTaskSetTimeCell *cell = (AddTaskSetTimeCell*)[self.tableView cellForRowAtIndexPath:indexPath];
             cell.cellEndTextLabel.text = [NSString stringWithFormat:@"%d" , (int)annexUploadCount];
         });

@@ -107,7 +107,7 @@
         self.calendar.calendarAppearance.dayTextFont = [UIFont systemFontOfSize:17.0];
     }
     else{
-         self.calendar.calendarAppearance.dayTextFont = [UIFont systemFontOfSize:14.0];
+         self.calendar.calendarAppearance.dayTextFont = [UIFont systemFontOfSize:15.0];
     }
     
     [self transitionExample];
@@ -185,7 +185,7 @@
 
 - (void)transitionExample
 {
-    CGFloat newHeight = 180;
+    CGFloat newHeight = 220;
    
     if(self.calendar.calendarAppearance.isWeekMode){
         newHeight = 100.;

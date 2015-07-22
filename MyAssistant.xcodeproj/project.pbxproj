@@ -99,6 +99,8 @@
 		FBC33B321B5E1B240048CDBC /* SubRemind.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC33B311B5E1B240048CDBC /* SubRemind.m */; };
 		FBC33B381B5E2A110048CDBC /* ScheduleSubRemindCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC33B371B5E2A110048CDBC /* ScheduleSubRemindCell.m */; };
 		FBC33B3B1B5E4FC10048CDBC /* Schedule.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC33B3A1B5E4FC10048CDBC /* Schedule.m */; };
+		FBC3471B1B5F67F000C1F602 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC3471A1B5F67F000C1F602 /* LoginController.m */; };
+		FBC3471E1B5F682000C1F602 /* RegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC3471D1B5F682000C1F602 /* RegisterController.m */; };
 		FBC358FD1B594B72007C9242 /* ScheduleHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC358FB1B594B72007C9242 /* ScheduleHeaderCell.m */; };
 		FBC358FE1B594B72007C9242 /* ScheduleHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBC358FC1B594B72007C9242 /* ScheduleHeaderCell.xib */; };
 		FBC35ABC1B40E03200119BA9 /* Mbutton.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC35ABB1B40E03200119BA9 /* Mbutton.m */; };
@@ -347,6 +349,10 @@
 		FBC33B371B5E2A110048CDBC /* ScheduleSubRemindCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduleSubRemindCell.m; sourceTree = "<group>"; };
 		FBC33B391B5E4FC10048CDBC /* Schedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Schedule.h; sourceTree = "<group>"; };
 		FBC33B3A1B5E4FC10048CDBC /* Schedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Schedule.m; sourceTree = "<group>"; };
+		FBC347191B5F67F000C1F602 /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
+		FBC3471A1B5F67F000C1F602 /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
+		FBC3471C1B5F682000C1F602 /* RegisterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterController.h; sourceTree = "<group>"; };
+		FBC3471D1B5F682000C1F602 /* RegisterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterController.m; sourceTree = "<group>"; };
 		FBC358FA1B594B72007C9242 /* ScheduleHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduleHeaderCell.h; sourceTree = "<group>"; };
 		FBC358FB1B594B72007C9242 /* ScheduleHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduleHeaderCell.m; sourceTree = "<group>"; };
 		FBC358FC1B594B72007C9242 /* ScheduleHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScheduleHeaderCell.xib; sourceTree = "<group>"; };
@@ -833,6 +839,17 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		FBC347181B5F663500C1F602 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				FBC347191B5F67F000C1F602 /* LoginController.h */,
+				FBC3471A1B5F67F000C1F602 /* LoginController.m */,
+				FBC3471C1B5F682000C1F602 /* RegisterController.h */,
+				FBC3471D1B5F682000C1F602 /* RegisterController.m */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
 		FBC35AB81B40DD0100119BA9 /* Category */ = {
 			isa = PBXGroup;
 			children = (
@@ -1179,6 +1196,7 @@
 		FBDD42811B32748C0050C313 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				FBC347181B5F663500C1F602 /* Login */,
 				FBC5A41B1B3BA36A00B7FBDD /* Task */,
 				FBC238FA1B49681900730559 /* Schedule */,
 				FBC7D0A31B3A4AAE00ACCE4D /* commom */,
@@ -1377,6 +1395,7 @@
 				FBC238F21B4907A500730559 /* TaskDetailNameCell.m in Sources */,
 				FBC472FD1B43B49600DB9E0C /* MessageFrame.m in Sources */,
 				FBC42A0F1B3969E200587FA6 /* TodayTaskCell.m in Sources */,
+				FBC3471E1B5F682000C1F602 /* RegisterController.m in Sources */,
 				FBC7D0A91B3A5D9F00ACCE4D /* RepeatRemindController.m in Sources */,
 				FBC297731B44D98300DBB57E /* PhotoCell.m in Sources */,
 				FBC35ABC1B40E03200119BA9 /* Mbutton.m in Sources */,
@@ -1421,6 +1440,7 @@
 				FBC2D8C31B4E43B90098498A /* AddScheduleContentCell.m in Sources */,
 				FBC33B321B5E1B240048CDBC /* SubRemind.m in Sources */,
 				FBC297F41B44DB2A00DBB57E /* SDWebImageManager.m in Sources */,
+				FBC3471B1B5F67F000C1F602 /* LoginController.m in Sources */,
 				FBC238E61B48F34200730559 /* Comment.m in Sources */,
 				FBDD42571B3265EB0050C313 /* TabBarViewController.m in Sources */,
 				FBC297F71B44DB2A00DBB57E /* UIImage+GIF.m in Sources */,
