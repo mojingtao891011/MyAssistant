@@ -9,6 +9,7 @@
 #import "FriendListController.h"
 #import "User.h"
 #import "FriendCell.h"
+#import "AddressBookController.h"
 
 
 @interface FriendListController ()<UICollectionViewDataSource , UICollectionViewDelegate , UICollectionViewDelegateFlowLayout , UITableViewDataSource ,UITableViewDelegate , UITextFieldDelegate, NSFetchedResultsControllerDelegate>
@@ -18,6 +19,7 @@
 @property (nonatomic , retain)NSFetchedResultsController        *fetchedResultsController ;
 @property (nonatomic , retain)NSManagedObjectContext       *context ;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UITextField *telTextField;
 
 @end
 
@@ -32,20 +34,10 @@
     }
    
     self.context = [CoreDataStack shareManaged].managedObjectContext ;
-    [self _initRightBarButton];
 }
-#pragma mark - UI
-- (void)_initRightBarButton
-{
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightButton setFrame:CGRectMake(0, 0, 40, 30)];
-    [rightButton setImage:[UIImage imageNamed:@"tongxunlu"] forState:UIControlStateNormal];
-    [rightButton addTarget:self action:@selector(rightBarButtonItemAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *barButtonItemRight = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
-    self.navigationItem.rightBarButtonItem = barButtonItemRight ;
-}
+
 #pragma mark - Action
+
 - (void)backAction
 {
     if (self.selectedFriendBlock) {
@@ -54,10 +46,23 @@
     
     [self.navigationController popViewControllerAnimated:YES];
 }
+
 - (void)rightBarButtonItemAction:(UIButton*)sender
 {
     
 }
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"pushAddressBookCtlSegue"]) {
+        AddressBookController *addressBookCtl = segue.destinationViewController;
+        addressBookCtl.SelectedTelBlock = ^(NSMutableArray *telArr){
+            
+        };
+    }
+    
+}
+
 #pragma mark - UITextFieldDelegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -90,7 +95,7 @@
     if (indexPath.row == _colletionDataSources.count) {
         return CGSizeMake(180, 40);
     }
-    return CGSizeMake(40, 40);
+    return CGSizeMake(30, 30);
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
