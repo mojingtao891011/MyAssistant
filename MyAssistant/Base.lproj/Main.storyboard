@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C2055" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="g3B-Mq-a0N">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C2055" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="wvy-GW-cMa">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -974,7 +974,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="g3B-Mq-a0N" kind="push" id="zUk-Zh-Qlc"/>
+                                            <segue destination="k0M-3n-6yO" kind="push" id="xYM-mY-Wli"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -995,6 +995,7 @@
                         <outlet property="imageView4" destination="Fad-b0-3Gj" id="SBp-7E-Ecf"/>
                         <outlet property="imageView5" destination="T8L-v4-Ilc" id="Msy-jM-LLV"/>
                         <outlet property="imageView6" destination="fn8-zr-07w" id="4hI-JG-nXW"/>
+                        <outlet property="imageView7" destination="jHF-ou-hqe" id="ByP-Xu-yJt"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9tb-ri-o9q" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3497,7 +3498,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KNy-9v-muT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="525" y="-790"/>
+            <point key="canvasLocation" x="209" y="-778"/>
         </scene>
         <!--Base Navgation Controller-->
         <scene sceneID="Qh6-P6-qmG">
@@ -3518,25 +3519,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8IV-Fc-KN7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1062" y="-795"/>
-        </scene>
-        <!--Base Navgation Controller-->
-        <scene sceneID="I3C-vO-efx">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="g3B-Mq-a0N" customClass="BaseNavgationController" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="N5v-zp-d8w"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="HXU-aZ-bBP">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="k0M-3n-6yO" kind="relationship" relationship="rootViewController" id="ITp-WE-euI"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2Pe-25-7OI" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="131" y="-790"/>
         </scene>
     </scenes>
     <resources>

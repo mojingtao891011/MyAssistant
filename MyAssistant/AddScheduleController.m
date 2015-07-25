@@ -335,6 +335,15 @@
         
         RepeatRemindController *repeatRemindCtl = [self fetchViewControllerByIdentifier:@"RepeatRemindController"] ;
         repeatRemindCtl.curRepeatType = [self.scheduleModel.schedulerepeat intValue];
+        
+        SubRemind *subRemind = [CoreDataModelService fetchSubRemindBySubRemindNumber:0 schedule:self.scheduleModel];
+        if (subRemind.subRemindTime) {
+            repeatRemindCtl.remindTime = subRemind.subRemindTime ;
+        }
+        else{
+            repeatRemindCtl.remindTime = self.scheduleModel.schedulestartTime ;
+        }
+        
         repeatRemindCtl.selectedRepeatTypeBlock = ^(NSInteger selectedIndex){
             
             AddScheduleContentCell *cell = (AddScheduleContentCell*)[self.tableView cellForRowAtIndexPath:indexPath];
@@ -360,6 +369,9 @@
                         break;
                     case 5:
                         cell.cellSubTextLabel.text = @"每年重复";
+                        break;
+                    case 6:
+                        cell.cellSubTextLabel.text = @"自定义";
                         break;
                     default:
                         break;

@@ -8,20 +8,21 @@
 
 #import "BaseTableController.h"
 
-typedef enum {
-    
-    noRepeat = 0,
-    everyDayRepeat = 1,
-    everyWeekRepeat = 2,
-    everyMonthRepeat = 3,
-    everyYearRepeat = 4,
-    
-}RepeatType;
-
+//typedef enum {
+//    
+//    noRepeat = 0,
+//    everyDayRepeat = 1,
+//    everyWeekRepeat = 2,
+//    everyMonthRepeat = 3,
+//    everyYearRepeat = 4,
+//    
+//}RepeatType;
+//
 
 @interface RepeatRemindController : BaseTableController
 
-@property (nonatomic , assign)RepeatType        curRepeatType ;
+@property (nonatomic , assign)NSInteger        curRepeatType ;
+@property (nonatomic , retain)NSDate            *remindTime;
 @property (nonatomic , copy)void(^selectedRepeatTypeBlock)(NSInteger selectedRepeatType);
 
 @end

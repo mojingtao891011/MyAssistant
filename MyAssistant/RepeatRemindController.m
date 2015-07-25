@@ -7,6 +7,7 @@
 //
 
 #import "RepeatRemindController.h"
+#import "CustomRepeatController.h"
 
 @interface RepeatRemindController ()
 
@@ -16,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView4;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView5;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView6;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView7;
 
 
 @property (nonatomic , retain)UIImageView *lastSelectedImageView ;
@@ -28,24 +30,35 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.imageViews = @[_imageView1 , _imageView2 , _imageView3 , _imageView4 , _imageView5 , _imageView6];
+    self.imageViews = @[_imageView1 , _imageView2 , _imageView3 , _imageView4 , _imageView5 , _imageView6 ];
     
-    
-    self.lastSelectedImageView = self.imageViews[_curRepeatType];
-    self.lastSelectedImageView.hidden = NO ;
+    if (self.imageViews.count <= _curRepeatType) {
+        self.imageView7.hidden = NO ;
+    }
+    else{
+        self.lastSelectedImageView = self.imageViews[_curRepeatType];
+        self.lastSelectedImageView.hidden = NO ;
+
+    }
     
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    CustomRepeatController *customRepeatCtl = segue.destinationViewController;
+    customRepeatCtl.scheduleRemindTime = self.remindTime;
+}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    
     if (indexPath.section == 0) {
-        
+    
+        self.imageView7.hidden = YES ;
         UIImageView *imageView = self.imageViews[indexPath.row];
         
         if (self.lastSelectedImageView) {
@@ -72,7 +85,11 @@
 
     }
     else{
-        
+        self.lastSelectedImageView.hidden = YES ;
+        self.imageView7.hidden = NO ;
+        if (self.selectedRepeatTypeBlock) {
+            self.selectedRepeatTypeBlock(indexPath.row +[tableView numberOfRowsInSection:0]);
+        }
     }
     
 }

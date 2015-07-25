@@ -39,8 +39,9 @@ typedef enum
 @property (nonatomic , copy)NSString *componentStr;
 @property (nonatomic , assign)CGFloat   footerHeight;
 
-@property (nonatomic , assign)NSInteger repeat1Number;
-@property (nonatomic , retain)NSString *repeat2Number;
+//0每天、1每周、2每月、3每年
+@property (nonatomic , assign)NSInteger frequencyInt;
+@property (nonatomic , retain)NSString *repeatInt;
 
 @property (nonatomic , retain)NSMutableArray        *selectedWeeks;
 @property (nonatomic , retain)NSMutableArray        *selectedMonths;
@@ -58,7 +59,7 @@ typedef enum
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.footerHeight = 40.0;
+    self.footerHeight = 40.0;       //默认高度
     self.firstSectionInteger = 2 ;
     self.secondSectionInteger = 0 ;
     self.firstSectionDataSource = [NSMutableArray arrayWithArray:@[@"每天" , @"天"]];
@@ -69,9 +70,9 @@ typedef enum
     self.everyDayFooterTitle = @"事件将每天重复一次";
     self.componentStr = @"天";
     
-    self.selectedWeeks = [NSMutableArray arrayWithCapacity:7];
-    self.selectedMonths = [NSMutableArray arrayWithCapacity:30];
-    self.selectedYears = [NSMutableArray arrayWithCapacity:12];
+    self.scheduleRemindTime = [NSDate date ];
+    [self _initDefaultValue:_scheduleRemindTime];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -90,17 +91,15 @@ typedef enum
         [self.firstSectionDataSource addObjectsFromArray:@[@"每天" , [NSString stringWithFormat:@"%@ 天" , repeat2]]];
         self.everyDayFooterTitle = [NSString stringWithFormat:@"事件将每%@天重复一次" , repeat2];
         self.componentStr = @"天";
-        self.repeat1Number = 0 ;
+        self.frequencyInt = 0 ;
     }
     else if ([repeat1 isEqualToString:@"每周"]){
-          self.repeat1Number = 1 ;
+          self.frequencyInt = 1 ;
         self.secondSectionInteger = 7;
         self.repeatType = everyWeek ;
         [self.firstSectionDataSource removeAllObjects];
         [self.firstSectionDataSource addObjectsFromArray:@[@"每周" , [NSString stringWithFormat:@"%@ 周" , repeat2]]];
-        self.everyWeekFooterTitle = [NSString stringWithFormat:@"事件将每%@周重复一次",repeat2];
-        
-        
+       
         NSArray *array= [self.selectedWeeks sortedArrayUsingSelector:@selector(compare:)];
         self.selectedWeeks = [NSMutableArray arrayWithArray:array];
         
@@ -118,13 +117,18 @@ typedef enum
             NSString *keyStr =[NSString stringWithFormat:@"%@" , index];
             [footerStr appendFormat:@"%@、",dict[keyStr]];
         }
-        
-        self.everyWeekFooterTitle = [NSString stringWithFormat:@"事件将每%@周于%@重复" , repeat2 , footerStr];
+        if (array.count == 0) {
+            self.everyWeekFooterTitle = [NSString stringWithFormat:@"事件将每%@周重复一次",repeat2];
+        }
+        else{
+             self.everyWeekFooterTitle = [NSString stringWithFormat:@"事件将每%@周于%@重复" , repeat2 , footerStr];
+        }
+       
         
         self.componentStr = @"周";
     }
     else if ([repeat1 isEqualToString:@"每月"]){
-          self.repeat1Number = 2 ;
+          self.frequencyInt = 2 ;
         self.secondSectionInteger = 1;
         self.repeatType = everyMonth ;
         [self.firstSectionDataSource removeAllObjects];
@@ -136,12 +140,18 @@ typedef enum
             
             [monthsDay appendFormat:@"%d日 ",(int)[buttonTag integerValue]+1];
         }
-        self.everyMonthFooterTitle = [NSString stringWithFormat:@"事件将每%@个月于%@重复" , repeat2 , monthsDay];
+        if (self.selectedMonths.count != 0) {
+            self.everyMonthFooterTitle = [NSString stringWithFormat:@"事件将每%@个月于%@重复" , repeat2 , monthsDay];
+        }
+        else{
+            self.everyMonthFooterTitle = [NSString stringWithFormat:@"事件将每%@个月重复" , repeat2 ];
+        }
+        
         
         self.componentStr = @"月";
     }
     else if ([repeat1 isEqualToString:@"每年"]){
-          self.repeat1Number = 3 ;
+          self.frequencyInt = 3 ;
         self.secondSectionInteger = 1;
         self.repeatType = everyYear ;
         [self.firstSectionDataSource removeAllObjects];
@@ -152,13 +162,18 @@ typedef enum
             
             [monthsDay appendFormat:@"%d月 ",(int)[buttonTag integerValue]+1];
         }
-        self.everyYearFooterTitle = [NSString stringWithFormat:@"事件将每%@个年于%@重复" , repeat2, monthsDay];
+        if (self.selectedYears.count != 0) {
+             self.everyYearFooterTitle = [NSString stringWithFormat:@"事件将每%@年于%@重复" , repeat2, monthsDay];
+        }
+        else{
+             self.everyYearFooterTitle = [NSString stringWithFormat:@"事件将每%@年重复" , repeat2];
+        }
 
         self.componentStr = @"年";
     }
 
     
-     self.repeat2Number = repeat2 ;
+     self.repeatInt = repeat2 ;
     
     [self.tableView reloadData];
 }
@@ -173,7 +188,7 @@ typedef enum
         
         [monthsDay appendFormat:@"%d日 ",(int)[buttonTag integerValue]+1];
     }
-    self.everyMonthFooterTitle = [NSString stringWithFormat:@"事件将每%@个月于%@重复" , self.repeat2Number , monthsDay];
+    self.everyMonthFooterTitle = [NSString stringWithFormat:@"事件将每%@个月于%@重复" , self.repeatInt , monthsDay];
     
     _isShowPicker1 = NO ;
     _isShowPicker2 = NO ;
@@ -192,7 +207,7 @@ typedef enum
         
         [monthsDay appendFormat:@"%d月 ",(int)[buttonTag integerValue]+1];
     }
-    self.everyYearFooterTitle = [NSString stringWithFormat:@"事件将每%@个年于%@重复" , self.repeat2Number , monthsDay];
+    self.everyYearFooterTitle = [NSString stringWithFormat:@"事件将每%@年于%@重复" , self.repeatInt , monthsDay];
     
     _isShowPicker1 = NO ;
     _isShowPicker2 = NO ;
@@ -220,7 +235,7 @@ typedef enum
         if (indexPath.row == 1&&_isShowPicker1) {
             PickerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PickerCell" forIndexPath:indexPath];
             cell.pickerType = firstPicker ;
-            [cell.pickerView selectRow:self.repeat1Number inComponent:0 animated:YES];
+            [cell.pickerView selectRow:self.frequencyInt inComponent:0 animated:YES];
             cell.delegate = self ;
             return cell ;
         }
@@ -229,7 +244,7 @@ typedef enum
             PickerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PickerCell" forIndexPath:indexPath];
             cell.pickerType = secondPicker ;
             cell.componentStr = self.componentStr ;
-            [cell.pickerView selectRow:[self.repeat2Number intValue]- 1 inComponent:0 animated:YES];
+            [cell.pickerView selectRow:[self.repeatInt intValue]- 1 inComponent:0 animated:YES];
             cell.delegate = self ;
             return cell ;
         }
@@ -440,6 +455,24 @@ typedef enum
     
 }
 #pragma mark - private
+- (void)_initDefaultValue:(NSDate*)scheduleStartTime
+{
+    self.selectedWeeks = [NSMutableArray arrayWithCapacity:7];
+    self.selectedMonths = [NSMutableArray arrayWithCapacity:30];
+    self.selectedYears = [NSMutableArray arrayWithCapacity:12];
+    
+
+    //  先定义一个遵循某个历法的日历对象
+    NSCalendar *greCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    //  通过已定义的日历对象，获取某个时间点的NSDateComponents表示，并设置需要表示哪些信息（NSYearCalendarUnit, NSMonthCalendarUnit, NSDayCalendarUnit等）
+    NSDateComponents *dateComponents = [greCalendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekCalendarUnit | NSWeekdayCalendarUnit | NSWeekOfMonthCalendarUnit | NSWeekOfYearCalendarUnit fromDate:scheduleStartTime];
+    
+
+    [self.selectedWeeks addObject:[NSNumber numberWithInteger:dateComponents.weekday-1]];
+    [self.selectedMonths addObject:[NSNumber numberWithInteger:dateComponents.day - 1]];
+    [self.selectedYears addObject:[NSNumber numberWithInteger:dateComponents.month -1]];
+
+}
 - (CGFloat)footerLabelHeight:(NSString*)footerTitle
 {
     //计算高度
@@ -449,8 +482,14 @@ typedef enum
 }
 - (NSString*)selectWeekDay:(NSIndexPath*)indexPath
 {
+    
+   
+    
     if ([self.selectedWeeks containsObject:[NSNumber numberWithInteger:indexPath.row]]) {
-        [self.selectedWeeks removeObject:[NSNumber numberWithInteger:indexPath.row]];
+        if (self.selectedWeeks.count != 1) {
+            [self.selectedWeeks removeObject:[NSNumber numberWithInteger:indexPath.row]];
+        }
+        
     }
     else{
         [self.selectedWeeks addObject:[NSNumber numberWithInteger:indexPath.row]];
@@ -474,7 +513,7 @@ typedef enum
     }
     
     
-    return [NSString stringWithFormat:@"事件将每%@周于%@重复" , _repeat2Number , footerStr]; ;
+    return [NSString stringWithFormat:@"事件将每%@周于%@重复" , _repeatInt , footerStr]; ;
 }
 
 @end

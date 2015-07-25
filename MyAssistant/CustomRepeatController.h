@@ -10,4 +10,8 @@
 
 @interface CustomRepeatController : BaseController
 
+@property (nonatomic , retain)NSDate *scheduleRemindTime;
+
+@property (nonatomic , copy)void(^CustomRepeatBlock)(NSInteger frequencyInt , NSInteger repeatInt , NSMutableArray *dateArr);
+
 @end

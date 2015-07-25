@@ -31,23 +31,29 @@
             
             self.cellSubTextLabel.text = scheduleModel.schedulerepeat.stringValue ;
             NSInteger selectedIndex = scheduleModel.schedulerepeat.integerValue ;
+            
             switch (selectedIndex) {
                 case 0:
-                    self.cellSubTextLabel.text = @"永不";
+                     self.cellSubTextLabel.text = @"永不";
                     break;
                 case 1:
                     self.cellSubTextLabel.text = @"每日重复";
                     break;
                 case 2:
-                    self.cellSubTextLabel.text = @"每周重复";
+                    self.cellSubTextLabel.text = @"每工作日重复";
                     break;
                 case 3:
-                    self.cellSubTextLabel.text = @"每月重复";
+                    self.cellSubTextLabel.text = @"每周末重复";
                     break;
                 case 4:
+                    self.cellSubTextLabel.text = @"每月重复";
+                    break;
+                case 5:
                     self.cellSubTextLabel.text = @"每年重复";
                     break;
-                    
+                case 6:
+                    self.cellSubTextLabel.text = @"自定义";
+                    break;
                 default:
                     break;
             }
