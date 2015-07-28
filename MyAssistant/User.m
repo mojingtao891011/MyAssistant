@@ -2,13 +2,14 @@
 //  User.m
 //  MyAssistant
 //
-//  Created by taomojingato on 15/7/7.
+//  Created by taomojingato on 15/7/27.
 //  Copyright (c) 2015年 mojingato. All rights reserved.
 //
 
 #import "User.h"
 #import "Annex.h"
 #import "Comment.h"
+#import "Friends.h"
 #import "Schedule.h"
 #import "SubTask.h"
 #import "Task.h"
@@ -26,8 +27,9 @@
 @dynamic creatShchedules;
 @dynamic creatTasks;
 @dynamic schedulesFollowers;
+@dynamic subTaskExecutors;
 @dynamic taskExecutors;
 @dynamic taskFollowers;
-@dynamic subTaskExecutors;
+@dynamic friends;
 
 @end

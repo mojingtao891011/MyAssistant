@@ -10,7 +10,6 @@
 		619CA311F6C8A0B5CFDAD0C6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A19F5D06251C3FA2F6C0629 /* libPods.a */; };
 		FB23332D1B4FCD5600352AA2 /* ScheduleFollowerController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB23332C1B4FCD5600352AA2 /* ScheduleFollowerController.m */; };
 		FB51D1361B4B87DE00CF4867 /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = FB51D1351B4B87DE00CF4867 /* Task.m */; };
-		FB51D13C1B4B87DE00CF4867 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = FB51D13B1B4B87DE00CF4867 /* User.m */; };
 		FB51D13F1B4BA5F400CF4867 /* AddSubTaskActionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FB51D13E1B4BA5F400CF4867 /* AddSubTaskActionCell.m */; };
 		FB51D1421B4BB76A00CF4867 /* NSDate+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = FB51D1411B4BB76A00CF4867 /* NSDate+Utilities.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		FB694B4D1B3454CF00D79E93 /* TaskNameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FB694B4C1B3454CF00D79E93 /* TaskNameCell.m */; };
@@ -25,6 +24,9 @@
 		FBB489F91B58EEC400613E0E /* ScheduleListController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB489F81B58EEC400613E0E /* ScheduleListController.m */; };
 		FBB489FD1B58EF0F00613E0E /* ScheduleListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB489FB1B58EF0F00613E0E /* ScheduleListCell.m */; };
 		FBB489FE1B58EF0F00613E0E /* ScheduleListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBB489FC1B58EF0F00613E0E /* ScheduleListCell.xib */; };
+		FBC022E21B67567F003ACFE9 /* AddressBookFriendsController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC022E11B67567F003ACFE9 /* AddressBookFriendsController.m */; };
+		FBC022E51B675903003ACFE9 /* AddressBookFriendCell1.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC022E41B675903003ACFE9 /* AddressBookFriendCell1.m */; };
+		FBC022E81B675926003ACFE9 /* AddressBookFriendCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC022E71B675926003ACFE9 /* AddressBookFriendCell2.m */; };
 		FBC238DA1B48E27400730559 /* AddSubTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC238D91B48E27400730559 /* AddSubTaskController.m */; };
 		FBC238E01B48F34200730559 /* Annex.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC238DF1B48F34200730559 /* Annex.m */; };
 		FBC238E61B48F34200730559 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC238E51B48F34200730559 /* Comment.m */; };
@@ -110,10 +112,15 @@
 		FBC42A091B394E2500587FA6 /* CoreDataModelService.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC42A081B394E2500587FA6 /* CoreDataModelService.m */; };
 		FBC42A0F1B3969E200587FA6 /* TodayTaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC42A0E1B3969E200587FA6 /* TodayTaskCell.m */; };
 		FBC42A121B3969FD00587FA6 /* TodayScheduleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC42A111B3969FD00587FA6 /* TodayScheduleCell.m */; };
+		FBC465D41B662A03003E0895 /* AddFriendsController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC465D31B662A03003E0895 /* AddFriendsController.m */; };
+		FBC465D71B66397F003E0895 /* Friends.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC465D61B66397F003E0895 /* Friends.m */; };
+		FBC465DA1B6639F7003E0895 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC465D91B6639F7003E0895 /* User.m */; };
 		FBC472FD1B43B49600DB9E0C /* MessageFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC472FC1B43B49600DB9E0C /* MessageFrame.m */; };
 		FBC4731D1B440C6E00DB9E0C /* CHTumblrMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC4731C1B440C6E00DB9E0C /* CHTumblrMenuView.m */; };
 		FBC475CB1B3D37F2000EC50E /* MJTCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC475CA1B3D37F2000EC50E /* MJTCalendar.m */; };
 		FBC475CE1B3D5332000EC50E /* BaseTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC475CD1B3D5332000EC50E /* BaseTableController.m */; };
+		FBC48AC81B6728220001E4DE /* AddFriendsTwoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC48AC71B6728220001E4DE /* AddFriendsTwoCell.m */; };
+		FBC48ACB1B67289F0001E4DE /* AddFriendsOneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC48ACA1B67289F0001E4DE /* AddFriendsOneCell.m */; };
 		FBC4B9461B60C04900F301CC /* KTSContactsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC4B9451B60C04900F301CC /* KTSContactsManager.m */; };
 		FBC4B94C1B60C39F00F301CC /* AddressBookController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC4B94B1B60C39F00F301CC /* AddressBookController.m */; };
 		FBC4B94F1B60DE5F00F301CC /* CustomRepeatController.m in Sources */ = {isa = PBXBuildFile; fileRef = FBC4B94E1B60DE5F00F301CC /* CustomRepeatController.m */; };
@@ -193,8 +200,6 @@
 		FB51D1331B4B7C6200CF4867 /* NoteName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoteName.h; sourceTree = "<group>"; };
 		FB51D1341B4B87DE00CF4867 /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Task.h; sourceTree = "<group>"; };
 		FB51D1351B4B87DE00CF4867 /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
-		FB51D13A1B4B87DE00CF4867 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		FB51D13B1B4B87DE00CF4867 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		FB51D13D1B4BA5F400CF4867 /* AddSubTaskActionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddSubTaskActionCell.h; sourceTree = "<group>"; };
 		FB51D13E1B4BA5F400CF4867 /* AddSubTaskActionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddSubTaskActionCell.m; sourceTree = "<group>"; };
 		FB51D1401B4BB76A00CF4867 /* NSDate+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Utilities.h"; sourceTree = "<group>"; };
@@ -221,6 +226,12 @@
 		FBB489FA1B58EF0F00613E0E /* ScheduleListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduleListCell.h; sourceTree = "<group>"; };
 		FBB489FB1B58EF0F00613E0E /* ScheduleListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduleListCell.m; sourceTree = "<group>"; };
 		FBB489FC1B58EF0F00613E0E /* ScheduleListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScheduleListCell.xib; sourceTree = "<group>"; };
+		FBC022E01B67567F003ACFE9 /* AddressBookFriendsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBookFriendsController.h; sourceTree = "<group>"; };
+		FBC022E11B67567F003ACFE9 /* AddressBookFriendsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressBookFriendsController.m; sourceTree = "<group>"; };
+		FBC022E31B675903003ACFE9 /* AddressBookFriendCell1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBookFriendCell1.h; sourceTree = "<group>"; };
+		FBC022E41B675903003ACFE9 /* AddressBookFriendCell1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressBookFriendCell1.m; sourceTree = "<group>"; };
+		FBC022E61B675926003ACFE9 /* AddressBookFriendCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBookFriendCell2.h; sourceTree = "<group>"; };
+		FBC022E71B675926003ACFE9 /* AddressBookFriendCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressBookFriendCell2.m; sourceTree = "<group>"; };
 		FBC238D81B48E27400730559 /* AddSubTaskController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddSubTaskController.h; sourceTree = "<group>"; };
 		FBC238D91B48E27400730559 /* AddSubTaskController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddSubTaskController.m; sourceTree = "<group>"; };
 		FBC238DE1B48F34200730559 /* Annex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Annex.h; sourceTree = "<group>"; };
@@ -377,6 +388,12 @@
 		FBC42A0E1B3969E200587FA6 /* TodayTaskCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodayTaskCell.m; sourceTree = "<group>"; };
 		FBC42A101B3969FD00587FA6 /* TodayScheduleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodayScheduleCell.h; sourceTree = "<group>"; };
 		FBC42A111B3969FD00587FA6 /* TodayScheduleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodayScheduleCell.m; sourceTree = "<group>"; };
+		FBC465D21B662A03003E0895 /* AddFriendsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendsController.h; sourceTree = "<group>"; };
+		FBC465D31B662A03003E0895 /* AddFriendsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendsController.m; sourceTree = "<group>"; };
+		FBC465D51B66397F003E0895 /* Friends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Friends.h; sourceTree = "<group>"; };
+		FBC465D61B66397F003E0895 /* Friends.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Friends.m; sourceTree = "<group>"; };
+		FBC465D81B6639F7003E0895 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		FBC465D91B6639F7003E0895 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		FBC472FB1B43B49600DB9E0C /* MessageFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageFrame.h; sourceTree = "<group>"; };
 		FBC472FC1B43B49600DB9E0C /* MessageFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageFrame.m; sourceTree = "<group>"; };
 		FBC4731B1B440C6E00DB9E0C /* CHTumblrMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHTumblrMenuView.h; sourceTree = "<group>"; };
@@ -385,6 +402,10 @@
 		FBC475CA1B3D37F2000EC50E /* MJTCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJTCalendar.m; sourceTree = "<group>"; };
 		FBC475CC1B3D5332000EC50E /* BaseTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTableController.h; sourceTree = "<group>"; };
 		FBC475CD1B3D5332000EC50E /* BaseTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTableController.m; sourceTree = "<group>"; };
+		FBC48AC61B6728220001E4DE /* AddFriendsTwoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendsTwoCell.h; sourceTree = "<group>"; };
+		FBC48AC71B6728220001E4DE /* AddFriendsTwoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendsTwoCell.m; sourceTree = "<group>"; };
+		FBC48AC91B67289F0001E4DE /* AddFriendsOneCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendsOneCell.h; sourceTree = "<group>"; };
+		FBC48ACA1B67289F0001E4DE /* AddFriendsOneCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendsOneCell.m; sourceTree = "<group>"; };
 		FBC4B9441B60C04900F301CC /* KTSContactsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSContactsManager.h; sourceTree = "<group>"; };
 		FBC4B9451B60C04900F301CC /* KTSContactsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSContactsManager.m; sourceTree = "<group>"; };
 		FBC4B94A1B60C39F00F301CC /* AddressBookController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBookController.h; sourceTree = "<group>"; };
@@ -523,6 +544,39 @@
 				704E32EB5019C8864DC7B38A /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		FBC022DE1B6755BD003ACFE9 /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				FBC465D21B662A03003E0895 /* AddFriendsController.h */,
+				FBC465D31B662A03003E0895 /* AddFriendsController.m */,
+				FBC022E01B67567F003ACFE9 /* AddressBookFriendsController.h */,
+				FBC022E11B67567F003ACFE9 /* AddressBookFriendsController.m */,
+				FBC3A17F1B53B69C00209751 /* FriendListController.h */,
+				FBC3A1801B53B69C00209751 /* FriendListController.m */,
+				FBC4B94A1B60C39F00F301CC /* AddressBookController.h */,
+				FBC4B94B1B60C39F00F301CC /* AddressBookController.m */,
+				FBC022DF1B675623003ACFE9 /* View */,
+			);
+			name = Friends;
+			sourceTree = "<group>";
+		};
+		FBC022DF1B675623003ACFE9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FBC48AC91B67289F0001E4DE /* AddFriendsOneCell.h */,
+				FBC48ACA1B67289F0001E4DE /* AddFriendsOneCell.m */,
+				FBC48AC61B6728220001E4DE /* AddFriendsTwoCell.h */,
+				FBC48AC71B6728220001E4DE /* AddFriendsTwoCell.m */,
+				FBC022E31B675903003ACFE9 /* AddressBookFriendCell1.h */,
+				FBC022E41B675903003ACFE9 /* AddressBookFriendCell1.m */,
+				FBC022E61B675926003ACFE9 /* AddressBookFriendCell2.h */,
+				FBC022E71B675926003ACFE9 /* AddressBookFriendCell2.m */,
+				FB86E4901B54E1E900A15D14 /* FriendCell.h */,
+				FB86E4911B54E1E900A15D14 /* FriendCell.m */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		FBC238FA1B49681900730559 /* Schedule */ = {
@@ -1026,10 +1080,6 @@
 				FBC2A8BA1B56B2220019C938 /* DatePickerController.m */,
 				FBC7D8681B57975400130645 /* FollowersController.h */,
 				FBC7D8691B57975400130645 /* FollowersController.m */,
-				FBC3A17F1B53B69C00209751 /* FriendListController.h */,
-				FBC3A1801B53B69C00209751 /* FriendListController.m */,
-				FBC4B94A1B60C39F00F301CC /* AddressBookController.h */,
-				FBC4B94B1B60C39F00F301CC /* AddressBookController.m */,
 				FBC2976D1B44D98300DBB57E /* PhtotoController.h */,
 				FBC2976E1B44D98300DBB57E /* PhtotoController.m */,
 				FBC7D86B1B5798E800130645 /* view */,
@@ -1051,8 +1101,6 @@
 				FBC2976F1B44D98300DBB57E /* PhotoCell.h */,
 				FBC297701B44D98300DBB57E /* PhotoCell.m */,
 				FBC297711B44D98300DBB57E /* PhotoCell.xib */,
-				FB86E4901B54E1E900A15D14 /* FriendCell.h */,
-				FB86E4911B54E1E900A15D14 /* FriendCell.m */,
 				FBC7D86C1B57990B00130645 /* FollowersCell.h */,
 				FBC7D86D1B57990B00130645 /* FollowersCell.m */,
 			);
@@ -1090,8 +1138,6 @@
 				FBC238E51B48F34200730559 /* Comment.m */,
 				FBC238DE1B48F34200730559 /* Annex.h */,
 				FBC238DF1B48F34200730559 /* Annex.m */,
-				FB51D13A1B4B87DE00CF4867 /* User.h */,
-				FB51D13B1B4B87DE00CF4867 /* User.m */,
 				FB51D1341B4B87DE00CF4867 /* Task.h */,
 				FB51D1351B4B87DE00CF4867 /* Task.m */,
 				FBC7D8651B5789D700130645 /* SubTask.h */,
@@ -1100,6 +1146,10 @@
 				FBC33B311B5E1B240048CDBC /* SubRemind.m */,
 				FBC33B391B5E4FC10048CDBC /* Schedule.h */,
 				FBC33B3A1B5E4FC10048CDBC /* Schedule.m */,
+				FBC465D51B66397F003E0895 /* Friends.h */,
+				FBC465D61B66397F003E0895 /* Friends.m */,
+				FBC465D81B6639F7003E0895 /* User.h */,
+				FBC465D91B6639F7003E0895 /* User.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1239,6 +1289,7 @@
 		FBDD42811B32748C0050C313 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				FBC022DE1B6755BD003ACFE9 /* Friends */,
 				FBC347181B5F663500C1F602 /* Login */,
 				FBC5A41B1B3BA36A00B7FBDD /* Task */,
 				FBC238FA1B49681900730559 /* Schedule */,
@@ -1417,7 +1468,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB51D13C1B4B87DE00CF4867 /* User.m in Sources */,
+				FBC465DA1B6639F7003E0895 /* User.m in Sources */,
 				FBC298181B44DB2A00DBB57E /* ZLPhotoPickerAssetsViewController.m in Sources */,
 				FBC2A8BB1B56B2220019C938 /* DatePickerController.m in Sources */,
 				FBC35ABF1B40E16600119BA9 /* MLabel.m in Sources */,
@@ -1432,6 +1483,7 @@
 				FBC91C8D1B4F726B008B6F69 /* ScheduleDetailController.m in Sources */,
 				FBC4731D1B440C6E00DB9E0C /* CHTumblrMenuView.m in Sources */,
 				FBC2D8C51B4E43B90098498A /* AddScheduleController.m in Sources */,
+				FBC022E81B675926003ACFE9 /* AddressBookFriendCell2.m in Sources */,
 				FBC238E01B48F34200730559 /* Annex.m in Sources */,
 				FBC297F61B44DB2A00DBB57E /* UIButton+WebCache.m in Sources */,
 				FBC7D8671B5789D700130645 /* SubTask.m in Sources */,
@@ -1439,6 +1491,7 @@
 				FBC238F21B4907A500730559 /* TaskDetailNameCell.m in Sources */,
 				FBC472FD1B43B49600DB9E0C /* MessageFrame.m in Sources */,
 				FBC42A0F1B3969E200587FA6 /* TodayTaskCell.m in Sources */,
+				FBC48AC81B6728220001E4DE /* AddFriendsTwoCell.m in Sources */,
 				FBC3471E1B5F682000C1F602 /* RegisterController.m in Sources */,
 				FBC7D0A91B3A5D9F00ACCE4D /* RepeatRemindController.m in Sources */,
 				FBC297731B44D98300DBB57E /* PhotoCell.m in Sources */,
@@ -1462,6 +1515,7 @@
 				FBC9B1BE1B3E5A900053FE96 /* SelfController.m in Sources */,
 				FBC7D86A1B57975400130645 /* FollowersController.m in Sources */,
 				FBC297FC1B44DB2A00DBB57E /* UIView+WebCacheOperation.m in Sources */,
+				FBC465D41B662A03003E0895 /* AddFriendsController.m in Sources */,
 				FBDD426E1B3268EE0050C313 /* UIViewExt.m in Sources */,
 				FBDD426D1B3268EE0050C313 /* UIView+firstResponder.m in Sources */,
 				FBC875E61B3539E100168FD3 /* MyAssistant.xcdatamodeld in Sources */,
@@ -1476,6 +1530,7 @@
 				FBC297ED1B44DB2A00DBB57E /* MKAnnotationView+WebCache.m in Sources */,
 				FBC298151B44DB2A00DBB57E /* ZLPhotoAssets.m in Sources */,
 				FBC358FD1B594B72007C9242 /* ScheduleHeaderCell.m in Sources */,
+				FBC022E51B675903003ACFE9 /* AddressBookFriendCell1.m in Sources */,
 				FBC2981E1B44DB2A00DBB57E /* ZLPhotoPickerGroupTableViewCell.m in Sources */,
 				FBDD427A1B3274510050C313 /* MessageController.m in Sources */,
 				FBCB32E81B47CA18007F4BF9 /* TodayCalendCell.m in Sources */,
@@ -1499,7 +1554,9 @@
 				FBDD425D1B3268370050C313 /* BaseNavgationController.m in Sources */,
 				FBC2FF281B33AF1C0068E0D9 /* ScheduleCell.m in Sources */,
 				FBC297FA1B44DB2A00DBB57E /* UIImageView+HighlightedWebCache.m in Sources */,
+				FBC465D71B66397F003E0895 /* Friends.m in Sources */,
 				FBC475CB1B3D37F2000EC50E /* MJTCalendar.m in Sources */,
+				FBC022E21B67567F003ACFE9 /* AddressBookFriendsController.m in Sources */,
 				FBC875E31B35332600168FD3 /* CoreDataStack.m in Sources */,
 				FBB13D9A1B56427300AD98B0 /* RemindCell.m in Sources */,
 				FBC2980F1B44DB2A00DBB57E /* ZLPhotoPickerBrowserPhoto.m in Sources */,
@@ -1522,6 +1579,7 @@
 				FBC298111B44DB2A00DBB57E /* ZLPhotoPickerBrowserPhotoImageView.m in Sources */,
 				FBC91C901B4F7C06008B6F69 /* ScheduleDetailNameCell.m in Sources */,
 				FBB489F91B58EEC400613E0E /* ScheduleListController.m in Sources */,
+				FBC48ACB1B67289F0001E4DE /* AddFriendsOneCell.m in Sources */,
 				FBC297EF1B44DB2A00DBB57E /* SDImageCache.m in Sources */,
 				FBC297F51B44DB2A00DBB57E /* SDWebImagePrefetcher.m in Sources */,
 				FBC4B94C1B60C39F00F301CC /* AddressBookController.m in Sources */,

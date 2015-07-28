@@ -12,6 +12,7 @@
 #import "AddTaskController.h"
 #import "AddScheduleController.h"
 #import "AddTaskController.h"
+#import "AddFriendsController.h"
 
 @interface TabBarViewController ()<UINavigationControllerDelegate>
 {
@@ -156,7 +157,7 @@
     WS(weakSelf);
     CHTumblrMenuView *menuView = [[CHTumblrMenuView alloc] init];
     [menuView addMenuItemWithTitle:@"添加任务" andIcon:[UIImage imageNamed:@"tianjiaricheng"] andSelectedBlock:^{
-        NSLog(@"添加任务 selected");
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [weakSelf presentController:0];
@@ -164,23 +165,25 @@
         });
     }];
     [menuView addMenuItemWithTitle:@"添加日程" andIcon:[UIImage imageNamed:@"tianjiarenwu"] andSelectedBlock:^{
-        NSLog(@"添加日程 selected");
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [weakSelf presentController:1];
             
         });
     }];
-    [menuView addMenuItemWithTitle:@"添加文件" andIcon:[UIImage imageNamed:@"shangchuanwenjian"] andSelectedBlock:^{
-        NSLog(@"添加文件 selected");
+    
+    [menuView addMenuItemWithTitle:@"添加好友" andIcon:[UIImage imageNamed:@"tianjiahaoyou"] andSelectedBlock:^{
+        [weakSelf presentController:2];
         
     }];
     [menuView addMenuItemWithTitle:@"开始扫描" andIcon:[UIImage imageNamed:@"kuaisusaomiao"] andSelectedBlock:^{
         NSLog(@"开始扫描 selected");
         
     }];
-    [menuView addMenuItemWithTitle:@"添加好友" andIcon:[UIImage imageNamed:@"tianjiahaoyou"] andSelectedBlock:^{
-        NSLog(@"点击分享 selected");
+    
+    [menuView addMenuItemWithTitle:@"添加文件" andIcon:[UIImage imageNamed:@"shangchuanwenjian"] andSelectedBlock:^{
+        NSLog(@"添加文件 selected");
         
     }];
     [menuView addMenuItemWithTitle:@"添加视频" andIcon:[UIImage imageNamed:@"tianjiarenwu"] andSelectedBlock:^{
@@ -202,6 +205,7 @@
  */
 - (void)presentController:(NSUInteger)index
 {
+    //添加任务
     if (index == 0) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         BaseNavgationController *addTaskNavCtl = [storyboard instantiateViewControllerWithIdentifier:@"AddTaskNavCtl"];
@@ -209,12 +213,20 @@
         addTaskCtl.isCreatTask = YES ;
         [self presentViewController:addTaskNavCtl animated:YES completion:nil];
     }
+    //添加日程
     else if (index == 1){
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         BaseNavgationController *addScheduleNavCtl = [storyboard instantiateViewControllerWithIdentifier:@"AddScheduleNavCtl"];
         AddScheduleController *addScheduleCtl = (AddScheduleController*)addScheduleNavCtl.topViewController ;
         addScheduleCtl.isCreatSchedule = YES ;
         [self presentViewController:addScheduleNavCtl animated:YES completion:nil];
+    }
+    //添加好友
+    else if (index == 2){
+        
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        BaseNavgationController *addFriendsNavCtl = [storyboard instantiateViewControllerWithIdentifier:@"AddFriendsNavController"];
+        [self presentViewController:addFriendsNavCtl animated:YES completion:nil];
     }
 }
 /**

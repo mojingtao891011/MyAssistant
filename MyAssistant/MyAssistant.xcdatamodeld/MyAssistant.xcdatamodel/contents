@@ -17,6 +17,17 @@
         <relationship name="task" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Task" inverseName="comments" inverseEntity="Task" syncable="YES"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="comments" inverseEntity="User" syncable="YES"/>
     </entity>
+    <entity name="Friends" representedClassName="Friends" syncable="YES">
+        <attribute name="account" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="curCompleteScheduleCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="curCompleteTaskCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="curScheduleCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="curTaskCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="nick" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sex" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+    </entity>
     <entity name="Schedule" representedClassName="Schedule" syncable="YES">
         <attribute name="scheduleAddress" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="scheduleCreatTime" optional="YES" attributeType="Date" syncable="YES"/>
@@ -74,6 +85,7 @@
         <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Comment" inverseName="user" inverseEntity="Comment" syncable="YES"/>
         <relationship name="creatShchedules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Schedule" inverseName="creatScheduleUser" inverseEntity="Schedule" syncable="YES"/>
         <relationship name="creatTasks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Task" inverseName="creatTaskUser" inverseEntity="Task" syncable="YES"/>
+        <relationship name="friends" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Friends" syncable="YES"/>
         <relationship name="schedulesFollowers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Schedule" inverseName="scheduleFollowers" inverseEntity="Schedule" syncable="YES"/>
         <relationship name="subTaskExecutors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SubTask" inverseName="executor" inverseEntity="SubTask" syncable="YES"/>
         <relationship name="taskExecutors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Task" inverseName="executor" inverseEntity="Task" syncable="YES"/>
@@ -86,6 +98,7 @@
         <element name="SubRemind" positionX="9" positionY="117" width="128" height="105"/>
         <element name="SubTask" positionX="9" positionY="117" width="128" height="135"/>
         <element name="Task" positionX="0" positionY="0" width="128" height="270"/>
-        <element name="User" positionX="0" positionY="0" width="128" height="240"/>
+        <element name="User" positionX="0" positionY="0" width="128" height="255"/>
+        <element name="Friends" positionX="9" positionY="117" width="128" height="180"/>
     </elements>
 </model>

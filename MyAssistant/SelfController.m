@@ -46,9 +46,10 @@
     self.friendButton.titleLabel.lineBreakMode=NSLineBreakByWordWrapping;
     self.friendButton.titleLabel.font=[UIFont systemFontOfSize:10];
 }
-#pragma mark - private funs
-- (void)leftAction
+#pragma mark - UITabledelegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
 @end

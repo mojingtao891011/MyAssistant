@@ -13,16 +13,13 @@
 #import "Task.h"
 #import "Schedule.h"
 #import "SVProgressHUD.h"
-
+#import "Friends.h"
 
 
 @interface AppDelegate ()<UIAlertViewDelegate>
-{
-    NSTimer  *_heartbeatTimer ;
-    NSManagedObjectContext          *_context ;
-    
-    NSString *_remindContent ;
-}
+
+@property (nonatomic , retain)NSManagedObjectContext          *context ;
+
 @end
 
 @implementation AppDelegate
@@ -30,22 +27,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-//    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//    
+   
     self.window.backgroundColor = [UIColor whiteColor];
     
     [self.window makeKeyAndVisible];
     
-    _context = [CoreDataStack shareManaged].managedObjectContext ;
-    
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(sendSchedule:) name:NOTE_ADDSCHEDULECOMPLETE object:nil];
-//    
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(sendTask:) name:NOTE_ADDTASKCOMPLETE object:nil];
+    self.context = [CoreDataStack shareManaged].managedObjectContext ;
     
     [self creatUserTest];
-    
-    //[self autoLogin];
-    
     
     
     return YES;
@@ -102,7 +91,31 @@
         
         [[CoreDataStack shareManaged].managedObjectContext save:nil];
         
+        [self creatUserFriends];
+        
     }
 
+}
+- (void)creatUserFriends
+{
+    NSEntityDescription *entity = [NSEntityDescription insertNewObjectForEntityForName:@"Friends" inManagedObjectContext:self.context];
+    Friends *friendModel = [[Friends alloc]initWithEntity:entity insertIntoManagedObjectContext:self.context];
+    
+  
+    UIImage *friendImage = [UIImage imageNamed:@"datouxiang"];
+    friendModel.image = UIImagePNGRepresentation(friendImage);
+    friendModel.nick = @"rick";
+    friendModel.sex = [NSNumber numberWithInteger:1];
+    friendModel.account = @"10086";
+    friendModel.address = @"深圳市南山区";
+    friendModel.curScheduleCount = [NSNumber numberWithInteger:12];
+    friendModel.curCompleteScheduleCount = [NSNumber numberWithInteger:4];
+    friendModel.curTaskCount = [NSNumber numberWithInteger:15];
+    friendModel.curCompleteTaskCount = [NSNumber numberWithInteger:5];
+    
+    if ([self.context save:nil]) {
+        NSLog(@"add friends ok");
+    }
+    
 }
 @end
