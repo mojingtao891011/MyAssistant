@@ -2,7 +2,7 @@
 //  Task.h
 //  MyAssistant
 //
-//  Created by taomojingato on 15/7/7.
+//  Created by taomojingato on 15/7/30.
 //  Copyright (c) 2015年 mojingato. All rights reserved.
 //
 
@@ -13,15 +13,15 @@
 
 @interface Task : NSManagedObject
 
-@property (nonatomic, retain) NSDate * taskTheDate;
 @property (nonatomic, retain) NSDate * taskCreatTime;
 @property (nonatomic, retain) NSString * taskDescribe;
 @property (nonatomic, retain) NSDate * taskEndTime;
 @property (nonatomic, retain) NSNumber * taskIsFininsh;
 @property (nonatomic, retain) NSString * taskName;
+@property (nonatomic, retain) NSNumber * taskProgress;
 @property (nonatomic, retain) NSDate * taskStartTime;
 @property (nonatomic, retain) NSNumber * taskTag;
-@property (nonatomic, retain) NSNumber * taskProgress;
+@property (nonatomic, retain) NSDate * taskTheDate;
 @property (nonatomic, retain) NSSet *annexs;
 @property (nonatomic, retain) NSSet *comments;
 @property (nonatomic, retain) User *creatTaskUser;

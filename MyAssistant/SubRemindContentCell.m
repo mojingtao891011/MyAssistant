@@ -7,7 +7,7 @@
 //
 
 #import "SubRemindContentCell.h"
-#import "SubRemind.h"
+#import "Remind.h"
 
 @implementation SubRemindContentCell
 
@@ -22,12 +22,12 @@
 }
 - (void)configureCellWithIndexPath:(NSIndexPath*)indexPath scheduleModel:(Schedule*)scheduleModel
 {
-    SubRemind *subRemindModel = [scheduleModel.subReminds allObjects][indexPath.row-4];
+    Remind *subRemindModel = [scheduleModel.reminds allObjects][indexPath.row-4];
     NSArray *arr = @[@"tixing1" , @"tixing2" ,@"tixing3"];
     self.cellImageView.image = [UIImage imageNamed:arr[indexPath.row - 4]];
-    NSString *dateStr = [Tool stringFromFomate:subRemindModel.subRemindTime formate:@"HH:mm"];
+    NSString *dateStr = [Tool stringFromFomate:subRemindModel.remindTime formate:@"HH:mm"];
     NSString *remindTypeStr ;
-    switch (subRemindModel.subRemindType.integerValue) {
+    switch (subRemindModel.remindType.integerValue) {
         case 0:
             remindTypeStr = @"永不";
             break;

@@ -54,7 +54,18 @@
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
 {
     
-    [[[[UIApplication sharedApplication].windows firstObject] rootViewController] dismissViewControllerAnimated:YES completion:nil];
+   // [[[[UIApplication sharedApplication].windows firstObject] rootViewController] dismissViewControllerAnimated:YES completion:nil];
+    
+    UIViewController *activeController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    if ([activeController isKindOfClass:[UINavigationController class]])
+    {
+        activeController = [(UINavigationController*) activeController visibleViewController];
+    }
+    else if (activeController.presentedViewController)
+    {
+        activeController = activeController.presentedViewController;
+    }
+    [activeController dismissViewControllerAnimated:YES completion:nil];
     
 }
 @end

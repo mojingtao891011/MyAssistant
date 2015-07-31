@@ -13,7 +13,6 @@
 #import "Task.h"
 #import "Schedule.h"
 #import "SVProgressHUD.h"
-#import "Friends.h"
 
 
 @interface AppDelegate ()<UIAlertViewDelegate>
@@ -89,33 +88,27 @@
         user.userMobile = @"18682470426";
         user.userMail = @"mojt@lierda.com";
         
-        [[CoreDataStack shareManaged].managedObjectContext save:nil];
+        NSArray *names = @[@"alin",@"abya",@"alin",@"BB",@"里湖",@"怕虎",@"roskin",@"niuniu"];
+        NSArray *imgs = @[@"1.jpg",@"2.jpg",@"3.jpg",@"4.jpg",@"5.jpg",@"6.jpg",@"7.jpg",@"3.jpg"];
+        NSMutableArray *friends = [NSMutableArray arrayWithCapacity:10];
+        for (int i = 0; i < names.count; i++) {
+            NSEntityDescription *entity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:[CoreDataStack shareManaged].managedObjectContext];
+            User *user = [[User alloc]initWithEntity:entity insertIntoManagedObjectContext:[CoreDataStack shareManaged].managedObjectContext];
+            
+            user.userName = names[i] ;
+            user.userMobile = @"18682470426";
+            user.userMail = @"mojt@lierda.com";
+            
+            UIImage *images = [UIImage imageNamed:imgs[i ]];
+            user.userImg = UIImageJPEGRepresentation(images, 0.2);
+            [friends addObject:user];
+        }
+        user.friends = [NSSet setWithArray:friends];
         
-        [self creatUserFriends];
+        [[CoreDataStack shareManaged].managedObjectContext save:nil];
         
     }
 
 }
-- (void)creatUserFriends
-{
-    NSEntityDescription *entity = [NSEntityDescription insertNewObjectForEntityForName:@"Friends" inManagedObjectContext:self.context];
-    Friends *friendModel = [[Friends alloc]initWithEntity:entity insertIntoManagedObjectContext:self.context];
-    
-  
-    UIImage *friendImage = [UIImage imageNamed:@"datouxiang"];
-    friendModel.image = UIImagePNGRepresentation(friendImage);
-    friendModel.nick = @"rick";
-    friendModel.sex = [NSNumber numberWithInteger:1];
-    friendModel.account = @"10086";
-    friendModel.address = @"深圳市南山区";
-    friendModel.curScheduleCount = [NSNumber numberWithInteger:12];
-    friendModel.curCompleteScheduleCount = [NSNumber numberWithInteger:4];
-    friendModel.curTaskCount = [NSNumber numberWithInteger:15];
-    friendModel.curCompleteTaskCount = [NSNumber numberWithInteger:5];
-    
-    if ([self.context save:nil]) {
-        NSLog(@"add friends ok");
-    }
-    
-}
+
 @end

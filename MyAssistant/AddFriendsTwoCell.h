@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *friendsImage;
 @property (weak, nonatomic) IBOutlet UILabel *friendNick;
 @property (weak, nonatomic) IBOutlet UIButton *inviteButton;
+@property (nonatomic , retain)NSArray *friends;
 
 - (IBAction)inviteAction:(UIButton *)sender;
 

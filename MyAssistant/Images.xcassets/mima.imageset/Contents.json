@@ -2,13 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "wm_planlist_03.png"
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "wm_planlist_03@2x.png"
+      "filename" : "mima@2x.png"
     },
     {
       "idiom" : "universal",

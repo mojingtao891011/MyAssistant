@@ -25,7 +25,7 @@
 {
     if (indexPath.section == 0) {
         
-        if (indexPath.row == 3 + scheduleModel.subReminds.count - 1) {
+        if (indexPath.row == 3 + scheduleModel.reminds.count - 1) {
             self.cellImageView.image = [UIImage imageNamed:@"chongfu"];
             self.cellTextLabel.text = @"重复";
             
@@ -61,9 +61,9 @@
         }
         else{
             
-             SubRemind *subRemind = [CoreDataModelService fetchSubRemindBySubRemindNumber:indexPath.row-2 schedule:scheduleModel];
+             Remind *subRemind = [CoreDataModelService fetchSubRemindBySubRemindNumber:indexPath.row-2 schedule:scheduleModel];
             
-            if (scheduleModel.subReminds.count > 1) {
+            if (scheduleModel.reminds.count > 1) {
                 NSArray *imgNameArr = @[@"tixing1" , @"tixing2" , @"tixing3"];
                 NSArray *titleArr = @[@"提醒" , @"第二次提醒" , @"第三次提醒"];
                 
@@ -71,11 +71,11 @@
                 self.cellTextLabel.text = titleArr[indexPath.row - 2];
                 
                 NSString *remindType = nil ;
-                if (subRemind.subRemindType) {
-                    remindType = subRemind.subRemindType ;
+                if (subRemind.remindType) {
+                    remindType = subRemind.remindType ;
                 }
                 else{
-                    remindType = [Tool stringFromFomate:subRemind.subRemindTime formate:@"MM-dd HH:mm"];
+                    remindType = [Tool stringFromFomate:subRemind.remindTime formate:@"MM-dd HH:mm"];
                 }
                 
                  self.cellSubTextLabel.text = remindType ;
@@ -84,12 +84,12 @@
             else
             {
                 NSString *remindType = nil ;
-                if (subRemind.subRemindType) {
-                    remindType = subRemind.subRemindType ;
+                if (subRemind.remindType) {
+                    remindType = subRemind.remindType ;
                 }
                 else{
-                    if (subRemind.subRemindTime) {
-                         remindType = [Tool stringFromFomate:subRemind.subRemindTime formate:@"MM-dd HH:mm"];
+                    if (subRemind.remindTime) {
+                         remindType = [Tool stringFromFomate:subRemind.remindTime formate:@"MM-dd HH:mm"];
                     }
                     else{
                         remindType = @"无";

@@ -9,19 +9,26 @@
 #import "AddFriendsController.h"
 #import "AddFriendsOneCell.h"
 #import "AddFriendsTwoCell.h"
-
+#import "User.h"
 
 @interface AddFriendsController ()<UITableViewDataSource , UITableViewDelegate>
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic , retain)NSArray *friends ;
 
 @end
 
 @implementation AddFriendsController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
-    [self _initLeftBar];
+    self.friends = [[CoreDataModelService fetchUserByName:DEVICE_NAME].friends allObjects];
+    
+    if (_isAddFriend) {
+        [self _initLeftBar];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,15 +44,16 @@
     [backButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     UIEdgeInsets edgeInsets = UIEdgeInsetsMake(0, -15, 0, 0);
     backButton.imageEdgeInsets = edgeInsets;
-    [backButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    [backButton addTarget:self action:@selector(myBackAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *barBrttonItem = [[UIBarButtonItem alloc]initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem = barBrttonItem ;
 }
 #pragma mark - Action
-- (void)backAction
+- (void)myBackAction
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -56,7 +64,7 @@
     if (section == 0) {
         return 1 ;
     }
-    return 5 ;
+    return self.friends.count ;
 }
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -67,6 +75,7 @@
     
     AddFriendsTwoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddFriendsTwoCell" forIndexPath:indexPath];
     cell.inviteButton.tag = indexPath.row ;
+    cell.friends = self.friends ;
     return cell ;
 }
 #pragma mark - UITableViewDelegate

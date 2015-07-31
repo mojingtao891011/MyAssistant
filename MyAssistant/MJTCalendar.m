@@ -78,6 +78,12 @@
     eventsByDate = [[NSUserDefaults standardUserDefaults]objectForKey:EVENT_KEY];
    
     [self.calendar reloadData];
+    
+    
+    // 监听异步删除通知
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deleteAction:) name:NOTE_DELETEMODEL object:nil];
+    });
 }
 
 - (void)layoutSubviews
@@ -85,7 +91,24 @@
     [self.calendar repositionViews];
 }
 #pragma mark - Note
-
+- (void)deleteAction:(NSNotification*)note
+{
+     NSString *key = [[self dateFormatter] stringFromDate:note.object];
+    
+    NSMutableArray *events = eventsByDate[key];
+    if ([events containsObject:note.object]) {
+        [events removeObject:note.object];
+        
+        [[NSUserDefaults standardUserDefaults]setObject:eventsByDate forKey:EVENT_KEY];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.calendar reloadData];
+        });
+    }
+    
+    
+}
 #pragma mark - Buttons callback
 
 - (void)didGoTodayTouch

@@ -7,7 +7,7 @@
 //
 
 #import "ScheduleSubRemindCell.h"
-#import "SubRemind.h"
+#import "Remind.h"
 
 @implementation ScheduleSubRemindCell
 
@@ -23,21 +23,21 @@
 - (void)configureCellWithIndexPath:(NSIndexPath *)indexPath scheduleModel:(Schedule *)scheduleModel
 {
     
-    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"subRemindNumber" ascending:YES];
-    NSArray *subReminds = [[scheduleModel.subReminds allObjects] sortedArrayUsingDescriptors:@[sort]];
+    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"remindIndex" ascending:YES];
+    NSArray *subReminds = [[scheduleModel.reminds allObjects] sortedArrayUsingDescriptors:@[sort]];
     
-    SubRemind *subRemind =subReminds[indexPath.row];
+    Remind *subRemind =subReminds[indexPath.row];
     NSArray *arr = @[@"tixing1" , @"tixing2" , @"tixing3"];
     //NSArray *titleArr = @[@"提醒" , @"第二次提醒" , @"第三次提醒"];
     self.cellImageView.image = [UIImage imageNamed:arr[indexPath.row]];
     
     NSString *remindType = nil ;
-    if (subRemind.subRemindType) {
-        remindType = subRemind.subRemindType;
+    if (subRemind.remindType) {
+        remindType = subRemind.remindType;
     }
     else{
-        if (subRemind.subRemindTime) {
-            remindType = [Tool stringFromFomate:subRemind.subRemindTime formate:@"MM-dd HH:mm"];
+        if (subRemind.remindTime) {
+            remindType = [Tool stringFromFomate:subRemind.remindTime formate:@"MM-dd HH:mm"];
         }
         else{
             remindType = @"无";

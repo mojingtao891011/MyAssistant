@@ -2,7 +2,7 @@
 //  Task.m
 //  MyAssistant
 //
-//  Created by taomojingato on 15/7/7.
+//  Created by taomojingato on 15/7/30.
 //  Copyright (c) 2015年 mojingato. All rights reserved.
 //
 
@@ -15,15 +15,15 @@
 
 @implementation Task
 
-@dynamic taskTheDate;
 @dynamic taskCreatTime;
 @dynamic taskDescribe;
 @dynamic taskEndTime;
 @dynamic taskIsFininsh;
 @dynamic taskName;
+@dynamic taskProgress;
 @dynamic taskStartTime;
 @dynamic taskTag;
-@dynamic taskProgress;
+@dynamic taskTheDate;
 @dynamic annexs;
 @dynamic comments;
 @dynamic creatTaskUser;

@@ -20,7 +20,7 @@
 #import "FollowersController.h"
 
 
-@interface TaskDetailsController ()<UITableViewDataSource , UITableViewDelegate , TaskDetailNameCellDelegate , SubTaskCellDelegate>
+@interface TaskDetailsController ()<UITableViewDataSource , UITableViewDelegate , TaskDetailNameCellDelegate , SubTaskCellDelegate , UIAlertViewDelegate>
 {
     SetTagController *setTaskTagCtl ;
 }
@@ -46,17 +46,24 @@
 - (void)_initBarButtonItem
 {
     
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightButton setFrame:CGRectMake(0, 0, 40, 30)];
-    [rightButton setImage:[UIImage imageNamed:@"bianji"] forState:UIControlStateNormal];
-    [rightButton addTarget:self action:@selector(rightBarButtonItemAction:) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *editButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [editButton setFrame:CGRectMake(0, 0, 40, 30)];
+    [editButton setImage:[UIImage imageNamed:@"bianji"] forState:UIControlStateNormal];
+    [editButton addTarget:self action:@selector(editButtonItemAction:) forControlEvents:UIControlEventTouchUpInside];
+     editButton.backgroundColor = [UIColor clearColor];
     
-    UIBarButtonItem *barButtonItemRight = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
-    self.navigationItem.rightBarButtonItem = barButtonItemRight ;
+    UIButton *deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [deleteButton setFrame:CGRectMake(0, 0, 40, 30)];
+    [deleteButton setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
+    [deleteButton addTarget:self action:@selector(deleteButtonItemAction:) forControlEvents:UIControlEventTouchUpInside];
+    deleteButton.backgroundColor = [UIColor clearColor];
     
+    UIBarButtonItem *editBarButton = [[UIBarButtonItem alloc]initWithCustomView:editButton];
+    UIBarButtonItem *deleteBarButton = [[UIBarButtonItem alloc]initWithCustomView:deleteButton];
+    self.navigationItem.rightBarButtonItems = @[ deleteBarButton,editBarButton];
 }
 #pragma mark - Action
-- (void)rightBarButtonItemAction:(UIButton*)sender
+- (void)editButtonItemAction:(UIButton*)sender
 {
     BaseNavgationController *AddTaskNavCtl =  [self fetchViewControllerByIdentifier:@"AddTaskNavCtl"];
     AddTaskController *addTaskCtl = (AddTaskController*)AddTaskNavCtl.topViewController;
@@ -64,10 +71,35 @@
     [self presentViewController:AddTaskNavCtl animated:YES completion:nil];
     
 }
+- (void)deleteButtonItemAction:(UIButton*)sender
+{
+    [[[UIAlertView alloc]initWithTitle:@"您确定要删除" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil]show ];
+    
+    
+}
 - (void)modificationComplection:(NSNotification*)note
 {
     self.taskModel = note.object ;
     [self.tableView reloadData];
+}
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (buttonIndex == 1) {
+        NSDate *taskStartTime = self.taskModel.taskStartTime ;
+        if ([CoreDataModelService deleteTaskByTaskModel:self.taskModel]) {
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTE_DELETEMODEL object:taskStartTime];
+            });
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        else{
+            
+        };
+    }
+    
 }
 #pragma mark - CellDelegate
 - (void)setTaskState:(BOOL)isFinish

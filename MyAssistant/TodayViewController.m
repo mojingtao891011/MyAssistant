@@ -129,7 +129,7 @@
 - (void)pushScheduleDetailCtl:(NSNotification*)sender
 {
     Schedule *schedule = [sender object];
-    [self.calendView createRandomEvents:schedule.scheduleTheDay];
+    [self.calendView createRandomEvents:schedule.schedulestartTime];
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ScheduleDetailController *scheduleDetailCtl = [storyboard instantiateViewControllerWithIdentifier:@"ScheduleDetailController"];
@@ -139,7 +139,7 @@
 - (void)pushTaskDetailCtl:(NSNotification*)sender
 {
     Task *task = [sender object];
-    [self.calendView createRandomEvents:task.taskTheDate];
+    [self.calendView createRandomEvents:task.taskStartTime];
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     TaskDetailsController *taskDetailCtl = [storyboard instantiateViewControllerWithIdentifier:@"TaskDetailsController"];
@@ -425,13 +425,22 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         if (indexPath.section == 1) {
             Schedule *scheduleModel = self.myCreatSchedules[indexPath.row - 1];
-            if ([CoreDataModelService deleteScheduleByScheduleCreatDetailTime:scheduleModel.scheduleCreatTime]) {
+            NSDate *scheduleStartTime= scheduleModel.schedulestartTime ;
+            if ([CoreDataModelService deleteScheduleByScheduleModel:scheduleModel]) {
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTE_DELETEMODEL object:scheduleStartTime];
+                });
                 [self loadDataSource];
             }
         }
         else if (indexPath.section == 2){
             Task *taskModel = self.myCreatTasks[indexPath.row - 1];
-            if ([CoreDataModelService deleteTaskByTaskCreatTime:taskModel.taskCreatTime]) {
+            NSDate *taskStartTime = taskModel.taskStartTime ;
+            if ([CoreDataModelService deleteTaskByTaskModel:taskModel]) {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTE_DELETEMODEL object:taskStartTime];
+                });
                 [self loadDataSource];
             }
         }

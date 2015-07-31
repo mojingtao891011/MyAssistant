@@ -2,7 +2,7 @@
 //  Annex.m
 //  MyAssistant
 //
-//  Created by taomojingato on 15/7/5.
+//  Created by taomojingato on 15/7/31.
 //  Copyright (c) 2015年 mojingato. All rights reserved.
 //
 
@@ -19,6 +19,7 @@
 @dynamic annexThumbImage;
 @dynamic annexType;
 @dynamic annexUploadTime;
+@dynamic annexSize;
 @dynamic schedule;
 @dynamic task;
 @dynamic user;

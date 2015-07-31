@@ -195,7 +195,19 @@
         messgaeVC.recipients = @[recipient];
         messgaeVC.body = connent ;
         
-        [[[[UIApplication sharedApplication].windows firstObject] rootViewController] presentViewController:messgaeVC animated:YES completion:nil];
+//        [[[[UIApplication sharedApplication].windows firstObject] rootViewController] presentViewController:messgaeVC animated:YES completion:nil];
+        
+        
+        UIViewController *activeController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        if ([activeController isKindOfClass:[UINavigationController class]])
+        {
+            activeController = [(UINavigationController*) activeController visibleViewController];
+        }
+        else if (activeController.presentedViewController)
+        {
+            activeController = activeController.presentedViewController;
+        }
+        [activeController presentViewController:messgaeVC animated:YES completion:nil];
         
     }
     else{

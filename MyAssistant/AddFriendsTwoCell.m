@@ -7,6 +7,7 @@
 //
 
 #import "AddFriendsTwoCell.h"
+#import "User.h"
 
 @implementation AddFriendsTwoCell
 
@@ -14,6 +15,7 @@
     
     self.inviteButton.layer.cornerRadius = 5.0 ;
     self.friendsImage.layer.cornerRadius = 5.0 ;
+    self.friendsImage.clipsToBounds = YES ;
     
 }
 
@@ -22,7 +24,15 @@
 
     
 }
-
+- (void)setFriends:(NSArray *)friends
+{
+    if (_friends != friends) {
+        _friends = friends ;
+    }
+    User *user = _friends[self.inviteButton.tag];
+    self.friendsImage.image = [UIImage imageWithData:user.userImg];
+    self.friendNick.text = user.userName ;
+}
 - (IBAction)inviteAction:(UIButton *)sender {
    
     UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"好友验证" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"发送", nil];

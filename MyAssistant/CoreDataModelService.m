@@ -7,9 +7,10 @@
 //
 
 #import "CoreDataModelService.h"
-#import "User.h"
 #import "CoreDataStack.h"
+#import "User.h"
 #import "Task.h"
+#import "Schedule.h"
 
 @implementation CoreDataModelService
 
@@ -114,54 +115,40 @@
     
     return nil ;
 }
-+(BOOL)deleteTaskByTaskCreatTime:(NSDate*)taskCreatTime
-{
-    //实例化查询
-    NSFetchRequest *request=[NSFetchRequest fetchRequestWithEntityName:@"Task"];
-    //使用谓词查询是基于Keypath查询的，如果键是一个变量，格式化字符串时需要使用%K而不是%@
-    request.predicate=[NSPredicate predicateWithFormat:@"%K=%@",@"taskCreatTime",taskCreatTime];
-    //    request.predicate=[NSPredicate predicateWithFormat:@"name=%@",name];
-    NSError *error;
-    Task *taskModel;
-    //进行查询
-    NSArray *results=[[CoreDataStack shareManaged].managedObjectContext executeFetchRequest:request error:&error];
-    if (error) {
-        NSLog(@"查询过程中发生错误，错误信息：%@！",error.localizedDescription);
-    }else{
-        taskModel=[results firstObject];
-    }
-    
-    [[CoreDataStack shareManaged].managedObjectContext deleteObject:taskModel];
 
-    return  [[CoreDataStack shareManaged].managedObjectContext  save:nil];
-}
-+(BOOL)deleteScheduleByScheduleCreatDetailTime:(NSDate*)scheduleCreatTime
++ (BOOL)deleteTaskByTaskModel:(Task*)task
 {
-    //实例化查询
-    NSFetchRequest *request=[NSFetchRequest fetchRequestWithEntityName:@"Schedule"];
-    //使用谓词查询是基于Keypath查询的，如果键是一个变量，格式化字符串时需要使用%K而不是%@
-    request.predicate=[NSPredicate predicateWithFormat:@"%K=%@",@"scheduleCreatTime",scheduleCreatTime];
-    //    request.predicate=[NSPredicate predicateWithFormat:@"name=%@",name];
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Task"];
     NSError *error;
-    Task *taskModel;
-    //进行查询
-    NSArray *results=[[CoreDataStack shareManaged].managedObjectContext executeFetchRequest:request error:&error];
-    if (error) {
-        NSLog(@"查询过程中发生错误，错误信息：%@！",error.localizedDescription);
-    }else{
-        taskModel=[results firstObject];
+    NSArray *tasks = [[CoreDataStack shareManaged].managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    if (error == nil) {
+        if ([tasks containsObject:task]) {
+            [[CoreDataStack shareManaged].managedObjectContext deleteObject:task];
+        }
     }
     
-    [[CoreDataStack shareManaged].managedObjectContext deleteObject:taskModel];
-    
     return  [[CoreDataStack shareManaged].managedObjectContext  save:nil];
 }
-+ (SubRemind*)fetchSubRemindBySubRemindNumber:(NSInteger)number  schedule:(Schedule*)schedule
++ (BOOL)deleteScheduleByScheduleModel:(Schedule*)schedule
 {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"SubRemind"];
-    request.predicate = [NSPredicate predicateWithFormat:@"subRemindNumber ==%@ && schedule == %@" , [NSNumber numberWithInteger:number] , schedule];
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Schedule"];
     NSError *error;
-    SubRemind *subRemind = nil ;
+    NSArray *schedules = [[CoreDataStack shareManaged].managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    if (error == nil) {
+        if ([schedules containsObject:schedule]) {
+            [[CoreDataStack shareManaged].managedObjectContext deleteObject:schedule];
+        }
+    }
+    return  [[CoreDataStack shareManaged].managedObjectContext  save:nil];
+}
++ (Remind*)fetchSubRemindBySubRemindNumber:(NSInteger)number  schedule:(Schedule*)schedule
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Remind"];
+    request.predicate = [NSPredicate predicateWithFormat:@"remindIndex ==%@ && schedule == %@" , [NSNumber numberWithInteger:number] , schedule];
+    NSError *error;
+    Remind *subRemind = nil ;
     //进行查询
     NSArray *results=[[CoreDataStack shareManaged].managedObjectContext executeFetchRequest:request error:&error];
     if (error) {

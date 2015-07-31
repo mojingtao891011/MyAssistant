@@ -22,7 +22,7 @@
 
 #import "Schedule.h"
 #import "User.h"
-#import "SubRemind.h"
+#import "Remind.h"
 #import "CoreDataModelService.h"
 
 
@@ -95,10 +95,10 @@
     self.scheduleModel.scheduleEndTime = [NSDate dateWithTimeInterval:60*60 sinceDate:self.scheduleModel.schedulestartTime];
     
     //提醒
-    NSEntityDescription *subRemindEntity = [NSEntityDescription entityForName:@"SubRemind" inManagedObjectContext:self.context];
-    SubRemind *subRemind = [[SubRemind alloc]initWithEntity:subRemindEntity insertIntoManagedObjectContext:self.context];
-    subRemind.subRemindNumber = [NSNumber numberWithInt:0];
-    [self.scheduleModel addSubRemindsObject:subRemind];
+    NSEntityDescription *subRemindEntity = [NSEntityDescription entityForName:@"Remind" inManagedObjectContext:self.context];
+    Remind *subRemind = [[Remind alloc]initWithEntity:subRemindEntity insertIntoManagedObjectContext:self.context];
+    subRemind.remindIndex = [NSNumber numberWithInt:0];
+    [self.scheduleModel addRemindsObject:subRemind];
     
     
     return _scheduleModel ;
@@ -192,7 +192,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
-    NSArray *arr = @[ @(3+self.scheduleModel.subReminds.count),@(1), @(1), @(1)];
+    NSArray *arr = @[ @(3+self.scheduleModel.reminds.count),@(1), @(1), @(1)];
     
     return [arr[section ] integerValue];
 }
@@ -329,16 +329,16 @@
         
     }
     //重复
-    else if (indexPath.row == 3 + self.scheduleModel.subReminds.count - 1){
+    else if (indexPath.row == 3 + self.scheduleModel.reminds.count - 1){
         
        // __weak TestAddScheduleController *weakSelf = self ;
         
         RepeatRemindController *repeatRemindCtl = [self fetchViewControllerByIdentifier:@"RepeatRemindController"] ;
         repeatRemindCtl.curRepeatType = [self.scheduleModel.schedulerepeat intValue];
         
-        SubRemind *subRemind = [CoreDataModelService fetchSubRemindBySubRemindNumber:0 schedule:self.scheduleModel];
-        if (subRemind.subRemindTime) {
-            repeatRemindCtl.remindTime = subRemind.subRemindTime ;
+       Remind *subRemind = [CoreDataModelService fetchSubRemindBySubRemindNumber:0 schedule:self.scheduleModel];
+        if (subRemind.remindTime) {
+            repeatRemindCtl.remindTime = subRemind.remindTime ;
         }
         else{
             repeatRemindCtl.remindTime = self.scheduleModel.schedulestartTime ;
@@ -424,19 +424,19 @@
                 
                 if (![remindType isEqualToString:@"无"]) {
                     
-                    SubRemind *subRemind = [CoreDataModelService fetchSubRemindBySubRemindNumber:subRemindNumber schedule:weakSelf.scheduleModel];
+                    Remind *subRemind = [CoreDataModelService fetchSubRemindBySubRemindNumber:subRemindNumber schedule:weakSelf.scheduleModel];
                     if (subRemind) {
-                        subRemind.subRemindTime = date ;
-                        subRemind.subRemindType = remindType ;
+                        subRemind.remindTime = date ;
+                        subRemind.remindType = remindType ;
                         subRemind.schedule = weakSelf.scheduleModel;
                         
-                        SubRemind *subRemind1 = [CoreDataModelService fetchSubRemindBySubRemindNumber:subRemindNumber + 1 schedule:weakSelf.scheduleModel];
+                        Remind *subRemind1 = [CoreDataModelService fetchSubRemindBySubRemindNumber:subRemindNumber + 1 schedule:weakSelf.scheduleModel];
                         if (subRemindNumber < 2 && subRemind1== nil) {
                             //添加子提醒
-                            NSEntityDescription *entity = [NSEntityDescription entityForName:@"SubRemind" inManagedObjectContext:weakSelf.context];
-                            SubRemind *subRemind1 = [[SubRemind alloc]initWithEntity:entity insertIntoManagedObjectContext:weakSelf.context];
-                            subRemind1.subRemindType = @"无" ;
-                            subRemind1.subRemindNumber = [NSNumber numberWithInteger:subRemindNumber + 1];
+                            NSEntityDescription *entity = [NSEntityDescription entityForName:@"Remind" inManagedObjectContext:weakSelf.context];
+                            Remind *subRemind1 = [[Remind alloc]initWithEntity:entity insertIntoManagedObjectContext:weakSelf.context];
+                            subRemind1.remindType = @"无" ;
+                            subRemind1.remindIndex = [NSNumber numberWithInteger:subRemindNumber + 1];
                             subRemind1.schedule = weakSelf.scheduleModel ;
                         }
                     }
@@ -456,18 +456,7 @@
 #pragma mark - 参与者
 - (void)didSelectedSecondSection:(NSIndexPath*)indexPath
 {
-    //如果没有登录
-    WS(weaSelf);
-    BaseNavgationController *loginNavCtl = [self fetchViewControllerByIdentifier:@"LoginNavCtl"];
-    LoginController *loginCtl = (LoginController*)loginNavCtl.topViewController ;
-    loginCtl.loginControllerBlock = ^(BOOL isLoginSucceed){
-        [weaSelf pushFriendListController:indexPath];
-    };
-    [self presentViewController:loginNavCtl animated:YES completion:nil];
     
-}
-- (void)pushFriendListController:(NSIndexPath*)indexPath
-{
     WS(weaSelf);
     FriendListController *friendListCtl = [self fetchViewControllerByIdentifier:@"FriendListController"];
     friendListCtl.isExecutor = NO ;
@@ -492,8 +481,8 @@
         
     };
     [self.navigationController pushViewController:friendListCtl animated:YES];
-
 }
+
 #pragma mark - 添加附件
 - (void)didSelectedFourSection:(NSIndexPath*)indexPath
 {

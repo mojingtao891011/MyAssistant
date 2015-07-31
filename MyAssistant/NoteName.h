@@ -15,5 +15,8 @@
 
 #define NOTE_MODIFICATION_TASK                                                                   @"note_modification_Task"
 #define NOTE_MODIFICATION_SCHEDULE                                                         @"note_modification_Schedule"
+#define NOTE_DELETEMODEL                                                                             @"note_deleteModel"
+
+#define NOTE_REFRESH_COLLECTIONVIEW                                                 @"note_refresh_collectionView"
 
 #endif

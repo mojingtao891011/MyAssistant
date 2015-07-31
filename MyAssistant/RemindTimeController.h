@@ -7,7 +7,7 @@
 //
 
 #import "BaseController.h"
-#import "SubRemind.h"
+#import "Remind.h"
 
 @interface RemindTimeController : BaseController
 

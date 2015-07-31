@@ -226,6 +226,8 @@
         
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         BaseNavgationController *addFriendsNavCtl = [storyboard instantiateViewControllerWithIdentifier:@"AddFriendsNavController"];
+        AddFriendsController *addFriendCtl = (AddFriendsController*)addFriendsNavCtl.topViewController;
+        addFriendCtl.isAddFriend = YES ;
         [self presentViewController:addFriendsNavCtl animated:YES completion:nil];
     }
 }

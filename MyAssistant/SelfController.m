@@ -34,17 +34,28 @@
 #pragma mark - UI
 - (void)_initDefault
 {
-    [self.scheduleButton setTitle:@" 12\n日程" forState:UIControlStateNormal];
+    NSString *scheduleTitle = [NSString stringWithFormat:@"%d\n日程" , (int)[CoreDataModelService fetchAllSchedule].count];
+    [self.scheduleButton setTitle:scheduleTitle forState:UIControlStateNormal];
     self.scheduleButton.titleLabel.lineBreakMode=NSLineBreakByWordWrapping;
+    self.scheduleButton.titleLabel.textAlignment = NSTextAlignmentCenter ;
     self.scheduleButton.titleLabel.font=[UIFont systemFontOfSize:10];
     
-    [self.taskButton setTitle:@" 12\n项目" forState:UIControlStateNormal];
+    NSString *taskTitle = [NSString stringWithFormat:@"%d\n项目",(int)[CoreDataModelService fetchAllTask].count];
+    [self.taskButton setTitle:taskTitle forState:UIControlStateNormal];
     self.taskButton.titleLabel.lineBreakMode=NSLineBreakByWordWrapping;
+    self.taskButton.titleLabel.textAlignment = NSTextAlignmentCenter ;
     self.taskButton.titleLabel.font=[UIFont systemFontOfSize:10];
     
     [self.friendButton setTitle:@" 12\n好友" forState:UIControlStateNormal];
     self.friendButton.titleLabel.lineBreakMode=NSLineBreakByWordWrapping;
     self.friendButton.titleLabel.font=[UIFont systemFontOfSize:10];
+}
+#pragma mark - Action
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"selfCtlpushFriendListCtl"]) {
+        
+    }
 }
 #pragma mark - UITabledelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

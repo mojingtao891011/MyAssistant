@@ -1,249 +1,185 @@
 //
-//  FriendListController.m
+//  AFriendListController.m
 //  MyAssistant
 //
-//  Created by taomojingato on 15/7/13.
+//  Created by taomojingato on 15/7/29.
 //  Copyright (c) 2015年 mojingato. All rights reserved.
 //
 
 #import "FriendListController.h"
+#import "FriendListCell1.h"
+#import "FriendListCell2.h"
+#import "FriendListCell3.h"
+#import "FriendListCell4.h"
 #import "User.h"
-#import "FriendCell.h"
-#import "AddressBookController.h"
+#import "NSString+PinYin.h"
+#import "PinYin4Objc.h"
 
+@interface FriendListController ()<UITableViewDataSource , UITableViewDelegate , NSFetchedResultsControllerDelegate>
+@property (weak, nonatomic) IBOutlet BaseTableView *tableView;
 
-@interface FriendListController ()<UICollectionViewDataSource , UICollectionViewDelegate , UICollectionViewDelegateFlowLayout , UITableViewDataSource ,UITableViewDelegate , UITextFieldDelegate, NSFetchedResultsControllerDelegate>
-
-@property (weak, nonatomic) IBOutlet UICollectionView *colletionView;
-
-@property (nonatomic , retain)NSFetchedResultsController        *fetchedResultsController ;
-@property (nonatomic , retain)NSManagedObjectContext       *context ;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UITextField *telTextField;
+@property (nonatomic , retain)NSManagedObjectContext        *context;
+@property (nonatomic , retain)NSFetchedResultsController         *fetchedResultsController;
+@property (nonatomic , retain)NSMutableArray                                *selectedFriends ;
 
 @end
 
 @implementation FriendListController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (self.colletionDataSources == nil) {
-         self.colletionDataSources = [NSMutableArray arrayWithCapacity:5];
-    }
+    self.context = [CoreDataStack shareManaged].managedObjectContext;
+    
+     //[self creatFriends];
+    [self loadDataSource];
    
-    self.context = [CoreDataStack shareManaged].managedObjectContext ;
 }
 
-#pragma mark - Action
-
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+#pragma mark - Model
+- (void)loadDataSource
+{
+    User *user = [CoreDataModelService fetchUserByName:DEVICE_NAME];
+    self.colletionDataSources = [NSMutableArray arrayWithArray:[user.friends allObjects]];
+   // self.colletionDataSources = [NSMutableArray arrayWithArray:[[user.friends allObjects] arrayWithPinYinFirstLetterFormat]];
+    
+    [self.tableView reloadData];
+}
+#pragma mark - Private
 - (void)backAction
 {
-    if (self.selectedFriendBlock) {
-        self.selectedFriendBlock(self.colletionDataSources);
+    if (self.selectedFriendBlock && self.selectedFriends) {
+        self.selectedFriendBlock(self.selectedFriends);
     }
     
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-- (void)rightBarButtonItemAction:(UIButton*)sender
-{
-    
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"pushAddressBookCtlSegue"]) {
-        AddressBookController *addressBookCtl = segue.destinationViewController;
-        addressBookCtl.SelectedTelBlock = ^(NSMutableArray *telArr){
-            
-        };
-    }
-    
-}
-
-#pragma mark - UITextFieldDelegate
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    
-    return YES ;
-}
-#pragma mark -UICollectionViewDataSource
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return 1 ;
-}
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return _colletionDataSources.count + 1 ;
-}
-- (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row == _colletionDataSources.count ) {
-        UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"lastCollectionView" forIndexPath:indexPath];
-        return cell ;
-    }
-    
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"collectionView" forIndexPath:indexPath];
-    return cell ;
-}
-#pragma mark -UICollectionViewDelegate
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row == _colletionDataSources.count) {
-        return CGSizeMake(180, 40);
-    }
-    return CGSizeMake(30, 30);
-}
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-{
-    return UIEdgeInsetsMake(1, 10, 1, 1);
-}
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [self.fetchedResultsController sections].count ;
+    return 2 ;
 }
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    id<NSFetchedResultsSectionInfo>sectionInfo = [self.fetchedResultsController sections][section];
-    return [sectionInfo numberOfObjects];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 2 ;
+    }
+
+    return _colletionDataSources.count ;
 }
-- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            FriendListCell4 *cell = [tableView dequeueReusableCellWithIdentifier:@"FriendListCell4" forIndexPath:indexPath];
+            return cell ;
+        }
+        else if (indexPath.row == 1){
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FriendListCell2" forIndexPath:indexPath];
+            return cell ;
+        }
+    }
     
-    FriendCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tableViewCell" forIndexPath:indexPath];
-    [self configureCell:cell WithIndexPath:indexPath];
+    FriendListCell3 *cell = [tableView dequeueReusableCellWithIdentifier:@"FriendListCell3" forIndexPath:indexPath];
+    [self configureCell:cell indexPath:indexPath];
     return cell ;
 }
-#pragma mark - UITableViewDelegate
+- (void)configureCell:(FriendListCell3*)cell indexPath:(NSIndexPath*)indexPath
+{
+    User *friendModel = _colletionDataSources[indexPath.row];
+    cell.friendNameLabel.text = friendModel.userName ;
+    cell.friendImage.image = [UIImage imageWithData:friendModel.userImg];
+    if ([_selectedFriends containsObject:friendModel]) {
+        cell.radioImageView.highlighted = YES ;
+    }
+    else{
+        cell.radioImageView.highlighted = NO ;
+    }
+}
+#pragma mark - UITableDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-   
-    FriendCell *cell = (FriendCell*)[tableView cellForRowAtIndexPath:indexPath];
-    cell.cellImageView.highlighted  = !cell.cellImageView.highlighted;
+    if (indexPath.section == 0) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
     
-    User *user = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    if (_isExecutor) {
-        if ([_colletionDataSources containsObject:user]) {
-            [_colletionDataSources removeObject:user];
+    else if (indexPath.section == 1) {
+        
+        User *friendModel = _colletionDataSources[indexPath.row];
+
+        if (!_selectedFriends) {
+            _selectedFriends = [NSMutableArray arrayWithCapacity:10];
         }
-        else{
-            if (_colletionDataSources.count != 0) {
-                [_colletionDataSources replaceObjectAtIndex:0 withObject:user];
+        
+        if (_isExecutor) {
+            if ([_selectedFriends containsObject:friendModel]) {
+                [_selectedFriends removeObject:friendModel];
             }
             else{
-                [_colletionDataSources addObject:user];
+                if (_selectedFriends.count != 0) {
+                    [_selectedFriends replaceObjectAtIndex:0 withObject:friendModel];
+                }
+                else{
+                    [_selectedFriends addObject:friendModel];
+                }
             }
         }
-    }
-    else{
-        if ([_colletionDataSources containsObject:user]) {
-            [_colletionDataSources removeObject:user];
-        }
         else{
-            [_colletionDataSources addObject:user];
+            if ([_selectedFriends containsObject:friendModel]) {
+                [_selectedFriends removeObject:friendModel];
+            }
+            else{
+                [_selectedFriends addObject:friendModel];
+            }
         }
 
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTE_REFRESH_COLLECTIONVIEW object:_selectedFriends userInfo:nil];
+        });
+        
+        [tableView reloadData];
     }
-    
-    [self.colletionView reloadData];
-    [self.tableView reloadData];
+   
 }
-
-- (void)configureCell:(FriendCell*)cell WithIndexPath:(NSIndexPath*)indexPath
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    User *user = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.cellTextlabel.text = user.userName ;
-    if ([_colletionDataSources containsObject:user]) {
-        cell.cellImageView.highlighted = YES ;
-    }
-    else{
-        cell.cellImageView.highlighted = NO ;
-    }
-}
-#pragma mark - NSFetchedResultsControllerDelegate
-- (NSFetchedResultsController*)fetchedResultsController
-{
-    if (_fetchedResultsController) {
-        return _fetchedResultsController ;
-    }
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
-    
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:self.context];
-    [fetchRequest setEntity:entity];
-    
-    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"userName" ascending:NO];
-    
-    [fetchRequest setSortDescriptors:@[sort]];
-    
-    [fetchRequest setFetchBatchSize:20];
-    
-    NSFetchedResultsController *afetchedResultsController = [[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:self.context sectionNameKeyPath:nil cacheName:nil];
-    afetchedResultsController.delegate = self ;
-    self.fetchedResultsController = afetchedResultsController ;
-    
-    if (![self.fetchedResultsController performFetch:nil]) {
-        NSLog(@"fetchedResultsController schedule fail");
-    }
-    
-    return _fetchedResultsController ;
-}
-- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView beginUpdates];
-}
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
-{
-    switch (type) {
-        case NSFetchedResultsChangeInsert:
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation: UITableViewRowAnimationAutomatic];
-            break;
-        case NSFetchedResultsChangeDelete:
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation: UITableViewRowAnimationAutomatic];
-            break;
-        case NSFetchedResultsChangeMove:
-            
-            break;
-        case NSFetchedResultsChangeUpdate:
-            
-            break;
-            
-        default:
-            break;
-    }
-    
-}
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
-{
-    switch (type) {
-        case NSFetchedResultsChangeInsert:
-            [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation: UITableViewRowAnimationAutomatic];
-            break;
-        case NSFetchedResultsChangeDelete:
-            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation: UITableViewRowAnimationAutomatic];
-            break;
-        case NSFetchedResultsChangeMove:
-            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation: UITableViewRowAnimationAutomatic];
-            [self.tableView deleteRowsAtIndexPaths:@[newIndexPath] withRowAnimation: UITableViewRowAnimationAutomatic];
-            break;
-        case NSFetchedResultsChangeUpdate:
-        {
-//            ScheduleCell *cell = (ScheduleCell*)[self.tableView cellForRowAtIndexPath:indexPath];
-//            [self configureScheduleCell:cell indexPath:indexPath];
+    if (section == 1) {
+        UITableViewHeaderFooterView *headerView = [tableView dequeueReusableCellWithIdentifier:@"headerView"];
+        if (!headerView) {
+            headerView = [[UITableViewHeaderFooterView alloc]initWithReuseIdentifier:@"headerView"];
+            UILabel *headerLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 100, 20)];
+            headerLabel.font = [UIFont systemFontOfSize:10.0];
+            headerLabel.tag = 1;
+            [headerView addSubview:headerLabel];
         }
-            break;
-            
-        default:
-            break;
+        
+        UILabel *label = (UILabel*)[headerView viewWithTag:1];
+        label.text = @"hello";
+        return headerView ;
+        
     }
     
+    return nil ;
 }
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    [self.tableView endUpdates];
+    if (section == 0) {
+        return 0 ;
+    }
+    
+    return 22.0;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        return 60.0 ;
+    }
+    
+    return 44.0 ;
 }
 
 @end

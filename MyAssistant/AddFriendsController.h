@@ -10,4 +10,7 @@
 
 @interface AddFriendsController : BaseController
 
+@property (nonatomic , assign)BOOL          isAddFriend;
+@property (nonatomic , assign)BOOL          isSeeFriendList;
+
 @end

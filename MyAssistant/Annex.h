@@ -2,7 +2,7 @@
 //  Annex.h
 //  MyAssistant
 //
-//  Created by taomojingato on 15/7/5.
+//  Created by taomojingato on 15/7/31.
 //  Copyright (c) 2015年 mojingato. All rights reserved.
 //
 
@@ -18,6 +18,7 @@
 @property (nonatomic, retain) id annexThumbImage;
 @property (nonatomic, retain) NSNumber * annexType;
 @property (nonatomic, retain) NSDate * annexUploadTime;
+@property (nonatomic, retain) NSNumber * annexSize;
 @property (nonatomic, retain) Schedule *schedule;
 @property (nonatomic, retain) Task *task;
 @property (nonatomic, retain) User *user;
