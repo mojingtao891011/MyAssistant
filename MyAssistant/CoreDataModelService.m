@@ -14,10 +14,10 @@
 
 @implementation CoreDataModelService
 
-+ (User*)fetchUserByName:(NSString *)userName
++ (User*)fetchUserByName:(NSString *)userID
 {
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userName == %@" , userName];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userID == %@" , userID];
     [fetchRequest setPredicate:predicate];
     
     NSError *error = nil ;
@@ -108,7 +108,7 @@
 //    NSSortDescriptor *sortTaskCreatTime = [NSSortDescriptor sortDescriptorWithKey:@"taskCreatTime" ascending:NO];
 //    self.myCreatTasks = [curUserCreatAllTasks sortedArrayUsingDescriptors:@[sortTaskTag , sortTaskEndTime , sortTaskCreatTime]];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"creatTaskUser.userName = %@" , DEVICE_NAME];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"creatTaskUser.userID = %@" , USER_ID];
     [fetchRequest setPredicate:predicate];
     
    // [cars filteredArrayUsingPredicate: predicate];

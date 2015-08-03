@@ -255,7 +255,7 @@
 {
    
     
-    User *curUser = [CoreDataModelService fetchUserByName:DEVICE_NAME];
+    User *curUser = [CoreDataModelService fetchUserByName:USER_ID];
     
     NSArray *curUserCreatAllTasks = [CoreDataModelService fetchAllTask];
     NSSortDescriptor *sortTaskTag = [NSSortDescriptor sortDescriptorWithKey:@"taskTag" ascending:NO];

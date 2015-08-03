@@ -24,7 +24,7 @@
     
     [super viewDidLoad];
     
-    self.friends = [[CoreDataModelService fetchUserByName:DEVICE_NAME].friends allObjects];
+    self.friends = [[CoreDataModelService fetchUserByName:USER_ID].friends allObjects];
     
     if (_isAddFriend) {
         [self _initLeftBar];

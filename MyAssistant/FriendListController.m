@@ -43,7 +43,7 @@
 #pragma mark - Model
 - (void)loadDataSource
 {
-    User *user = [CoreDataModelService fetchUserByName:DEVICE_NAME];
+    User *user = [CoreDataModelService fetchUserByName:USER_ID];
     self.colletionDataSources = [NSMutableArray arrayWithArray:[user.friends allObjects]];
    // self.colletionDataSources = [NSMutableArray arrayWithArray:[[user.friends allObjects] arrayWithPinYinFirstLetterFormat]];
     

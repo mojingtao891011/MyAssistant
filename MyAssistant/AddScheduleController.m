@@ -15,6 +15,7 @@
 #import "LoginController.h"
 #import "BaseNavgationController.h"
 
+#import "AddScheduleNameCell.h"
 #import "AddScheduleContentCell.h"
 #import "AddSubRemindCell.h"
 #import "AddScheduleTimeCell.h"
@@ -146,7 +147,7 @@
     self.scheduleModel.scheduleCreatTime = [NSDate date];
         
     
-    User *user = [CoreDataModelService fetchUserByName:DEVICE_NAME];
+    User *user = [CoreDataModelService fetchUserByName:USER_ID];
     
     self.scheduleModel.creatScheduleUser = user ;
     
@@ -202,13 +203,20 @@
     if (indexPath.section == 0 ) {
         //日程标题
         if (indexPath.row == 0) {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddScheduleNameCell" forIndexPath:indexPath];
-            self.scheduleNameTF = (UITextField*)[cell viewWithTag:1];
-            if (self.scheduleModel.scheduleName) {
-                 self.scheduleNameTF.text = self.scheduleModel.scheduleName;
+            AddScheduleNameCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddScheduleNameCell" forIndexPath:indexPath];
+            self.scheduleNameTF = cell.scheduleNameTF ;
+            if (_isShowMore) {
+                cell.heightConstraint.constant = 30.0 ;
+                
             }
             else{
-                self.scheduleNameTF.text = self.scheduleName ;
+                cell.heightConstraint.constant = 0.0 ;
+            }
+            if (self.scheduleModel.scheduleName) {
+                 cell.scheduleNameTF.text = self.scheduleModel.scheduleName;
+            }
+            else{
+                cell.scheduleNameTF.text = self.scheduleName ;
             }
            
             return cell ;

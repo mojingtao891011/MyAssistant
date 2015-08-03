@@ -2,7 +2,7 @@
 //  User.h
 //  MyAssistant
 //
-//  Created by taomojingato on 15/7/30.
+//  Created by taomojingato on 15/8/3.
 //  Copyright (c) 2015年 mojingato. All rights reserved.
 //
 
@@ -13,7 +13,7 @@
 
 @interface User : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * userID;
+@property (nonatomic, retain) NSString * userID;
 @property (nonatomic, retain) NSData * userImg;
 @property (nonatomic, retain) NSString * userMail;
 @property (nonatomic, retain) NSString * userMobile;

@@ -271,7 +271,7 @@
     }
     
     
-    self.taskModel.creatTaskUser = [CoreDataModelService fetchUserByName:DEVICE_NAME];
+    self.taskModel.creatTaskUser = [CoreDataModelService fetchUserByName:USER_ID];
     
     
     NSError *error = nil ;

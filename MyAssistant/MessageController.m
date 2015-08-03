@@ -22,7 +22,8 @@
     
     [self addLeftBarButtonItem];
     
-    [self test];
+
+//[self test];
 }
 
 - (void)test

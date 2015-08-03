@@ -21,6 +21,8 @@
 #import "Color.h"
 #import "NoteName.h"
 #import "CoreDataModelService.h"
+#import "SVProgressHUD.h"
+
 
 //NSLog
 #ifdef DEBUG
@@ -34,19 +36,22 @@
 #define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self
 
 
-#define DEVICE_NAME                                                             [[NSUserDefaults standardUserDefaults]objectForKey:@"deviceName"]
 #define CUR_SELECTEDDATE                                                   [[NSUserDefaults standardUserDefaults]objectForKey:@"curSelectedDate"]
 
 
 
-#define CUR_USER                                                                    (User*)[CoreDataModelService fetchUserByName:DEVICE_NAME]
-
 
 //私有key登录成功获得
 #define     PRIVATEKEY                                                          [[NSUserDefaults standardUserDefaults]objectForKey:@"privatekey"]
+//userID登录成功获得
+#define     USER_ID                                                                 [[NSUserDefaults standardUserDefaults]objectForKey:@"userID"]
+//密码
+#define     USER_PWD                                                            [[NSUserDefaults standardUserDefaults]objectForKey:@"password"]
+
 //公有key 注册、登录用到
 #define     PUBLICKEY                                                            @"smartclock"
 
+#define CUR_USER                                                                    (User*)[CoreDataModelService fetchUserByName:USER_ID]
 
 //
 #define     SCREEN_HEIGHT                                                        [UIScreen  mainScreen].bounds.size.height

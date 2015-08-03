@@ -33,8 +33,8 @@
     
     self.context = [CoreDataStack shareManaged].managedObjectContext ;
     
-    [self creatUserTest];
     
+    [self autoLogin];
     
     return YES;
 }
@@ -110,5 +110,52 @@
     }
 
 }
+- (void)autoLogin
+{
+    
+    if (!USER_ID ||!USER_PWD) {
+        return ;
+    }
+    
+    // 初始化請求
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:@"http://qztank.gicp.net:8800/bosman/main.php"]];
+    [request setHTTPMethod:@"POST"];
+    [request setTimeoutInterval:60.0];
+    NSDictionary *parmDict =@ {@"publickey":PUBLICKEY,@"command":@"102",@"mobile":USER_ID,@"passwd":USER_PWD};
+    [request setHTTPBody:[NSJSONSerialization dataWithJSONObject:parmDict options:NSJSONWritingPrettyPrinted error:nil]];
+    // 发送同步请求
+    NSError *error = nil ;
+    NSData *data = [NSURLConnection sendSynchronousRequest:request
+                                         returningResponse:nil error:&error];
+    if (error ) {
+        return ;
+    }
+    else{
+        NSError *error = nil ;
+        id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (!error) {
+            
+            if ([json isKindOfClass:[NSDictionary class]]) {
+                NSDictionary *dict = (NSDictionary*)json ;
+                if ([dict[@"result"] integerValue]== 0 ) {
+                    //保存私有key
+                    [[NSUserDefaults standardUserDefaults]setObject:dict[@"privatekey"] forKey:@"privatekey"];
+                    [[NSUserDefaults standardUserDefaults]synchronize];
+                    
+                    //
+                    UIStoryboard *storuboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                    UIViewController *tabBarCtl = [storuboard instantiateViewControllerWithIdentifier:@"TabBarCtl"];
+                    self.window.rootViewController = tabBarCtl ;
+                }
+            }
+        }
+    }
+    
 
+}
+- (void)sendBeatHead
+{
+    
+}
 @end

@@ -12,7 +12,7 @@
 @class User ,Task,Schedule;
 @interface CoreDataModelService : NSObject
 
-+ (User*)fetchUserByName:(NSString *)userName ;
++ (User*)fetchUserByName:(NSString *)userID ;
 
 +(NSArray*)fetchAllUser ;
 
@@ -23,8 +23,6 @@
 + (BOOL)deleteTaskByTaskModel:(Task*)task ;
 + (BOOL)deleteScheduleByScheduleModel:(Schedule*)schedule ;
 
-//+(BOOL)deleteTaskByTaskCreatTime:(NSDate*)taskCreatTime;
-//+(BOOL)deleteScheduleByScheduleCreatDetailTime:(NSDate*)scheduleCreatDetailTime;
 
 + (Remind*)fetchSubRemindBySubRemindNumber:(NSInteger)number  schedule:(Schedule*)schedule ;
 

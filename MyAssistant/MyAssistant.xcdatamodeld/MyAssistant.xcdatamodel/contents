@@ -69,7 +69,7 @@
         <relationship name="subTasks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SubTask" inverseName="task" inverseEntity="SubTask" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
-        <attribute name="userID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="userID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userImg" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="userMail" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userMobile" optional="YES" attributeType="String" syncable="YES"/>
@@ -88,10 +88,10 @@
         <element name="Annex" positionX="0" positionY="0" width="128" height="180"/>
         <element name="Comment" positionX="0" positionY="0" width="128" height="120"/>
         <element name="Message" positionX="9" positionY="117" width="128" height="60"/>
+        <element name="Remind" positionX="18" positionY="126" width="128" height="105"/>
         <element name="Schedule" positionX="0" positionY="0" width="128" height="255"/>
         <element name="SubTask" positionX="9" positionY="117" width="128" height="135"/>
         <element name="Task" positionX="0" positionY="0" width="128" height="270"/>
         <element name="User" positionX="0" positionY="0" width="128" height="255"/>
-        <element name="Remind" positionX="18" positionY="126" width="128" height="105"/>
     </elements>
 </model>

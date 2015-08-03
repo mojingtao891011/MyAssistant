@@ -2,13 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "create_icon_14.png"
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "create_icon_14@2x.png"
+      "filename" : "kuaisudenglu@2x.png"
     },
     {
       "idiom" : "universal",

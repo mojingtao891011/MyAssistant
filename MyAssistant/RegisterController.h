@@ -10,4 +10,7 @@
 
 @interface RegisterController : BaseController
 
+@property (nonatomic , assign)BOOL isForgetBttonPushSegue;
+@property (nonatomic , copy)void(^moblieBlock)(NSString *moblie);
+
 @end

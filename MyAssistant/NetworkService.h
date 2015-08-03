@@ -9,12 +9,13 @@
 #import "AFHTTPSessionManager.h"
 
 
-//#define INTERNAL
+#define INTERNAL
 #ifdef INTERNAL
-#define  hostNameUrlStr                        @"http://imessage.hapygirl.com" //外网
+#define  hostNameUrlStr                        @"http://qztank.gicp.net:8800/bosman/main.php" //外网
 #else
 #define  hostNameUrlStr                        @"http://qztank.gicp.net:8800" //内网
 #endif
+
 
 //上传文件URL
 static NSString *const uploadUrlStr                                          = @"http://qztank.gicp.net:8800/upload/upload_file.php" ;
