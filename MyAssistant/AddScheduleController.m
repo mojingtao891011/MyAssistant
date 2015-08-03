@@ -27,14 +27,15 @@
 #import "CoreDataModelService.h"
 
 
-@interface AddScheduleController ()<UITableViewDataSource , UITableViewDelegate , UITextFieldDelegate>
-
+@interface AddScheduleController ()<UITableViewDataSource , UITableViewDelegate , UITextFieldDelegate , reloadCellHeightDelegate>
 @property (nonatomic , retain)NSManagedObjectContext   *context ;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic , retain)UITextField *scheduleNameTF;
 @property (nonatomic , retain)UITextField *scheduleAddressTF;
 @property (nonatomic , copy)NSString        *scheduleName ;
 @property (nonatomic , assign)BOOL          isShowMore ;
+@property (nonatomic , assign)CGFloat       cellHeight;
+@property (nonatomic , copy)NSString        *decribeStr;
 
 @end
 
@@ -43,6 +44,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
    
+    _cellHeight = 65.0 ;
     
     [self _initBarButtonItem];
     
@@ -181,6 +183,13 @@
 {
     self.scheduleName = textField.text ;
 }
+- (void)reloadCellHeight:(CGFloat)height describeStr:(NSString *)describeStr
+{
+    NSIndexPath *reloadRow = [NSIndexPath indexPathForRow:0 inSection:0];
+    _cellHeight = height ;
+    _decribeStr = describeStr ;
+    [self.tableView reloadRowsAtIndexPaths:@[reloadRow] withRowAnimation:UITableViewRowAnimationNone];
+}
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -204,9 +213,17 @@
         //日程标题
         if (indexPath.row == 0) {
             AddScheduleNameCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AddScheduleNameCell" forIndexPath:indexPath];
+            cell.delegate = self ;
             self.scheduleNameTF = cell.scheduleNameTF ;
             if (_isShowMore) {
-                cell.heightConstraint.constant = 30.0 ;
+                if (_decribeStr) {
+                    cell.describeTextView.text = _decribeStr ;
+                    cell.tipLabel.hidden = YES ;
+                }
+                else{
+                    cell.tipLabel.hidden = NO ;
+                }
+                cell.heightConstraint.constant = _cellHeight - 35.0 ;
                 
             }
             else{
@@ -218,7 +235,7 @@
             else{
                 cell.scheduleNameTF.text = self.scheduleName ;
             }
-           
+            
             return cell ;
         }
         //日程时间
@@ -256,6 +273,9 @@
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        return _cellHeight + 20;
+    }
     if (indexPath.section == 0 && indexPath.row < 2) {
         return 65.0;
     }

@@ -37,7 +37,7 @@
    
     UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"好友验证" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"发送", nil];
     alertView.alertViewStyle = UIAlertViewStylePlainTextInput ;
-    UITextField *textField = [alertView textFieldAtIndex:0];
+   // UITextField *textField = [alertView textFieldAtIndex:0];
     //textField.placeholder = DEVICE_NAME ;
     [alertView show];
 }
