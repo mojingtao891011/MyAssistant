@@ -2043,6 +2043,7 @@
                                                         <outlet property="delegate" destination="ndD-ic-qwk" id="WGE-vP-lH2"/>
                                                     </connections>
                                                 </textField>
+<<<<<<< Updated upstream
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nGG-fZ-zAa">
                                                     <rect key="frame" x="8" y="34" width="304" height="28"/>
                                                     <constraints>
@@ -2061,6 +2062,16 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+=======
+                                                <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="备注" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RHz-XU-CTh">
+                                                    <rect key="frame" x="8" y="33" width="304" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="tXF-aq-Zxp"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                </textField>
+>>>>>>> Stashed changes
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="aTi-OI-7uf" firstAttribute="top" secondItem="zPY-XR-vE6" secondAttribute="bottom" constant="4" id="8w3-Kn-zRg"/>
